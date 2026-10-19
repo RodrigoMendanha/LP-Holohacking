@@ -72,7 +72,7 @@ import Icon from "../ui/Icon.astro";
   .hero {
     position: relative;
     margin-top: -72px; /* passa por baixo do header transparente */
-    padding: calc(72px + clamp(3rem, 2rem + 4vw, 6rem)) 0 clamp(4rem, 3rem + 4vw, 7rem);
+    padding: calc(72px + clamp(2.5rem, 1.5rem + 3.5vw, 5rem)) 0 clamp(4rem, 3rem + 4vw, 7rem);
     background: var(--verde-noite);
     color: var(--texto);
     overflow: hidden;
@@ -117,7 +117,7 @@ import Icon from "../ui/Icon.astro";
     line-height: 1.04;
     letter-spacing: -0.01em;
     margin: 1.25rem 0 1.5rem;
-    max-width: 16ch;
+    max-width: 17ch;
   }
   .hero-sub {
     font-size: var(--fs-lead);
@@ -147,11 +147,11 @@ import Icon from "../ui/Icon.astro";
     position: relative;
     width: min(100%, 560px);
     margin-inline: auto;
-    padding: 2.5rem 0;
+    padding: 0.5rem 0 0;
   }
   .hero-radar {
     position: relative;
-    padding: 6%;
+    padding: 16% 6% 9%;
   }
   .hero-radar::before {
     content: "";
@@ -199,9 +199,9 @@ import Icon from "../ui/Icon.astro";
   }
   .hero-card--prioridades {
     right: 0;
-    bottom: 1.2rem;
-    width: 46%;
-    min-width: 170px;
+    top: 0;
+    width: 38%;
+    min-width: 140px;
   }
   .hero-card--prioridades ol { display: grid; gap: 0.55rem; color: var(--creme); }
   .hero-card--prioridades li {
@@ -219,7 +219,7 @@ import Icon from "../ui/Icon.astro";
   .hero-card--prioridades .esqueleto { opacity: 0.2; }
   .hero-card--triade {
     left: 4%;
-    bottom: 0;
+    bottom: 3rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -233,21 +233,22 @@ import Icon from "../ui/Icon.astro";
   .hero-card--triade i { font-style: normal; color: var(--dourado); }
 
   .hero-legenda {
-    position: absolute;
-    left: 0; right: 0;
-    bottom: -1.6rem;
+    display: block;
+    margin-top: 1.5rem;
     text-align: center;
     font-size: 0.66rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(237, 232, 218, 0.45);
+    color: rgba(237, 232, 218, 0.66);
   }
 
   @media (max-width: 639px) {
     .hero-card { padding: 0.7rem 0.85rem; }
     .hero-card-num { font-size: 2rem; }
-    .hero-card--triade { font-size: 0.9rem; left: 0; }
-    .hero-card--prioridades { bottom: 3.4rem; }
+    .hero-card--triade { font-size: 0.9rem; left: 0; bottom: 3.2rem; }
+    .hero-card--prioridades { width: 40%; }
+    .hero-card--prioridades .hero-card-rot { white-space: nowrap; font-size: 0.54rem; letter-spacing: 0.16em; }
+    .hero-card--prioridades li { grid-template-columns: 0.9rem 1fr; }
   }
 
   @media (min-width: 1000px) {

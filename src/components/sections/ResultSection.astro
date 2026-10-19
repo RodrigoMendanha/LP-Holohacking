@@ -303,6 +303,9 @@ import Icon from "../ui/Icon.astro";
     border-left: 2px solid var(--dourado);
   }
 
+  @media (max-width: 639px) {
+    .documento-sombra { display: none; }
+  }
   @media (max-width: 479px) {
     .doc-bloco--duplo { grid-template-columns: 1fr; }
     .doc-triade { grid-template-columns: 1fr; }
