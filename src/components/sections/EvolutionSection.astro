@@ -1,0 +1,193 @@
+---
+import Radar from "../ui/Radar.astro";
+
+// Valores ilustrativos. A tela mostra antes e agora lado a lado e não
+// rotula "melhor" ou "pior" — quem interpreta é o profissional.
+const sistemas = ["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"];
+const antes = [5.4, 4.6, 6.2, 5.1, 4.8];
+const agora = [6.6, 5.9, 7.0, 4.9, 6.3];
+const fmt = (n: number) => n.toFixed(1).replace(".", ",");
+---
+
+<section class="secao secao--clara evolucao" id="evolucao" aria-labelledby="evolucao-titulo">
+  <div class="container">
+    <header class="cabeca">
+      <span class="eyebrow" data-reveal>Evolução</span>
+      <h2 id="evolucao-titulo" data-reveal style="--i:1">No retorno, você <em>não começa do zero.</em></h2>
+      <p data-reveal style="--i:2">
+        O HoloHacking preserva a continuidade entre encontros para que o acompanhamento tenha contexto. Antes e agora
+        aparecem lado a lado — a leitura do que mudou é sua.
+      </p>
+    </header>
+
+    <figure class="evo-painel" data-reveal>
+      <div class="evo-radar">
+        <Radar
+          values={agora}
+          before={antes}
+          labels={sistemas}
+          size={380}
+          sacred={false}
+          cor="#a87f31"
+          labelColor="var(--dourado-texto)"
+          title="Radar ilustrativo comparando duas aplicações do HOLOSCAN: antes, tracejado, e agora, preenchido"
+        />
+        <div class="evo-legenda" aria-hidden="true">
+          <span><i class="tracejado"></i>Antes</span>
+          <span><i class="cheio"></i>Agora</span>
+        </div>
+      </div>
+
+      <div class="evo-dados">
+        <div class="evo-indice">
+          <div class="evo-um">
+            <span>Antes</span>
+            <b class="numero">58</b>
+          </div>
+          <span class="evo-seta" aria-hidden="true">→</span>
+          <div class="evo-um evo-um--agora">
+            <span>Agora</span>
+            <b class="numero">63</b>
+          </div>
+          <span class="evo-indice-rot">Índice HOLOS</span>
+        </div>
+
+        <table class="evo-tabela">
+          <caption class="sr-only">Notas ilustrativas por sistema, antes e agora</caption>
+          <thead>
+            <tr>
+              <th scope="col">Sistema</th>
+              <th scope="col">Antes</th>
+              <th scope="col">Agora</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              sistemas.map((s, i) => (
+                <tr>
+                  <th scope="row">{s}</th>
+                  <td>{fmt(antes[i])}</td>
+                  <td>{fmt(agora[i])}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <figcaption class="mock-nota evo-nota">Ilustração · valores fictícios, sem interpretação automática</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .evo-painel {
+    display: grid;
+    gap: clamp(2rem, 1.5rem + 3vw, 4rem);
+    align-items: center;
+    padding: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+    border-radius: var(--raio);
+    background: var(--creme-claro);
+    border: 1px solid var(--linha);
+    box-shadow: var(--sombra);
+  }
+  .evo-radar {
+    max-width: 460px;
+    width: 100%;
+    margin-inline: auto;
+  }
+  .evo-legenda {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+  }
+  .evo-legenda span { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .evo-legenda i { display: inline-block; width: 22px; height: 0; }
+  .evo-legenda .tracejado { border-top: 2px dashed #a87f31; opacity: 0.7; }
+  .evo-legenda .cheio { height: 10px; border: 2px solid #a87f31; background: rgba(201, 163, 90, 0.25); border-radius: 2px; }
+
+  .evo-indice {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.5rem 1.25rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--linha);
+  }
+  .evo-um { display: flex; flex-direction: column; gap: 0.35rem; }
+  .evo-um span,
+  .evo-indice-rot {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+  }
+  .evo-um b {
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--texto-suave);
+  }
+  .evo-um--agora span { color: var(--acento); }
+  .evo-um--agora b {
+    font-size: 3.6rem;
+    font-weight: 600;
+    color: var(--titulo);
+  }
+  .evo-seta {
+    font-size: 1.6rem;
+    color: var(--dourado);
+    padding-bottom: 0.5rem;
+  }
+  .evo-indice-rot {
+    flex-basis: 100%;
+    color: var(--acento);
+  }
+
+  .evo-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .evo-tabela th,
+  .evo-tabela td {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--borda);
+    text-align: right;
+    font-size: 0.95rem;
+  }
+  .evo-tabela thead th {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+    padding-top: 0;
+  }
+  .evo-tabela th:first-child { text-align: left; }
+  .evo-tabela tbody th {
+    font-weight: 400;
+    color: var(--texto);
+  }
+  .evo-tabela td { color: var(--texto-suave); width: 5rem; }
+  .evo-tabela td:last-child {
+    font-family: var(--fonte-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--titulo);
+  }
+  .evo-tabela tr:last-child th,
+  .evo-tabela tr:last-child td { border-bottom: 0; }
+
+  .evo-nota { grid-column: 1 / -1; margin-top: 0; }
+
+  @media (min-width: 900px) {
+    .evo-painel { grid-template-columns: 1fr 1fr; }
+  }
+</style>

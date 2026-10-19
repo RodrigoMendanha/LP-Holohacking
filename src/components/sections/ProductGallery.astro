@@ -1,0 +1,206 @@
+---
+/* Molduras prontas para as capturas reais do produto (PRODUCT_SHOTS em
+   data/site.ts). Sem captura, a moldura mostra uma composição abstrata e
+   diz com todas as letras que a imagem ainda vai chegar — nada aqui finge
+   ser tela real. */
+import Radar from "../ui/Radar.astro";
+import { PRODUCT_SHOTS } from "../../data/site";
+
+const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
+---
+
+<section class="secao tema-escuro galeria" id="por-dentro" aria-labelledby="galeria-titulo">
+  <div class="container">
+    <header class="cabeca cabeca--centro">
+      <span class="eyebrow" data-reveal>Produto por dentro</span>
+      <h2 id="galeria-titulo" data-reveal style="--i:1">Tudo em um só lugar, <em>do primeiro ao último encontro.</em></h2>
+      <p data-reveal style="--i:2">
+        {
+          temCaptura
+            ? "Algumas das telas que acompanham você em cada etapa do atendimento."
+            : "As capturas do produto entram aqui em breve. Por enquanto, cada moldura mostra o que ela vai apresentar."
+        }
+      </p>
+    </header>
+
+    <ul role="list" class="galeria-grade">
+      {
+        PRODUCT_SHOTS.map((s, i) => (
+          <li class="tela" data-reveal style={`--i:${i % 3}`}>
+            <div class="tela-moldura">
+              <div class="tela-barra" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+                <span>HoloHacking · {s.title}</span>
+              </div>
+              <div class="tela-area">
+                {s.src ? (
+                  <img src={s.src} alt={s.alt || `Tela ${s.title} do HoloHacking`} width="1280" height="800" loading="lazy" decoding="async" />
+                ) : (
+                  <div class:list={["tela-abstrata", `tela-abstrata--${s.id}`]} aria-hidden="true">
+                    {s.id === "dashboard" && (
+                      <div class="abs-dash">
+                        <span class="abs-lado" />
+                        <div class="abs-cards">
+                          <span /><span /><span /><span class="abs-largo" />
+                        </div>
+                      </div>
+                    )}
+                    {s.id === "holoscan" && (
+                      <div class="abs-radar">
+                        <Radar values={[6.5, 5.5, 7.5, 6, 7]} size={200} title="" />
+                      </div>
+                    )}
+                    {s.id === "ferramentas" && (
+                      <div class="abs-colunas">
+                        <span /><span /><span />
+                      </div>
+                    )}
+                    {s.id === "playbook" && (
+                      <div class="abs-lista">
+                        <span class="sel" /><span /><span class="sel" />
+                      </div>
+                    )}
+                    {s.id === "resultado" && (
+                      <div class="abs-doc">
+                        <b />
+                        <span /><span /><span style="width:60%" />
+                      </div>
+                    )}
+                    {s.id === "evolucao" && (
+                      <div class="abs-radar">
+                        <Radar values={[6.6, 5.9, 7, 4.9, 6.3]} before={[5.4, 4.6, 6.2, 5.1, 4.8]} size={200} sacred={false} title="" />
+                      </div>
+                    )}
+                    <span class="tela-selo">Captura do produto em breve</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            <h3>{s.title}</h3>
+            <p>{s.caption}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .galeria-grade {
+    display: grid;
+    gap: clamp(1.5rem, 1rem + 2vw, 2.5rem) 1.5rem;
+  }
+  .tela h3 {
+    font-size: 1.4rem;
+    margin: 1.1rem 0 0.25rem;
+  }
+  .tela p {
+    font-size: 0.9rem;
+    color: var(--texto-suave);
+  }
+  .tela-moldura {
+    border-radius: var(--raio-card);
+    overflow: hidden;
+    border: 1px solid rgba(201, 163, 90, 0.28);
+    background: #082b20;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    transition: transform 0.4s var(--ease), border-color 0.4s;
+  }
+  .tela:hover .tela-moldura { transform: translateY(-4px); border-color: var(--dourado); }
+  .tela-barra {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid rgba(201, 163, 90, 0.16);
+    background: rgba(6, 35, 26, 0.9);
+  }
+  .tela-barra i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(201, 163, 90, 0.35);
+  }
+  .tela-barra span {
+    margin-left: 0.6rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(237, 232, 218, 0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tela-area {
+    position: relative;
+    aspect-ratio: 16 / 10;
+  }
+  .tela-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- composições abstratas ---------- */
+  .tela-abstrata {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 8%;
+    background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(201, 163, 90, 0.1), transparent 70%);
+    color: var(--dourado);
+  }
+  .tela-selo {
+    position: absolute;
+    left: 50%;
+    bottom: 0.8rem;
+    translate: -50% 0;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--raio-pilula);
+    border: 1px solid rgba(201, 163, 90, 0.35);
+    background: rgba(6, 35, 26, 0.85);
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--dourado-claro);
+  }
+  .abs-dash { display: grid; grid-template-columns: 22% 1fr; gap: 6%; width: 100%; height: 78%; margin-top: -8%; }
+  .abs-lado { border-radius: 8px; background: rgba(201, 163, 90, 0.1); border: 1px solid rgba(201, 163, 90, 0.18); }
+  .abs-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8%; }
+  .abs-cards span { border-radius: 8px; border: 1px solid rgba(201, 163, 90, 0.25); }
+  .abs-cards .abs-largo { grid-column: 1 / -1; background: rgba(201, 163, 90, 0.07); }
+  .abs-radar { width: 48%; margin-top: -8%; }
+  .abs-colunas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6%; width: 86%; height: 66%; margin-top: -8%; }
+  .abs-colunas span {
+    border-radius: 8px;
+    border: 1px solid rgba(201, 163, 90, 0.25);
+    background: linear-gradient(180deg, rgba(201, 163, 90, 0.14) 0 22%, transparent 22%);
+  }
+  .abs-lista { display: grid; gap: 9%; width: 76%; height: 62%; margin-top: -8%; }
+  .abs-lista span { border-radius: 8px; border: 1px solid rgba(201, 163, 90, 0.22); }
+  .abs-lista .sel { border-color: rgba(201, 163, 90, 0.6); background: rgba(201, 163, 90, 0.1); }
+  .abs-doc {
+    display: grid;
+    align-content: start;
+    gap: 9px;
+    width: 52%;
+    height: 78%;
+    margin-top: -8%;
+    padding: 9% 8%;
+    border-radius: 6px;
+    background: var(--creme-claro);
+  }
+  .abs-doc b { height: 10px; width: 70%; border-radius: 3px; background: var(--dourado); opacity: 0.8; margin-bottom: 6px; }
+  .abs-doc span { height: 6px; border-radius: 3px; background: var(--tinta); opacity: 0.14; }
+
+  @media (min-width: 640px) {
+    .galeria-grade { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1000px) {
+    .galeria-grade { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

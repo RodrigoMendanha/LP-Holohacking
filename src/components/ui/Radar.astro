@@ -20,6 +20,8 @@ interface Props {
   class?: string;
   title?: string;
   labelColor?: string;
+  /** cor do traço: dourado da marca no escuro; #a87f31 (o --dash-barra do produto) no creme */
+  cor?: string;
 }
 
 const {
@@ -31,6 +33,7 @@ const {
   class: className,
   title = "Radar ilustrativo do HOLOSCAN com cinco sistemas",
   labelColor = "var(--dourado-claro)",
+  cor = "#c9a35a",
 } = Astro.props;
 
 const PHI = (1 + Math.sqrt(5)) / 2;
@@ -75,7 +78,7 @@ const viewBox = `${-pad} ${-pad / 2} ${size + pad * 2} ${size + pad}`;
   xmlns="http://www.w3.org/2000/svg"
 >
   <title>{title}</title>
-  <g class="radar-moldura" fill="none" stroke="#c9a35a" stroke-width="1">
+  <g class="radar-moldura" fill="none" stroke={cor} stroke-width="1">
     {sacred && <circle cx={C} cy={C} r={R * 1.06} stroke-opacity="0.1" />}
     {rings.map(({ r, o }) => <polygon points={ring(r)} stroke-opacity={o.toFixed(3)} />)}
     {sacred && <polygon points={star} stroke-opacity="0.12" />}
@@ -91,7 +94,7 @@ const viewBox = `${-pad} ${-pad / 2} ${size + pad * 2} ${size + pad}`;
         class="radar-antes"
         points={shape(before)}
         fill="none"
-        stroke="#c9a35a"
+        stroke={cor}
         stroke-opacity="0.55"
         stroke-width="1.6"
         stroke-dasharray="5 4"
@@ -103,14 +106,14 @@ const viewBox = `${-pad} ${-pad / 2} ${size + pad * 2} ${size + pad}`;
     <polygon
       points={shape(values)}
       fill="rgba(201,163,90,.2)"
-      stroke="#c9a35a"
+      stroke={cor}
       stroke-width="2.4"
       stroke-linejoin="round"
     />
     {
       values.map((n, i) => {
         const [x, y] = pt((R * n) / 10, i);
-        return <circle cx={x.toFixed(1)} cy={y.toFixed(1)} r="4.5" fill="#c9a35a" />;
+        return <circle cx={x.toFixed(1)} cy={y.toFixed(1)} r="4.5" fill={cor} />;
       })
     }
   </g>
