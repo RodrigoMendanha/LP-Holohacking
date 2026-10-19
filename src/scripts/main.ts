@@ -119,6 +119,123 @@ function iniciarVsl() {
   }
 }
 
+/* ---------- visualizador das telas do produto ----------
+   Sempre há como sair: botão Fechar, "Voltar à página", tecla Esc, clique
+   fora da imagem e o botão voltar do navegador/celular. O foco volta para a
+   miniatura que abriu. Sem JS, o link abre a imagem na mesma aba e o
+   "voltar" do navegador traz de volta à página. */
+function iniciarZoom() {
+  const dialogo = document.querySelector<HTMLDialogElement>("[data-zoom-dialog]");
+  const gatilhos = [...document.querySelectorAll<HTMLAnchorElement>("a[data-zoom]")];
+  if (!dialogo || !gatilhos.length || typeof dialogo.showModal !== "function") return;
+
+  const img = dialogo.querySelector<HTMLImageElement>("[data-zoom-img]")!;
+  const titulo = dialogo.querySelector<HTMLElement>("[data-zoom-titulo-alvo]")!;
+  const legenda = dialogo.querySelector<HTMLElement>("[data-zoom-legenda-alvo]")!;
+  const contador = dialogo.querySelector<HTMLElement>("[data-zoom-contador]")!;
+  const anterior = dialogo.querySelector<HTMLButtonElement>("[data-zoom-anterior]")!;
+  const proxima = dialogo.querySelector<HTMLButtonElement>("[data-zoom-proxima]")!;
+  let atual = 0;
+  let origem: HTMLElement | null = null;
+  let comHistorico = false;
+  let yAberto = 0;
+  // fechar chama history.back(); o navegador tentaria restaurar a rolagem
+  // de uma entrada antiga (ex.: a seção de um link clicado antes). A posição
+  // de quando a imagem abriu é que vale.
+  const voltarAoLugar = () => {
+    window.scrollTo({ top: yAberto, behavior: "instant" as ScrollBehavior });
+    origem?.focus({ preventScroll: true });
+  };
+  // Em alguns históricos o navegador ainda rola por conta própria logo
+  // depois do popstate. Rolagem suave desligada e a posição reaplicada até
+  // ele terminar.
+  const fixarLugar = () => {
+    const html = document.documentElement;
+    html.style.scrollBehavior = "auto";
+    voltarAoLugar();
+    requestAnimationFrame(voltarAoLugar);
+    [60, 160, 320].forEach((ms) => setTimeout(voltarAoLugar, ms));
+    setTimeout(() => {
+      html.style.scrollBehavior = "";
+      if ("scrollRestoration" in history) history.scrollRestoration = "auto";
+    }, 360);
+  };
+
+  const mostrar = (i: number) => {
+    atual = (i + gatilhos.length) % gatilhos.length;
+    const g = gatilhos[atual];
+    img.src = g.getAttribute("href") || "";
+    img.alt = g.dataset.zoomAlt || "";
+    titulo.textContent = g.dataset.zoomTitulo || "";
+    legenda.textContent = g.dataset.zoomLegenda || "";
+    contador.textContent = `Tela ${atual + 1} de ${gatilhos.length}`;
+  };
+  const umaSo = gatilhos.length < 2;
+  anterior.hidden = umaSo;
+  proxima.hidden = umaSo;
+
+  const abrir = (i: number, de: HTMLElement) => {
+    origem = de;
+    yAberto = window.scrollY;
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    mostrar(i);
+    dialogo.showModal();
+    document.body.classList.add("zoom-aberto");
+    // Sem a âncora (#secao) na entrada atual: ao voltar para ela, o navegador
+    // rolaria até a seção do último link clicado.
+    history.replaceState(history.state, "", location.pathname + location.search);
+    // o "voltar" do celular fecha o visualizador em vez de sair da página
+    history.pushState({ zoom: true }, "");
+    comHistorico = true;
+    dialogo.querySelector<HTMLElement>(".zoom-fechar")?.focus();
+  };
+
+  const fechar = () => {
+    if (dialogo.open) dialogo.close();
+  };
+
+  dialogo.addEventListener("close", () => {
+    document.body.classList.remove("zoom-aberto");
+    document.documentElement.style.scrollBehavior = "auto";
+    if (comHistorico) {
+      comHistorico = false;
+      history.back(); // o popstate abaixo devolve a rolagem
+    }
+    fixarLugar();
+  });
+
+  window.addEventListener("popstate", () => {
+    if (dialogo.open) {
+      comHistorico = false; // o navegador já voltou
+      dialogo.close();
+      return;
+    }
+    if (history.scrollRestoration === "manual") fixarLugar();
+  });
+
+  gatilhos.forEach((g, i) =>
+    g.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      abrir(i, g);
+    }),
+  );
+  dialogo.querySelectorAll("[data-zoom-fechar]").forEach((b) => b.addEventListener("click", fechar));
+  anterior.addEventListener("click", () => mostrar(atual - 1));
+  proxima.addEventListener("click", () => mostrar(atual + 1));
+
+  // clique fora da imagem e dos botões (no fundo escuro) fecha
+  dialogo.addEventListener("click", (ev) => {
+    const alvo = ev.target as HTMLElement;
+    if (alvo === dialogo || alvo.classList.contains("zoom-caixa") || alvo.classList.contains("zoom-figura")) fechar();
+  });
+
+  dialogo.addEventListener("keydown", (ev) => {
+    if (umaSo) return;
+    if (ev.key === "ArrowLeft") mostrar(atual - 1);
+    if (ev.key === "ArrowRight") mostrar(atual + 1);
+  });
+}
+
 /* ---------- medição dos CTAs (só fala com o que estiver carregado) ---------- */
 type Dados = Record<string, string | undefined>;
 function rastrear(evento: string, dados: Dados) {
@@ -146,4 +263,5 @@ iniciarAparicao();
 iniciarHeader();
 iniciarMenu();
 iniciarVsl();
+iniciarZoom();
 iniciarCtas();

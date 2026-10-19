@@ -4,6 +4,7 @@
    diz com todas as letras que a imagem ainda vai chegar — nada aqui finge
    ser tela real. */
 import Radar from "../ui/Radar.astro";
+import Icon from "../ui/Icon.astro";
 import { PRODUCT_SHOTS } from "../../data/site";
 
 const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
@@ -36,9 +37,19 @@ const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
               </div>
               <div class="tela-area">
                 {s.src ? (
-                  <a class="tela-ampliar" href={s.src} target="_blank" rel="noopener">
+                  <a
+                    class="tela-ampliar"
+                    href={s.src}
+                    data-zoom
+                    data-zoom-titulo={s.title}
+                    data-zoom-legenda={s.caption}
+                    data-zoom-alt={s.alt || `Tela ${s.title} do HoloHacking`}
+                    aria-label={`Ampliar a tela ${s.title}`}
+                  >
                     <img src={s.src} alt={s.alt || `Tela ${s.title} do HoloHacking`} width="1600" height="1000" loading="lazy" decoding="async" />
-                    <span class="sr-only">(abre a imagem em tamanho real em nova aba)</span>
+                    <span class="tela-dica" aria-hidden="true">
+                      <Icon name="expand" size={14} /> Ampliar
+                    </span>
                   </a>
                 ) : (
                   <div class:list={["tela-abstrata", `tela-abstrata--${s.id}`]} aria-hidden="true">
@@ -88,6 +99,43 @@ const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
       }
     </ul>
   </div>
+
+  {
+    temCaptura && (
+      <dialog class="zoom" data-zoom-dialog aria-labelledby="zoom-titulo">
+        <div class="zoom-caixa">
+          <header class="zoom-topo">
+            <p class="zoom-contador" data-zoom-contador />
+            <button type="button" class="zoom-fechar" data-zoom-fechar>
+              <Icon name="x" size={18} />
+              <span>Fechar</span>
+            </button>
+          </header>
+          <figure class="zoom-figura">
+            <img data-zoom-img src="" alt="" width="1600" height="1000" />
+            <figcaption>
+              <h3 id="zoom-titulo" data-zoom-titulo-alvo />
+              <p data-zoom-legenda-alvo />
+            </figcaption>
+          </figure>
+          <footer class="zoom-base">
+            <button type="button" class="zoom-nav" data-zoom-anterior aria-label="Tela anterior">
+              <Icon name="arrow-left" size={18} />
+              <span>Anterior</span>
+            </button>
+            <button type="button" class="btn btn--fantasma zoom-voltar" data-zoom-fechar>
+              <Icon name="arrow-left" size={16} />
+              <span>Voltar à página</span>
+            </button>
+            <button type="button" class="zoom-nav" data-zoom-proxima aria-label="Próxima tela">
+              <span>Próxima</span>
+              <Icon name="arrow-right" size={18} />
+            </button>
+          </footer>
+        </div>
+      </dialog>
+    )
+  }
 </section>
 
 <style>
@@ -140,7 +188,139 @@ const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
     position: relative;
     aspect-ratio: 16 / 10;
   }
-  .tela-ampliar { display: block; height: 100%; cursor: zoom-in; }
+  .tela-ampliar {
+    position: relative;
+    display: block;
+    height: 100%;
+    cursor: zoom-in;
+  }
+  .tela-dica {
+    position: absolute;
+    right: 0.7rem;
+    bottom: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: var(--raio-pilula);
+    border: 1px solid rgba(201, 163, 90, 0.45);
+    background: rgba(6, 35, 26, 0.88);
+    color: var(--dourado-claro);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .tela-ampliar:hover .tela-dica,
+  .tela-ampliar:focus-visible .tela-dica {
+    background: var(--dourado);
+    color: var(--verde-noite);
+  }
+
+  /* ---------- visualizador ---------- */
+  .zoom {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--creme);
+  }
+  .zoom::backdrop {
+    background: rgba(3, 20, 14, 0.92);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  .zoom[open] { display: grid; place-items: center; }
+  .zoom-caixa {
+    display: grid;
+    gap: 0.9rem;
+    width: min(100% - 2rem, 1240px);
+    max-height: calc(100dvh - 2rem);
+    padding: 1rem 0;
+  }
+  .zoom-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .zoom-contador {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+  .zoom-fechar,
+  .zoom-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.6rem 1rem;
+    border-radius: var(--raio-botao);
+    border: 1px solid rgba(201, 163, 90, 0.45);
+    background: rgba(11, 51, 37, 0.9);
+    color: var(--dourado-claro);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .zoom-fechar:hover,
+  .zoom-nav:hover {
+    background: var(--dourado);
+    color: var(--verde-noite);
+    border-color: var(--dourado);
+  }
+  .zoom-figura {
+    display: grid;
+    gap: 0.75rem;
+    min-height: 0;
+  }
+  .zoom-figura img {
+    width: 100%;
+    height: auto;
+    max-height: calc(100dvh - 15rem);
+    object-fit: contain;
+    border-radius: var(--raio-card);
+    border: 1px solid rgba(201, 163, 90, 0.35);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+    background: var(--verde-noite);
+  }
+  .zoom-figura h3 {
+    font-size: 1.35rem;
+    color: var(--dourado-claro);
+  }
+  .zoom-figura p {
+    font-size: 0.9rem;
+    color: rgba(237, 232, 218, 0.78);
+  }
+  .zoom-base {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .zoom-voltar { min-height: 44px; padding: 0.6rem 1.1rem; color: var(--creme); }
+  :global(body.zoom-aberto) { overflow: hidden; }
+
+  @media (max-width: 639px) {
+    .zoom-nav span,
+    .zoom-voltar span { display: none; }
+    .zoom-nav,
+    .zoom-voltar { padding: 0.6rem 0.85rem; }
+    .zoom-voltar::after {
+      content: "Voltar";
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+    }
+  }
   .tela-area img {
     width: 100%;
     height: 100%;
