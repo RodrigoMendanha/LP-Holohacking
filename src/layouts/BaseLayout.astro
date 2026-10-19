@@ -1,0 +1,88 @@
+---
+import "@fontsource-variable/cormorant-garamond/wght.css";
+import "@fontsource-variable/cormorant-garamond/wght-italic.css";
+import "@fontsource-variable/jost/wght.css";
+import "../styles/global.css";
+
+import jostLatin from "@fontsource-variable/jost/files/jost-latin-wght-normal.woff2?url";
+import cormorantLatin from "@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-wght-normal.woff2?url";
+
+import Analytics from "../components/Analytics.astro";
+import { SITE, ANALYTICS_IDS } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = SITE.title, description = SITE.description } = Astro.props;
+
+// Canonical e OG absolutos só quando SITE.url existir.
+const base = SITE.url ? SITE.url.replace(/\/$/, "") : "";
+const canonical = base ? base + Astro.url.pathname : "";
+const ogImage = base ? base + SITE.ogImage : SITE.ogImage;
+const robots = SITE.indexable ? "index, follow" : "noindex, nofollow";
+const gtmId = /^GTM-[A-Z0-9]+$/.test(ANALYTICS_IDS.GTM) ? ANALYTICS_IDS.GTM : "";
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content="#06231a" />
+    <meta name="color-scheme" content="light dark" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <link rel="preload" href={cormorantLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={jostLatin} as="font" type="font/woff2" crossorigin />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={SITE.ogImageAlt} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={SITE.ogImageAlt} />
+
+    <script is:inline>document.documentElement.classList.add("js");</script>
+    <Analytics />
+  </head>
+  <body>
+    {
+      gtmId && (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+            title="Google Tag Manager"
+          />
+        </noscript>
+      )
+    }
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+    <slot />
+    <script>
+      import "../scripts/main.ts";
+    </script>
+  </body>
+</html>

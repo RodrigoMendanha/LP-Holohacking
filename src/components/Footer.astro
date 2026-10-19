@@ -1,0 +1,111 @@
+---
+import Logo from "./ui/Logo.astro";
+import { SITE, LEGAL_URLS, COMPANY } from "../data/site";
+
+const ano = new Date().getFullYear();
+const legais = [
+  { label: "Termos", href: LEGAL_URLS.terms },
+  { label: "Privacidade", href: LEGAL_URLS.privacy },
+  { label: "Contato", href: LEGAL_URLS.contact },
+];
+const empresa = [COMPANY.legalName, COMPANY.cnpj && `CNPJ ${COMPANY.cnpj}`, COMPANY.address, COMPANY.email]
+  .filter(Boolean)
+  .join(" · ");
+const ext = (u: string) => /^https?:\/\//i.test(u);
+---
+
+<footer class="rodape tema-escuro">
+  <div class="container rodape-grade">
+    <div class="rodape-marca">
+      <Logo size={40} />
+      <p>HoloHacking — {SITE.descriptor}.</p>
+      <p class="rodape-metodo">Corpo · Mente · Espírito — em equilíbrio, em propósito.</p>
+    </div>
+
+    <nav aria-label="Links legais">
+      <ul role="list" class="rodape-links">
+        {
+          legais.map((l) => (
+            <li>
+              {l.href ? (
+                <a href={l.href} {...(ext(l.href) ? { target: "_blank", rel: "noopener" } : {})}>
+                  {l.label}
+                </a>
+              ) : (
+                <span class="rodape-pendente" title="Link ainda não configurado">{l.label}</span>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container rodape-base">
+    <p>© {ano} HoloHacking. Todos os direitos reservados.</p>
+    {empresa && <p>{empresa}</p>}
+    <p class="rodape-aviso">
+      O HoloHacking é uma ferramenta de apoio ao trabalho profissional. Não realiza diagnóstico e não
+      substitui avaliação clínica, exames ou o julgamento do nutricionista.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background: #04190f;
+    color: var(--texto-suave);
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5rem) 2.5rem;
+    border-top: 1px solid rgba(201, 163, 90, 0.14);
+    font-size: var(--fs-small);
+  }
+  .rodape-grade {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(201, 163, 90, 0.12);
+  }
+  .rodape-marca p { margin-top: 1rem; max-width: 40ch; }
+  .rodape-metodo {
+    font-family: var(--fonte-display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--dourado);
+  }
+  .rodape-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+  }
+  .rodape-links a,
+  .rodape-pendente {
+    display: inline-block;
+    padding-block: 0.4rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .rodape-links a {
+    color: var(--dourado-claro);
+    text-decoration: none;
+  }
+  .rodape-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .rodape-pendente { color: rgba(237, 232, 218, 0.4); }
+  .rodape-base {
+    display: grid;
+    gap: 0.6rem;
+    padding-top: 1.75rem;
+    font-size: 0.8rem;
+  }
+  .rodape-aviso {
+    max-width: 80ch;
+    opacity: 0.75;
+  }
+  @media (min-width: 900px) {
+    .rodape-grade {
+      grid-template-columns: 1fr auto;
+      align-items: start;
+    }
+  }
+</style>

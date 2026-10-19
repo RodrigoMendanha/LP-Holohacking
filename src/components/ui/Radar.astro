@@ -1,0 +1,172 @@
+---
+/* ===========================================================================
+   RADAR HOLOSCAN — peça decorativa/comercial
+
+   Mesma geometria do radar do produto (app.js initRadar / evolucao.js
+   radarDuplo): pentágono, anéis que encolhem pela proporção áurea (φ),
+   pentagrama ao fundo, tudo em dourado. Aqui os valores são SEMPRE
+   ilustrativos — nunca de paciente.
+
+   - values: 5 notas de 0 a 10 (área preenchida, "agora")
+   - before: 5 notas opcionais (contorno tracejado, "antes")
+   =========================================================================== */
+interface Props {
+  values: number[];
+  before?: number[];
+  labels?: string[];
+  size?: number;
+  /** anéis por φ + pentagrama (assinatura do HOLOSCAN) */
+  sacred?: boolean;
+  class?: string;
+  title?: string;
+  labelColor?: string;
+}
+
+const {
+  values,
+  before,
+  labels = [],
+  size = 420,
+  sacred = true,
+  class: className,
+  title = "Radar ilustrativo do HOLOSCAN com cinco sistemas",
+  labelColor = "var(--dourado-claro)",
+} = Astro.props;
+
+const PHI = (1 + Math.sqrt(5)) / 2;
+const C = size / 2;
+const R = size * 0.36;
+const pad = labels.length ? 70 : 12;
+
+const angle = (i: number) => -Math.PI / 2 + (i * 2 * Math.PI) / 5;
+const pt = (r: number, i: number): [number, number] => [C + r * Math.cos(angle(i)), C + r * Math.sin(angle(i))];
+const fmt = (p: [number, number]) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`;
+const ring = (r: number) => [0, 1, 2, 3, 4].map((i) => fmt(pt(r, i))).join(" ");
+const shape = (v: number[]) => v.map((n, i) => fmt(pt((R * n) / 10, i))).join(" ");
+
+const rings: { r: number; o: number }[] = [];
+if (sacred) {
+  let r = R;
+  for (let k = 0; k < 5; k++) {
+    rings.push({ r, o: 0.1 + k * 0.035 });
+    r = r / PHI;
+  }
+} else {
+  [0.25, 0.5, 0.75, 1].forEach((f) => rings.push({ r: R * f, o: f === 1 ? 0.26 : 0.12 }));
+}
+const star = [0, 2, 4, 1, 3].map((i) => fmt(pt(R, i))).join(" ");
+
+const labelPos = labels.map((text, i) => {
+  const a = angle(i);
+  const [x, y] = pt(R + 22, i);
+  const anchor = Math.abs(Math.cos(a)) < 0.3 ? "middle" : Math.cos(a) > 0 ? "start" : "end";
+  const dy = Math.sin(a) < -0.7 ? -6 : Math.sin(a) > 0.7 ? 14 : 4;
+  return { text, x, y: y + dy, anchor };
+});
+
+const viewBox = `${-pad} ${-pad / 2} ${size + pad * 2} ${size + pad}`;
+---
+
+<svg
+  class:list={["radar", className]}
+  viewBox={viewBox}
+  role="img"
+  aria-label={title}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <title>{title}</title>
+  <g class="radar-moldura" fill="none" stroke="#c9a35a" stroke-width="1">
+    {sacred && <circle cx={C} cy={C} r={R * 1.06} stroke-opacity="0.1" />}
+    {rings.map(({ r, o }) => <polygon points={ring(r)} stroke-opacity={o.toFixed(3)} />)}
+    {sacred && <polygon points={star} stroke-opacity="0.12" />}
+    {[0, 1, 2, 3, 4].map((i) => {
+      const [x, y] = pt(R, i);
+      return <line x1={C} y1={C} x2={x.toFixed(1)} y2={y.toFixed(1)} stroke-opacity="0.22" />;
+    })}
+  </g>
+
+  {
+    before && (
+      <polygon
+        class="radar-antes"
+        points={shape(before)}
+        fill="none"
+        stroke="#c9a35a"
+        stroke-opacity="0.55"
+        stroke-width="1.6"
+        stroke-dasharray="5 4"
+      />
+    )
+  }
+
+  <g class="radar-area" style={`transform-origin:${C}px ${C}px`}>
+    <polygon
+      points={shape(values)}
+      fill="rgba(201,163,90,.2)"
+      stroke="#c9a35a"
+      stroke-width="2.4"
+      stroke-linejoin="round"
+    />
+    {
+      values.map((n, i) => {
+        const [x, y] = pt((R * n) / 10, i);
+        return <circle cx={x.toFixed(1)} cy={y.toFixed(1)} r="4.5" fill="#c9a35a" />;
+      })
+    }
+  </g>
+
+  {
+    labelPos.map((l) => (
+      <text
+        x={l.x.toFixed(1)}
+        y={l.y.toFixed(1)}
+        text-anchor={l.anchor}
+        class="radar-rotulo"
+        fill={labelColor}
+      >
+        {l.text}
+      </text>
+    ))
+  }
+</svg>
+
+<style>
+  .radar {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .radar-rotulo {
+    font-family: var(--fonte-corpo);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .radar-area {
+    transition: transform 1.4s var(--ease), opacity 1.2s var(--ease);
+  }
+  :global(.js) .radar-area {
+    transform: scale(0.15);
+    opacity: 0;
+  }
+  :global(.js .is-visivel) .radar-area,
+  :global(.js) .radar.is-visivel .radar-area {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .radar-antes {
+    transition: opacity 1s var(--ease) 0.4s;
+  }
+  :global(.js) .radar-antes { opacity: 0; }
+  :global(.js .is-visivel) .radar-antes,
+  :global(.js) .radar.is-visivel .radar-antes { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .radar-area,
+    :global(.js) .radar-antes {
+      transform: none;
+      opacity: 1;
+    }
+  }
+</style>

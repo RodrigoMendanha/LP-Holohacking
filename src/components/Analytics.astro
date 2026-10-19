@@ -1,0 +1,58 @@
+---
+/* Scripts de medição só entram no HTML quando há ID em ANALYTICS_IDS.
+   Sem ID = nenhum byte de terceiros. */
+import { ANALYTICS_IDS } from "../data/site";
+
+const { GTM, GA4, META_PIXEL } = ANALYTICS_IDS;
+const valid = (v: string, re: RegExp) => (re.test(v) ? v : "");
+const gtm = valid(GTM, /^GTM-[A-Z0-9]+$/);
+const ga4 = valid(GA4, /^G-[A-Z0-9]+$/);
+const pixel = valid(META_PIXEL, /^\d{6,20}$/);
+---
+
+{
+  gtm && (
+    <script is:inline define:vars={{ gtm }}>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s);
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", gtm);
+    </script>
+  )
+}
+
+{
+  ga4 && (
+    <>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4}`} />
+      <script is:inline define:vars={{ ga4 }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag("js", new Date());
+        gtag("config", ga4);
+      </script>
+    </>
+  )
+}
+
+{
+  pixel && (
+    <script is:inline define:vars={{ pixel }}>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+        if (!f._fbq) f._fbq = n;
+        n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
+        t = b.createElement(e); t.async = !0; t.src = v;
+        s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+      fbq("init", pixel);
+      fbq("track", "PageView");
+    </script>
+  )
+}

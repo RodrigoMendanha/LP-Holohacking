@@ -1,0 +1,129 @@
+/* ===========================================================================
+   TOKENS DA LP — derivados do produto HoloHacking
+
+   Os valores de cor, fonte, raio e sombra vêm do :root de style.css do
+   produto (repositório principal). Os nomes da marca foram mantidos iguais
+   (--verde-noite, --dourado, --creme…) para que quem conhece o produto leia
+   este arquivo sem tradução. O que é só da LP (escala tipográfica, espaço,
+   container) ganhou nome próprio.
+
+   Breakpoints (CSS não aceita variável em media query — use estes valores):
+     --bp-sm  640px   celular grande
+     --bp-md  900px   tablet
+     --bp-lg  1200px  desktop
+   =========================================================================== */
+
+:root {
+  /* ---------- cor: a marca (idênticas ao produto) ---------- */
+  --verde-noite: #06231a;
+  --verde-escuro: #0b3325;
+  --verde-medio: #14503b;
+  --verde-suave: #2c6a51;
+
+  --dourado: #c9a35a;
+  --dourado-claro: #e2c98a;
+  --dourado-escuro: #8a6f32;
+  /* O produto usa este passo mais escuro para dourado sobre creme (texto pequeno): o
+     dourado da marca mede ~2,2:1 contra o creme, abaixo do mínimo. */
+  --dourado-texto: #7a612b;
+
+  --creme: #f4efe3;
+  --creme-claro: #faf7ee;
+
+  --tinta: #1d3a2e;
+  --tinta-suave: #4f6a5d;
+
+  /* ---------- cor: transparências da marca ---------- */
+  --dourado-bg: rgba(201, 163, 90, 0.12);
+  --dourado-suave: rgba(201, 163, 90, 0.25);
+  --linha: rgba(201, 163, 90, 0.35);
+  --linha-fina: rgba(201, 163, 90, 0.18);
+  --halo: rgba(201, 163, 90, 0.1);
+
+  /* ---------- semântica: seção clara (padrão) ---------- */
+  --sup-fundo: var(--creme);
+  --sup-card: var(--creme-claro);
+  --titulo: var(--verde-escuro);
+  --texto: var(--tinta);
+  --texto-suave: var(--tinta-suave);
+  --realce: var(--verde-medio);
+  --acento: var(--dourado-texto);
+  --borda: rgba(29, 58, 46, 0.1);
+  --borda-forte: rgba(29, 58, 46, 0.18);
+
+  /* ---------- tipografia ---------- */
+  --fonte-display: "Cormorant Garamond Variable", "Cormorant Garamond", Georgia, serif;
+  --fonte-corpo: "Jost Variable", "Jost", "Segoe UI", system-ui, sans-serif;
+
+  /* escala fluida — mobile-first, cresce até ~1440px */
+  --fs-hero: clamp(2.35rem, 1.45rem + 4.2vw, 4.6rem);
+  --fs-h2: clamp(1.95rem, 1.45rem + 2.3vw, 3.15rem);
+  --fs-h3: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+  --fs-h4: 1.2rem;
+  --fs-lead: clamp(1.02rem, 0.98rem + 0.25vw, 1.2rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-micro: 0.72rem;
+  --fs-eyebrow: 0.7rem;
+  --fs-numero: clamp(2.6rem, 2rem + 2.6vw, 4rem);
+
+  --lh-titulo: 1.1;
+  --lh-corpo: 1.7;
+  --ls-eyebrow: 0.28em;
+  --ls-botao: 0.2em;
+
+  /* ---------- espaço ---------- */
+  --esp-1: 0.25rem;
+  --esp-2: 0.5rem;
+  --esp-3: 0.75rem;
+  --esp-4: 1rem;
+  --esp-5: 1.5rem;
+  --esp-6: 2rem;
+  --esp-7: 3rem;
+  --esp-8: 4rem;
+  --esp-9: 6rem;
+  --secao-y: clamp(4.5rem, 3rem + 6vw, 8.5rem);
+
+  /* ---------- container ---------- */
+  --container: 1200px;
+  --container-estreito: 760px;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+
+  /* ---------- forma ---------- */
+  --raio: 18px;          /* painéis — igual ao produto */
+  --raio-card: 14px;     /* cards */
+  --raio-botao: 10px;    /* botões e inputs — igual ao produto */
+  --raio-pilula: 999px;
+
+  /* ---------- sombra (a do produto, longa e esverdeada) ---------- */
+  --sombra: 0 18px 50px rgba(6, 35, 26, 0.18);
+  --sombra-forte: 0 30px 80px rgba(6, 35, 26, 0.28);
+  --sombra-escura: 0 24px 70px rgba(0, 0, 0, 0.4);
+
+  /* ---------- foco ---------- */
+  --foco: 2px solid var(--dourado);
+  --foco-offset: 3px;
+
+  /* ---------- movimento ---------- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 0.6s;
+
+  /* ---------- camadas ---------- */
+  --z-header: 100;
+  --z-menu: 110;
+}
+
+/* ---------- semântica: seção escura (verde-noite) ---------- */
+.tema-escuro {
+  --sup-fundo: var(--verde-noite);
+  --sup-card: rgba(244, 239, 227, 0.04);
+  --titulo: var(--dourado-claro);
+  --texto: #ede8da;
+  --texto-suave: rgba(237, 232, 218, 0.72);
+  --realce: var(--dourado);
+  --acento: var(--dourado);
+  --borda: rgba(201, 163, 90, 0.16);
+  --borda-forte: rgba(201, 163, 90, 0.3);
+  --sombra: var(--sombra-escura);
+  color-scheme: dark;
+}

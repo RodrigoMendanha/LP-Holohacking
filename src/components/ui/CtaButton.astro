@@ -1,0 +1,50 @@
+---
+/* Todo CTA comercial da página passa por aqui. O destino vem de
+   resolveCta() — CHECKOUT_URL, CTA_FALLBACK_URL ou a âncora da oferta. */
+import { resolveCta, type CtaLocation } from "../../lib/cta";
+import { CTA_LABEL } from "../../data/site";
+import Icon from "./Icon.astro";
+
+interface Props {
+  location: CtaLocation;
+  label?: string;
+  variant?: "dourado" | "verde" | "fantasma";
+  block?: boolean;
+  class?: string;
+  /** Texto do botão quando não há destino comercial (só na oferta). */
+  disabledLabel?: string;
+}
+
+const {
+  location,
+  label = CTA_LABEL,
+  variant = "dourado",
+  block = false,
+  class: className,
+  disabledLabel = "Acesso em breve",
+} = Astro.props;
+
+const cta = resolveCta(location);
+const classes = ["btn", `btn--${variant}`, block && "btn--bloco", className].filter(Boolean).join(" ");
+---
+
+{
+  cta.href ? (
+    <a
+      class={classes}
+      href={cta.href}
+      data-cta
+      data-location={location}
+      data-cta-mode={cta.mode}
+      {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+    >
+      <span>{label}</span>
+      <Icon name="arrow-right" size={16} />
+      {cta.external && <span class="sr-only">(abre em nova aba)</span>}
+    </a>
+  ) : (
+    <button type="button" class={classes} disabled aria-disabled="true" data-cta data-location={location} data-cta-mode="none">
+      {disabledLabel}
+    </button>
+  )
+}

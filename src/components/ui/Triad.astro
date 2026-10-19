@@ -1,0 +1,83 @@
+---
+/* Tríade Corpo · Mente · Espírito — o radar triangular do produto
+   (app.js, "Triada HOLOS"), monocromático dourado. Peça inspiracional:
+   sem números, sem leitura clínica. */
+interface Props {
+  size?: number;
+  values?: [number, number, number];
+  class?: string;
+  labelColor?: string;
+}
+const {
+  size = 300,
+  values = [7.6, 6.8, 7.2],
+  class: className,
+  labelColor = "var(--dourado)",
+} = Astro.props;
+
+const C = size / 2;
+const R = size * 0.34;
+const cy = C + size * 0.04;
+const angle = (i: number) => -Math.PI / 2 + (i * 2 * Math.PI) / 3;
+const pt = (r: number, i: number): [number, number] => [C + r * Math.cos(angle(i)), cy + r * Math.sin(angle(i))];
+const fmt = (p: [number, number]) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`;
+const tri = (r: number) => [0, 1, 2].map((i) => fmt(pt(r, i))).join(" ");
+const area = values.map((v, i) => fmt(pt((R * v) / 10, i))).join(" ");
+const labels = ["Corpo", "Mente", "Espírito"];
+const labelPos = labels.map((t, i) => {
+  const [x, y] = pt(R + 26, i);
+  return { t, x, y: i === 0 ? y - 4 : y + 16 };
+});
+---
+
+<svg
+  class:list={["triade", className]}
+  viewBox={`-40 0 ${size + 80} ${size + 10}`}
+  role="img"
+  aria-label="Tríade Corpo, Mente e Espírito"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g fill="none" stroke="#c9a35a" stroke-width="1">
+    {[0.25, 0.5, 0.75, 1].map((f) => <polygon points={tri(R * f)} stroke-opacity={f === 1 ? 0.32 : 0.14} />)}
+    <circle cx={C} cy={cy} r={R * 1.08} stroke-opacity="0.08" />
+    {[0, 1, 2].map((i) => {
+      const [x, y] = pt(R, i);
+      return <line x1={C} y1={cy} x2={x.toFixed(1)} y2={y.toFixed(1)} stroke-opacity="0.18" />;
+    })}
+  </g>
+  <g class="triade-area" style={`transform-origin:${C}px ${cy}px`}>
+    <polygon points={area} fill="rgba(201,163,90,.18)" stroke="#c9a35a" stroke-width="2" stroke-linejoin="round" />
+    {values.map((v, i) => {
+      const [x, y] = pt((R * v) / 10, i);
+      return <circle cx={x.toFixed(1)} cy={y.toFixed(1)} r="4" fill="#c9a35a" />;
+    })}
+  </g>
+  {labelPos.map((l) => (
+    <text x={l.x.toFixed(1)} y={l.y.toFixed(1)} text-anchor="middle" class="triade-rotulo" fill={labelColor}>
+      {l.t}
+    </text>
+  ))}
+</svg>
+
+<style>
+  .triade {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .triade-rotulo {
+    font-family: var(--fonte-display);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .triade-area {
+    transition: transform 1.3s var(--ease), opacity 1.1s var(--ease);
+  }
+  :global(.js) .triade-area { transform: scale(0.2); opacity: 0; }
+  :global(.js) .triade.is-visivel .triade-area,
+  :global(.js .is-visivel) .triade-area { transform: none; opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .triade-area { transform: none; opacity: 1; }
+  }
+</style>

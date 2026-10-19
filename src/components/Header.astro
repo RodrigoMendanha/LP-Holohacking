@@ -1,0 +1,152 @@
+---
+import Logo from "./ui/Logo.astro";
+import CtaButton from "./ui/CtaButton.astro";
+import Icon from "./ui/Icon.astro";
+
+const links = [
+  { href: "#como-funciona", label: "Como funciona" },
+  { href: "#holoscan", label: "HOLOSCAN" },
+  { href: "#resultado", label: "Resultado HOLOS" },
+  { href: "#para-quem", label: "Para quem é" },
+  { href: "#faq", label: "FAQ" },
+];
+---
+
+<header class="header" data-header>
+  <div class="container header-linha">
+    <a href="#topo" class="header-marca" aria-label="HoloHacking — voltar ao topo">
+      <Logo size={36} />
+    </a>
+
+    <nav class="header-nav" aria-label="Principal">
+      <ul role="list">
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="header-acoes">
+      <CtaButton location="header" variant="dourado" class="header-cta" />
+      <button
+        type="button"
+        class="header-menu"
+        aria-expanded="false"
+        aria-controls="menu-mobile"
+        aria-label="Abrir menu"
+        data-menu-botao
+      >
+        <span class="ico-abrir"><Icon name="menu" size={22} /></span>
+        <span class="ico-fechar"><Icon name="x" size={22} /></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="menu-mobile" id="menu-mobile" data-menu-painel>
+    <nav class="container" aria-label="Menu">
+      <ul role="list">
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+      <CtaButton location="menu" variant="dourado" block />
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    color: var(--creme);
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.35s, border-color 0.35s, backdrop-filter 0.35s;
+  }
+  /* o hero vem logo abaixo, também verde-noite — o header "flutua" sobre ele */
+  .header:global(.is-rolado),
+  :global(.menu-aberto) .header {
+    background: rgba(6, 35, 26, 0.86);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+    border-bottom-color: rgba(201, 163, 90, 0.16);
+  }
+  .header-linha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 72px;
+  }
+  .header-marca {
+    text-decoration: none;
+    border-radius: 6px;
+  }
+
+  .header-nav { display: none; }
+  .header-nav ul {
+    display: flex;
+    gap: clamp(1rem, 0.2rem + 1.6vw, 2.2rem);
+  }
+  .header-nav a,
+  .menu-mobile a:not(.btn) {
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(237, 232, 218, 0.78);
+    transition: color 0.2s;
+  }
+  .header-nav a:hover { color: var(--dourado-claro); }
+
+  .header-acoes {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .header-acoes :global(.header-cta) { display: none; }
+
+  .header-menu {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--raio-botao);
+    border: 1px solid rgba(201, 163, 90, 0.3);
+    color: var(--dourado-claro);
+  }
+  .header-menu .ico-fechar,
+  .header-menu[aria-expanded="true"] .ico-abrir { display: none; }
+  .header-menu[aria-expanded="true"] .ico-fechar { display: block; }
+
+  .menu-mobile {
+    display: none;
+    border-top: 1px solid rgba(201, 163, 90, 0.16);
+    padding-block: 1rem 1.5rem;
+  }
+  .menu-mobile:global(.is-aberto) { display: block; }
+  .menu-mobile ul { margin-bottom: 1.25rem; }
+  .menu-mobile li a {
+    display: block;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid rgba(201, 163, 90, 0.1);
+    font-size: 0.8rem;
+  }
+
+  /* sem JS o botão não abre nada: o menu vira lista fixa */
+  :global(html:not(.js)) .header-menu { display: none; }
+  :global(html:not(.js)) .menu-mobile { display: block; }
+
+  @media (min-width: 640px) {
+    .header-acoes :global(.header-cta) {
+      display: inline-flex;
+      min-height: 44px;
+      padding: 0.7rem 1.2rem;
+      font-size: 0.68rem;
+    }
+  }
+  @media (min-width: 900px) {
+    .header-nav { display: block; }
+    .header-menu,
+    .menu-mobile,
+    .menu-mobile:global(.is-aberto) { display: none !important; }
+  }
+</style>

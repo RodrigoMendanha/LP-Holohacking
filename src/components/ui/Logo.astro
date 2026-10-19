@@ -1,0 +1,43 @@
+---
+/* A pinha oficial (logo-holohacking.png, 256px, fundo transparente) + o nome
+   em texto, como o produto faz. Não existe ainda um SVG oficial do logo —
+   ver README. */
+interface Props {
+  size?: number;
+  showName?: boolean;
+  class?: string;
+}
+const { size = 40, showName = true, class: className } = Astro.props;
+---
+
+<span class:list={["logo", className]}>
+  <img
+    src="/images/brand/logo-holohacking.png"
+    alt={showName ? "" : "HoloHacking"}
+    width={size}
+    height={size}
+    decoding="async"
+  />
+  {showName && <span class="logo-nome">HoloHacking</span>}
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+  }
+  .logo img {
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .logo-nome {
+    font-family: var(--fonte-display);
+    font-weight: 600;
+    font-size: 1.32rem;
+    letter-spacing: 0.02em;
+    color: var(--creme);
+    line-height: 1;
+  }
+</style>
