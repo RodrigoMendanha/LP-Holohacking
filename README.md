@@ -106,6 +106,11 @@ public/
 **Capturas do produto:** use 16:10 (ex.: 1600×1000, `.webp`), sempre com **paciente fictício** —
 nenhum nome, dado clínico ou registro real.
 
+As 4 capturas atuais (`dashboard`, `holoscan`, `ferramentas`, `evolucao`) são telas reais do app,
+feitas no modo demonstração (`?demo=1`) com a paciente fictícia "Marina Alves", com o acesso ao
+Supabase bloqueado — nenhum dado de produção foi lido. Para refazê-las, rode o app localmente,
+entre pelo acesso de desenvolvimento e use `DEMO.irPara(t)` para chegar a cada tela.
+
 **Trocar o logo:** substitua `public/images/brand/logo-holohacking.png` mantendo o nome (ou ajuste o
 caminho em `src/components/ui/Logo.astro`). Hoje existe só o PNG de 256 px — ver "Pendências".
 
@@ -163,13 +168,18 @@ Na Vercel/Netlify: comando de build `npm run build`, pasta de saída `dist`.
 
 - **Logo vetorial:** só existe `logo-holohacking.png` (256 px); o `favicon.svg` embute esse mesmo PNG.
   Falta um SVG oficial para nitidez em telas grandes.
-- **Número de perguntas do HOLOSCAN:** a LP usa **81** (briefing). Um comentário no CSS do produto
-  fala em "84 perguntas". Confirmar e, se preciso, ajustar `HOLOSCAN_QUESTIONS`.
+- **Número de perguntas do HOLOSCAN:** a LP usa **81** (briefing). O app (botão "Aplicar questionário —
+  84 perguntas" e a demo) fala em **84**. Confirmar e, se preciso, ajustar `HOLOSCAN_QUESTIONS`.
 - **Respostas do FAQ a confirmar:** "Como recebo o acesso?", "Funciona no celular?" e "Posso gerar
   PDF?" descrevem o funcionamento esperado — confirmar antes de publicar.
 - **PDF / WhatsApp:** a copy diz que o Resultado é salvo em PDF e enviado pelo canal que a
   nutricionista já usa. Não promete envio automático.
 - **Nomes das ferramentas:** "OQ³ — O Que Quer · Precisa · Consegue" e "PQQ — Escada dos Porquês"
   seguem o briefing; no produto aparecem como "OQ3" e "PQQ — Pra Que Que?". As descrições vêm do produto.
+- **Capturas de Playbook e Resultado HOLOS:** essas telas ainda não existem no app (a emissão de
+  relatório exige sessão no servidor). As duas molduras seguem com "Captura do produto em breve".
+- **Aviso na captura do HOLOSCAN:** a tela mostra "Aplicação histórica sem pacote metodológico V1",
+  porque a paciente da demo foi calculada pelo motor anterior. Uma demo recalculada no pacote V1
+  geraria uma captura sem esse aviso.
 - **Cores dos cinco sistemas:** existem nos dados do produto, mas não aparecem na interface. A LP
   mantém tudo monocromático, como o produto.

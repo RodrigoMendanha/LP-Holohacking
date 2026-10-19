@@ -17,7 +17,7 @@ const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
       <p data-reveal style="--i:2">
         {
           temCaptura
-            ? "Algumas das telas que acompanham você em cada etapa do atendimento."
+            ? "Telas reais do HoloHacking, com a paciente fictícia usada nas demonstrações."
             : "As capturas do produto entram aqui em breve. Por enquanto, cada moldura mostra o que ela vai apresentar."
         }
       </p>
@@ -36,7 +36,10 @@ const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
               </div>
               <div class="tela-area">
                 {s.src ? (
-                  <img src={s.src} alt={s.alt || `Tela ${s.title} do HoloHacking`} width="1280" height="800" loading="lazy" decoding="async" />
+                  <a class="tela-ampliar" href={s.src} target="_blank" rel="noopener">
+                    <img src={s.src} alt={s.alt || `Tela ${s.title} do HoloHacking`} width="1600" height="1000" loading="lazy" decoding="async" />
+                    <span class="sr-only">(abre a imagem em tamanho real em nova aba)</span>
+                  </a>
                 ) : (
                   <div class:list={["tela-abstrata", `tela-abstrata--${s.id}`]} aria-hidden="true">
                     {s.id === "dashboard" && (
@@ -137,6 +140,7 @@ const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
     position: relative;
     aspect-ratio: 16 / 10;
   }
+  .tela-ampliar { display: block; height: 100%; cursor: zoom-in; }
   .tela-area img {
     width: 100%;
     height: 100%;

@@ -105,7 +105,9 @@ export interface Testimonial {
 export const TESTIMONIALS: Testimonial[] = [];
 
 /* ---------------------------------------------------------------------------
-   PRODUTO POR DENTRO — capturas reais, sem dado de paciente.
+   PRODUTO POR DENTRO — capturas reais do app, feitas no modo demonstração
+   com a paciente fictícia "Marina Alves" (caso-marina.js do produto).
+   Nunca usar paciente real.
    src vazio = moldura ilustrativa com o aviso "Captura do produto em breve".
 --------------------------------------------------------------------------- */
 export interface ProductShot {
@@ -117,12 +119,36 @@ export interface ProductShot {
   alt: string;
 }
 export const PRODUCT_SHOTS: ProductShot[] = [
-  { id: "dashboard", title: "Dashboard e ficha", caption: "O dia de atendimento e a ficha de cada paciente em um só lugar.", src: "", alt: "" },
-  { id: "holoscan", title: "HOLOSCAN", caption: "A leitura integral organizada em sistemas e prioridades de investigação.", src: "", alt: "" },
-  { id: "ferramentas", title: "Ferramentas", caption: "Ferramentas de aprofundamento em Corpo, Mente e Espírito.", src: "", alt: "" },
+  {
+    id: "dashboard",
+    title: "Ficha do paciente",
+    caption: "A jornada clínica de cada paciente: mapear, confrontar, integrar e acompanhar.",
+    src: "/images/product/dashboard.webp",
+    alt: "Ficha da paciente fictícia Marina Alves no HoloHacking, com ações rápidas, resumo e a jornada clínica.",
+  },
+  {
+    id: "holoscan",
+    title: "HOLOSCAN",
+    caption: "O radar dos cinco sistemas e a ordem do que pede mais investigação.",
+    src: "/images/product/holoscan.webp",
+    alt: "Tela do HOLOSCAN com o radar dos cinco sistemas e a lista “Onde olhar primeiro”.",
+  },
+  {
+    id: "ferramentas",
+    title: "Ferramentas",
+    caption: "OQ³: desejo, necessidade e capacidade — uma das ferramentas do módulo Corpo.",
+    src: "/images/product/ferramentas.webp",
+    alt: "Ferramenta OQ³ do módulo Corpo, com as três perguntas: quer, precisa e consegue.",
+  },
   { id: "playbook", title: "Playbook", caption: "Caminhos possíveis organizados a partir do atendimento.", src: "", alt: "" },
   { id: "resultado", title: "Resultado HOLOS", caption: "A entrega ao paciente, construída pela nutricionista.", src: "", alt: "" },
-  { id: "evolucao", title: "Evolução", caption: "Antes e agora, lado a lado, a cada retorno.", src: "", alt: "" },
+  {
+    id: "evolucao",
+    title: "Evolução",
+    caption: "Duas aplicações lado a lado, sem cálculo automático de melhora ou piora.",
+    src: "/images/product/evolucao.webp",
+    alt: "Tela de evolução do HOLOSCAN comparando duas aplicações, com radar tracejado e preenchido e as notas de cada sistema.",
+  },
 ];
 
 /* ---------------------------------------------------------------------------
