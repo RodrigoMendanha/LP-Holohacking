@@ -1,0 +1,21 @@
+{
+  "name": "lp-holohacking",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Landing page oficial do HoloHacking — a plataforma clínica da Nutrição Holística.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@fontsource-variable/cormorant-garamond": "5.2.6",
+    "@fontsource-variable/jost": "5.2.6",
+    "astro": "5.18.2"
+  },
+  "engines": {
+    "node": ">=18.20.8"
+  }
+}
