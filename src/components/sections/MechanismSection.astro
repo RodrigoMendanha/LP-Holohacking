@@ -1,0 +1,131 @@
+---
+import Icon, { type IconName } from "../ui/Icon.astro";
+
+const passos: { t: string; d: string; i: IconName }[] = [
+  { t: "Mapear", d: "O paciente responde ao Mapeamento Holístico antes da consulta.", i: "map" },
+  { t: "Investigar", d: "O HOLOSCAN organiza os relatos e mostra onde vale aprofundar.", i: "search" },
+  { t: "Aprofundar", d: "Ferramentas de Corpo, Mente e Espírito, escolhidas por você.", i: "layers" },
+  { t: "Estruturar", d: "O Playbook organiza estratégias possíveis para a fase.", i: "compass" },
+  { t: "Entregar", d: "O Resultado HOLOS leva ao paciente uma direção clara.", i: "file" },
+  { t: "Acompanhar", d: "No retorno, a Evolução coloca antes e agora lado a lado.", i: "refresh" },
+];
+---
+
+<section class="secao tema-escuro mecanismo" id="como-funciona" aria-labelledby="mecanismo-titulo">
+  <div class="container">
+    <header class="cabeca cabeca--centro">
+      <span class="eyebrow" data-reveal>Uma nova forma de atender</span>
+      <h2 id="mecanismo-titulo" data-reveal style="--i:1">
+        Seis movimentos. <em>Um único raciocínio.</em>
+      </h2>
+      <p data-reveal style="--i:2">
+        O HoloHacking organiza o atendimento em etapas que se conectam — da primeira informação ao retorno.
+      </p>
+    </header>
+
+    <ol class="linha" role="list">
+      {
+        passos.map((p, i) => (
+          <li class="passo" data-reveal style={`--i:${i}`}>
+            <span class="passo-no" aria-hidden="true">
+              <Icon name={p.i} size={20} />
+            </span>
+            <span class="passo-num numero" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{p.t}</h3>
+            <p>{p.d}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .linha {
+    position: relative;
+    display: grid;
+    gap: 0;
+    counter-reset: passo;
+  }
+  /* mobile: linha vertical à esquerda */
+  .linha::before {
+    content: "";
+    position: absolute;
+    left: 23px;
+    top: 24px;
+    bottom: 24px;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(201, 163, 90, 0.55), rgba(201, 163, 90, 0.12));
+  }
+  .passo {
+    position: relative;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    column-gap: 1.25rem;
+    padding-bottom: 2rem;
+  }
+  .passo:last-child { padding-bottom: 0; }
+  .passo-no {
+    grid-row: 1 / span 3;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--dourado);
+    background: var(--verde-escuro);
+    color: var(--dourado);
+    box-shadow: 0 0 0 6px rgba(6, 35, 26, 1), 0 0 24px rgba(201, 163, 90, 0.18);
+  }
+  .passo-num {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(201, 163, 90, 0.7);
+    letter-spacing: 0.08em;
+    padding-top: 0.2rem;
+  }
+  .passo h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin: 0.15rem 0 0.4rem;
+  }
+  .passo p {
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+    max-width: 40ch;
+  }
+
+  /* desktop: linha horizontal premium */
+  @media (min-width: 1000px) {
+    .linha {
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.25rem;
+    }
+    .linha::before {
+      left: calc(100% / 12);
+      right: calc(100% / 12);
+      top: 27px;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(201, 163, 90, 0.15), rgba(201, 163, 90, 0.6) 50%, rgba(201, 163, 90, 0.15));
+    }
+    .passo {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+      padding: 0;
+    }
+    .passo-no {
+      grid-row: auto;
+      width: 56px;
+      height: 56px;
+      margin-bottom: 1.25rem;
+    }
+    .passo h3 { font-size: 1.45rem; }
+    .passo p { font-size: 0.9rem; }
+  }
+</style>

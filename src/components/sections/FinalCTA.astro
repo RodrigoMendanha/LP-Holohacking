@@ -1,0 +1,50 @@
+---
+import CtaButton from "../ui/CtaButton.astro";
+import Logo from "../ui/Logo.astro";
+import { CTA_LABEL_FINAL } from "../../data/site";
+---
+
+<section class="secao tema-escuro final" aria-labelledby="final-titulo">
+  <div class="final-halo" aria-hidden="true"></div>
+  <div class="container container--estreito final-conteudo">
+    <div data-reveal>
+      <Logo size={64} showName={false} class="final-logo" />
+    </div>
+    <h2 id="final-titulo" data-reveal style="--i:1">
+      Transforme informação em <em>direção</em> para o atendimento.
+    </h2>
+    <p data-reveal style="--i:2">
+      Conduza cada etapa com mais clareza, profundidade e continuidade — sem abrir mão do seu raciocínio profissional.
+    </p>
+    <div data-reveal style="--i:3">
+      <CtaButton location="final" label={CTA_LABEL_FINAL} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .final {
+    text-align: center;
+    background: var(--verde-noite) !important;
+  }
+  .final-halo {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 50% 60% at 50% 0%, rgba(201, 163, 90, 0.22), transparent 70%),
+      radial-gradient(circle at 50% 50%, transparent 0 34%, rgba(201, 163, 90, 0.07) 34.2% 34.4%, transparent 34.6% 48%, rgba(201, 163, 90, 0.05) 48.2% 48.4%, transparent 48.6%);
+  }
+  .final-conteudo { position: relative; }
+  .final :global(.final-logo) { justify-content: center; margin-bottom: 1.5rem; }
+  .final h2 {
+    font-size: var(--fs-h2);
+    margin-bottom: 1.25rem;
+  }
+  .final p {
+    font-size: var(--fs-lead);
+    color: var(--texto-suave);
+    max-width: 52ch;
+    margin: 0 auto 2.25rem;
+  }
+</style>

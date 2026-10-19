@@ -1,0 +1,64 @@
+---
+/* Só aparece com depoimentos reais e autorizados em TESTIMONIALS.
+   Lista vazia = a seção não é renderizada. */
+import { TESTIMONIALS } from "../../data/site";
+---
+
+{
+  TESTIMONIALS.length > 0 && (
+    <section class="secao secao--clara depoimentos" id="depoimentos" aria-labelledby="depoimentos-titulo">
+      <div class="container">
+        <header class="cabeca cabeca--centro">
+          <span class="eyebrow" data-reveal>Quem usa</span>
+          <h2 id="depoimentos-titulo" data-reveal style="--i:1">
+            Na voz de quem <em>atende.</em>
+          </h2>
+        </header>
+        <ul role="list" class="depoimentos-grade">
+          {TESTIMONIALS.map((t, i) => (
+            <li class="card depoimento" data-reveal style={`--i:${i % 3}`}>
+              <figure>
+                <blockquote>
+                  <p>“{t.quote}”</p>
+                </blockquote>
+                <figcaption>
+                  {t.image && <img src={t.image} alt="" width="48" height="48" loading="lazy" decoding="async" />}
+                  <span>
+                    <b>{t.name}</b>
+                    {t.role && <i>{t.role}</i>}
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .depoimentos-grade { display: grid; gap: 1.25rem; }
+  .depoimento { background: var(--creme-claro); }
+  .depoimento blockquote p {
+    font-family: var(--fonte-display);
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--titulo);
+  }
+  .depoimento figcaption {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--linha);
+  }
+  .depoimento img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+  .depoimento b { display: block; font-weight: 500; }
+  .depoimento i { font-style: normal; font-size: 0.85rem; color: var(--texto-suave); }
+  @media (min-width: 900px) {
+    .depoimentos-grade { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

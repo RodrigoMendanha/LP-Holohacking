@@ -1,0 +1,254 @@
+---
+import Icon from "../ui/Icon.astro";
+
+const beneficios = [
+  { t: "Contexto antes da consulta", d: "Você chega ao encontro já sabendo por onde começar." },
+  { t: "Informações organizadas", d: "As respostas ficam reunidas na ficha do paciente." },
+  { t: "Menos tempo com coleta básica", d: "Parte da coleta inicial acontece antes do encontro." },
+  { t: "Mais espaço para aprofundar", d: "A consulta fica para o que só a escuta profissional alcança." },
+];
+---
+
+<section class="secao secao--clara mapeamento" id="mapeamento" aria-labelledby="mapeamento-titulo">
+  <div class="container mapeamento-grade">
+    <div class="mapeamento-texto">
+      <span class="eyebrow" data-reveal>Mapeamento Holístico</span>
+      <h2 id="mapeamento-titulo" data-reveal style="--i:1">
+        O atendimento começa <em>antes da consulta.</em>
+      </h2>
+      <p class="mapeamento-lead" data-reveal style="--i:2">
+        O paciente recebe um link e responde ao Mapeamento Holístico antes do encontro. Quando a consulta começa,
+        o contexto já está na mesa.
+      </p>
+
+      <ul role="list" class="mapeamento-lista">
+        {
+          beneficios.map((b, i) => (
+            <li data-reveal style={`--i:${i}`}>
+              <span class="mapeamento-check" aria-hidden="true">
+                <Icon name="check" size={16} />
+              </span>
+              <div>
+                <b>{b.t}</b>
+                <span>{b.d}</span>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <figure class="mapeamento-visual" data-reveal style="--i:2">
+      <div class="envio" aria-hidden="true">
+        <span class="icone"><Icon name="link" /></span>
+        <div>
+          <b>Link do Mapeamento Holístico</b>
+          <span>enviado ao paciente</span>
+        </div>
+        <span class="envio-ok"><Icon name="check" size={14} /></span>
+      </div>
+
+      <div class="celular" aria-hidden="true">
+        <div class="celular-tela">
+          <div class="celular-topo">
+            <img src="/images/brand/logo-holohacking.png" alt="" width="26" height="26" loading="lazy" />
+            <span>Mapeamento Holístico</span>
+          </div>
+          <div class="celular-progresso">
+            <span>Em andamento</span>
+            <i><b style="width:43%"></b></i>
+          </div>
+          <p class="celular-pergunta">Como costuma ser a sua rotina em um dia comum?</p>
+          <div class="celular-opcoes">
+            <span class="esqueleto" style="width:88%"></span>
+            <span class="opcao opcao--ativa"><i></i><span class="esqueleto" style="width:70%"></span></span>
+            <span class="opcao"><i></i><span class="esqueleto" style="width:58%"></span></span>
+            <span class="opcao"><i></i><span class="esqueleto" style="width:76%"></span></span>
+          </div>
+          <span class="celular-botao">Continuar</span>
+        </div>
+      </div>
+      <figcaption class="mock-nota">Ilustração · interface simplificada</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .mapeamento-grade {
+    display: grid;
+    gap: clamp(3rem, 2rem + 4vw, 5rem);
+    align-items: center;
+  }
+  .mapeamento-texto h2 {
+    font-size: var(--fs-h2);
+    margin: 1rem 0 1.5rem;
+  }
+  .mapeamento-lead {
+    font-size: var(--fs-lead);
+    color: var(--texto-suave);
+    max-width: 52ch;
+  }
+  .mapeamento-lista {
+    display: grid;
+    gap: 1.1rem;
+    margin-top: 2.25rem;
+  }
+  .mapeamento-lista li {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  .mapeamento-check {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--verde-escuro);
+    color: var(--dourado);
+    margin-top: 0.15rem;
+  }
+  .mapeamento-lista b {
+    display: block;
+    font-family: var(--fonte-display);
+    font-size: 1.28rem;
+    font-weight: 600;
+    color: var(--titulo);
+    line-height: 1.2;
+  }
+  .mapeamento-lista span { font-size: 0.95rem; color: var(--texto-suave); }
+
+  /* ---------- a ilustração ---------- */
+  .mapeamento-visual {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    padding-top: 3.5rem;
+  }
+  .envio {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50% 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: max-content;
+    max-width: 100%;
+    padding: 0.7rem 0.9rem 0.7rem 0.7rem;
+    border-radius: var(--raio-card);
+    background: #fff;
+    border: 1px solid var(--borda);
+    box-shadow: var(--sombra);
+  }
+  .envio .icone { width: 40px; height: 40px; }
+  .envio b {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--titulo);
+  }
+  .envio div span { font-size: 0.76rem; color: var(--texto-suave); }
+  .envio-ok {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--verde-medio);
+    color: var(--dourado-claro);
+  }
+
+  .celular {
+    width: min(300px, 82vw);
+    padding: 10px;
+    border-radius: 40px;
+    background: linear-gradient(160deg, #0f3a2b, #041a12);
+    box-shadow: var(--sombra-forte), inset 0 0 0 1px rgba(201, 163, 90, 0.35);
+  }
+  .celular-tela {
+    display: grid;
+    gap: 1.1rem;
+    padding: 1.6rem 1.2rem 1.4rem;
+    border-radius: 31px;
+    background: var(--creme-claro);
+    color: var(--texto);
+    min-height: 470px;
+    align-content: start;
+  }
+  .celular-topo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--fonte-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--titulo);
+  }
+  .celular-topo img { filter: brightness(0.7) sepia(0.4); }
+  .celular-progresso span {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acento);
+    font-weight: 600;
+  }
+  .celular-progresso i {
+    display: block;
+    height: 4px;
+    margin-top: 0.4rem;
+    border-radius: 4px;
+    background: rgba(29, 58, 46, 0.1);
+    overflow: hidden;
+  }
+  .celular-progresso b {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--dourado), var(--dourado-escuro));
+  }
+  .celular-pergunta {
+    font-family: var(--fonte-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--titulo);
+  }
+  .celular-opcoes { display: grid; gap: 0.6rem; color: var(--tinta); }
+  .opcao {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 0.8rem;
+    border-radius: var(--raio-botao);
+    border: 1px solid var(--borda-forte);
+    background: #fff;
+  }
+  .opcao i {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid var(--borda-forte);
+  }
+  .opcao .esqueleto { flex: 1; margin: 0 !important; }
+  .opcao--ativa { border-color: var(--dourado); background: var(--dourado-bg); }
+  .opcao--ativa i { border: 4px solid var(--verde-medio); }
+  .celular-botao {
+    margin-top: 0.3rem;
+    padding: 0.85rem;
+    border-radius: var(--raio-botao);
+    background: linear-gradient(135deg, var(--verde-medio), var(--verde-escuro));
+    color: var(--dourado-claro);
+    text-align: center;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  @media (min-width: 1000px) {
+    .mapeamento-grade { grid-template-columns: 1.05fr 0.95fr; }
+  }
+</style>

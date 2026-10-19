@@ -1,0 +1,179 @@
+---
+import CtaButton from "../ui/CtaButton.astro";
+import Icon from "../ui/Icon.astro";
+import Logo from "../ui/Logo.astro";
+import { VSL_URL, VSL_EMBED_HTML, VSL_POSTER } from "../../data/site";
+import { resolveVsl } from "../../lib/vsl";
+
+const embedHtml = VSL_EMBED_HTML.trim();
+const fonte = embedHtml ? null : resolveVsl(VSL_URL);
+const estado = embedHtml ? "embed" : fonte ? "url" : "vazio";
+---
+
+<section class="secao tema-escuro vsl" id="video" aria-labelledby="vsl-titulo">
+  <div class="container">
+    <header class="cabeca cabeca--centro">
+      <span class="eyebrow" data-reveal>Apresentação</span>
+      <h2 id="vsl-titulo" data-reveal style="--i:1">
+        Veja como funciona um atendimento completo <em>dentro do HoloHacking</em>
+      </h2>
+      <p data-reveal style="--i:2">
+        Entenda como investigação, estratégia, entrega e acompanhamento se conectam em uma única jornada.
+      </p>
+    </header>
+
+    <div class="vsl-moldura" data-reveal style="--i:3">
+      <div class="vsl-caixa" data-vsl data-vsl-estado={estado} data-vsl-src={fonte?.src}>
+        <div class="vsl-palco" data-vsl-palco>
+          {
+            estado === "url" && (
+              <button type="button" class="vsl-capa" data-vsl-play aria-label="Assistir ao vídeo de apresentação">
+                {VSL_POSTER && (
+                  <img src={VSL_POSTER} alt="" width="1280" height="720" loading="lazy" decoding="async" />
+                )}
+                <span class="vsl-play">
+                  <Icon name="play" size={28} />
+                </span>
+                <span class="vsl-capa-texto">Assistir à apresentação</span>
+              </button>
+            )
+          }
+          {
+            estado === "embed" && (
+              <div class="vsl-carregando" aria-hidden="true">
+                <Logo size={44} showName={false} />
+              </div>
+            )
+          }
+          {
+            estado === "vazio" && (
+              <div class="vsl-vazio">
+                <span class="vsl-vazio-anel" aria-hidden="true" />
+                <Logo size={56} showName={false} />
+                <p class="vsl-vazio-titulo">Vídeo de apresentação em breve.</p>
+                <p class="vsl-vazio-sub">Enquanto isso, a página mostra cada etapa da jornada logo abaixo.</p>
+              </div>
+            )
+          }
+        </div>
+        {estado === "embed" && <template data-vsl-embed set:html={embedHtml}></template>}
+      </div>
+    </div>
+
+    <div class="vsl-cta" data-reveal style="--i:4">
+      <CtaButton location="vsl" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .vsl { padding-top: clamp(3rem, 2rem + 3vw, 5rem); }
+  .vsl-moldura {
+    position: relative;
+    max-width: 980px;
+    margin-inline: auto;
+    padding: clamp(6px, 0.4rem + 0.5vw, 12px);
+    border-radius: calc(var(--raio) + 6px);
+    background: linear-gradient(160deg, rgba(201, 163, 90, 0.5), rgba(201, 163, 90, 0.08) 40%, rgba(201, 163, 90, 0.28));
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(201, 163, 90, 0.1);
+  }
+  .vsl-caixa {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--raio);
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 40%, rgba(201, 163, 90, 0.12), transparent 70%),
+      linear-gradient(160deg, var(--verde-escuro), #041a12);
+  }
+  .vsl-palco,
+  .vsl-palco > :global(*) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .vsl-palco :global(iframe) { border: 0; }
+
+  .vsl-capa {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 1rem;
+    color: var(--creme);
+  }
+  .vsl-capa img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.75;
+  }
+  .vsl-play {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: clamp(64px, 50px + 4vw, 92px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--dourado-claro), var(--dourado) 50%, var(--dourado-escuro));
+    color: var(--verde-noite);
+    box-shadow: 0 0 0 10px rgba(201, 163, 90, 0.14), 0 20px 50px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s;
+  }
+  .vsl-play :global(svg) { fill: currentColor; margin-left: 4px; }
+  .vsl-capa:hover .vsl-play { transform: scale(1.06); box-shadow: 0 0 0 16px rgba(201, 163, 90, 0.12), 0 20px 50px rgba(0, 0, 0, 0.4); }
+  .vsl-capa-texto {
+    position: relative;
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .vsl-vazio,
+  .vsl-carregando {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 0.9rem;
+    text-align: center;
+    padding: 1.5rem;
+  }
+  .vsl-vazio-anel {
+    position: absolute;
+    width: min(70%, 420px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 163, 90, 0.14);
+    box-shadow: 0 0 0 40px rgba(201, 163, 90, 0.03), 0 0 0 80px rgba(201, 163, 90, 0.02);
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+  }
+  .vsl-vazio-titulo {
+    position: relative;
+    font-family: var(--fonte-display);
+    font-size: clamp(1.25rem, 1rem + 1.2vw, 1.9rem);
+    font-weight: 500;
+    font-style: italic;
+    color: var(--dourado-claro);
+  }
+  .vsl-vazio-sub {
+    position: relative;
+    font-size: var(--fs-small);
+    color: var(--texto-suave);
+    max-width: 40ch;
+  }
+  @media (max-width: 479px) {
+    .vsl-vazio-sub { display: none; }
+  }
+  .vsl-noscript { padding: 1rem; text-align: center; }
+
+  .vsl-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+</style>

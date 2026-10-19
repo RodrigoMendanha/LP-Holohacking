@@ -1,0 +1,117 @@
+---
+import Icon from "../ui/Icon.astro";
+
+const naoE = [
+  "Diagnóstico automatizado",
+  "IA escolhendo condutas",
+  "Dieta automática",
+  "Protocolo rígido",
+  "Substituto para exames",
+  "Substituto para o julgamento profissional",
+];
+const e = ["Estrutura", "Organização", "Aprofundamento", "Estratégia", "Acompanhamento"];
+---
+
+<section class="secao tema-escuro controle" id="controle" aria-labelledby="controle-titulo">
+  <div class="container">
+    <header class="cabeca cabeca--centro">
+      <span class="eyebrow" data-reveal>Controle profissional</span>
+      <h2 id="controle-titulo" data-reveal style="--i:1">O HoloHacking <em>não substitui você.</em></h2>
+      <p data-reveal style="--i:2">Seu olhar profissional continua sendo a parte mais importante do processo.</p>
+    </header>
+
+    <div class="controle-grade">
+      <div class="controle-col controle-col--nao" data-reveal>
+        <h3>Não é</h3>
+        <ul role="list">
+          {
+            naoE.map((t) => (
+              <li>
+                <span class="marca marca--nao" aria-hidden="true"><Icon name="x" size={14} /></span>
+                {t}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="controle-col controle-col--sim painel" data-reveal style="--i:1">
+        <h3>É</h3>
+        <ul role="list">
+          {
+            e.map((t) => (
+              <li>
+                <span class="marca marca--sim" aria-hidden="true"><Icon name="check" size={14} /></span>
+                {t}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="controle-assinatura">A plataforma organiza. <em>Você decide.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .controle-grade {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 980px;
+    margin-inline: auto;
+  }
+  .controle-col {
+    padding: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+    border-radius: var(--raio);
+  }
+  .controle-col--nao {
+    border: 1px solid rgba(201, 163, 90, 0.18);
+    background: rgba(244, 239, 227, 0.025);
+  }
+  .controle-col h3 {
+    font-size: 0.72rem;
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin-bottom: 1rem;
+  }
+  .controle-col li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(201, 163, 90, 0.12);
+    font-family: var(--fonte-display);
+    font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .controle-col li:last-child { border-bottom: 0; }
+  .controle-col--nao li { color: rgba(237, 232, 218, 0.62); }
+  .controle-col--sim li { color: var(--dourado-claro); }
+  .marca {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+  }
+  .marca--nao { border: 1px solid rgba(237, 232, 218, 0.25); color: rgba(237, 232, 218, 0.55); }
+  .marca--sim { background: var(--dourado); color: var(--verde-noite); }
+  .controle-assinatura {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--linha);
+    font-family: var(--fonte-display);
+    font-size: 1.35rem;
+    font-style: italic;
+    color: var(--creme);
+  }
+  .controle-assinatura em { color: var(--dourado); }
+
+  @media (min-width: 800px) {
+    .controle-grade { grid-template-columns: 1fr 1fr; align-items: stretch; }
+  }
+</style>

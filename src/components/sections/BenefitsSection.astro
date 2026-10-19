@@ -1,0 +1,59 @@
+---
+import Icon, { type IconName } from "../ui/Icon.astro";
+
+const beneficios: { t: string; d: string; i: IconName }[] = [
+  { t: "Mais organização", d: "Cada etapa do atendimento tem um lugar.", i: "grid" },
+  { t: "Mais clareza para priorizar", d: "Você enxerga por onde vale começar.", i: "target" },
+  { t: "Continuidade entre consultas", d: "O retorno parte do que já foi construído.", i: "refresh" },
+  { t: "Informações menos dispersas", d: "Relatos, ferramentas e registros reunidos.", i: "layers" },
+  { t: "Estratégias mais estruturadas", d: "Caminhos possíveis organizados por sistema e dimensão.", i: "compass" },
+  { t: "Entrega profissional ao paciente", d: "Um Resultado HOLOS claro, com a sua assinatura.", i: "file" },
+  { t: "Histórico organizado", d: "A jornada de cada paciente, registrada no tempo.", i: "history" },
+  { t: "Mais valor percebido", d: "O paciente enxerga o cuidado que existe por trás do acompanhamento.", i: "heart" },
+];
+---
+
+<section class="secao secao--creme-claro beneficios" aria-labelledby="beneficios-titulo">
+  <div class="container">
+    <header class="cabeca cabeca--centro">
+      <span class="eyebrow" data-reveal>Benefícios</span>
+      <h2 id="beneficios-titulo" data-reveal style="--i:1">O que muda <em>na prática.</em></h2>
+    </header>
+
+    <ul role="list" class="beneficios-grade">
+      {
+        beneficios.map((b, i) => (
+          <li class="card card--hover beneficio" data-reveal style={`--i:${i % 4}`}>
+            <span class="icone">
+              <Icon name={b.i} />
+            </span>
+            <h3>{b.t}</h3>
+            <p>{b.d}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .beneficios-grade {
+    display: grid;
+    gap: 1rem;
+  }
+  .beneficio { background: #fff; }
+  .beneficio h3 {
+    font-size: 1.35rem;
+    margin: 1.1rem 0 0.4rem;
+  }
+  .beneficio p {
+    font-size: 0.92rem;
+    color: var(--texto-suave);
+  }
+  @media (min-width: 640px) {
+    .beneficios-grade { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  }
+  @media (min-width: 1100px) {
+    .beneficios-grade { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>

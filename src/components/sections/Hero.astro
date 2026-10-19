@@ -1,0 +1,260 @@
+---
+import CtaButton from "../ui/CtaButton.astro";
+import Radar from "../ui/Radar.astro";
+import Icon from "../ui/Icon.astro";
+---
+
+<section class="hero tema-escuro" aria-labelledby="hero-titulo">
+  <div class="hero-fundo" aria-hidden="true">
+    <span class="hero-halo"></span>
+    <span class="hero-anel hero-anel--1"></span>
+    <span class="hero-anel hero-anel--2"></span>
+  </div>
+
+  <div class="container hero-grade">
+    <div class="hero-texto">
+      <span class="eyebrow" data-reveal>Plataforma profissional para nutricionistas</span>
+      <h1 id="hero-titulo" data-reveal style="--i:1">
+        Transforme informações soltas em uma <em>jornada de atendimento</em> clara, estruturada e acompanhável.
+      </h1>
+      <p class="hero-sub" data-reveal style="--i:2">
+        O HoloHacking reúne Mapeamento Holístico, HOLOSCAN, ferramentas de aprofundamento, Playbook de
+        Estratégias HOLOS, Resultado HOLOS e Evolução em uma única jornada profissional.
+      </p>
+      <div class="hero-acoes" data-reveal style="--i:3">
+        <CtaButton location="hero" />
+        <a class="btn btn--fantasma" href="#como-funciona">
+          <span>Ver como funciona</span>
+          <Icon name="arrow-down" size={16} />
+        </a>
+      </div>
+      <p class="hero-micro" data-reveal style="--i:4">
+        <span class="filete" aria-hidden="true"></span>
+        Seu raciocínio profissional continua no centro.
+      </p>
+    </div>
+
+    <figure class="hero-visual" data-reveal style="--i:2">
+      <div class="hero-radar">
+        <Radar
+          values={[7.4, 5.6, 8.2, 6.3, 7.1]}
+          labels={["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"]}
+          size={420}
+          title="Ilustração do radar HOLOSCAN com cinco sistemas e valores fictícios"
+        />
+      </div>
+
+      <div class="hero-card hero-card--indice" aria-hidden="true">
+        <span class="hero-card-rot">Índice HOLOS</span>
+        <span class="numero hero-card-num">72</span>
+        <span class="hero-card-sub">de 100</span>
+      </div>
+
+      <div class="hero-card hero-card--prioridades" aria-hidden="true">
+        <span class="hero-card-rot">Onde aprofundar</span>
+        <ol role="list">
+          <li><b>1</b><span class="esqueleto" style="width:78%"></span></li>
+          <li><b>2</b><span class="esqueleto" style="width:62%"></span></li>
+          <li><b>3</b><span class="esqueleto" style="width:70%"></span></li>
+        </ol>
+      </div>
+
+      <div class="hero-card hero-card--triade" aria-hidden="true">
+        <span>Corpo</span><i>·</i><span>Mente</span><i>·</i><span>Espírito</span>
+      </div>
+
+      <figcaption class="hero-legenda">Ilustração inspirada no HOLOSCAN · valores fictícios</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    margin-top: -72px; /* passa por baixo do header transparente */
+    padding: calc(72px + clamp(3rem, 2rem + 4vw, 6rem)) 0 clamp(4rem, 3rem + 4vw, 7rem);
+    background: var(--verde-noite);
+    color: var(--texto);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero-fundo { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .hero-halo {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 50% at 78% 18%, rgba(201, 163, 90, 0.2), transparent 65%),
+      radial-gradient(ellipse 60% 50% at 8% 100%, rgba(20, 80, 59, 0.55), transparent 62%),
+      radial-gradient(ellipse 90% 70% at 50% -10%, rgba(201, 163, 90, 0.08), transparent 60%);
+  }
+  .hero-anel {
+    position: absolute;
+    border: 1px solid rgba(201, 163, 90, 0.09);
+    border-radius: 50%;
+    right: -18vw;
+    top: 50%;
+    translate: 0 -50%;
+  }
+  .hero-anel--1 { width: 78vw; height: 78vw; max-width: 1100px; max-height: 1100px; }
+  .hero-anel--2 { width: 54vw; height: 54vw; max-width: 760px; max-height: 760px; right: -6vw; border-color: rgba(201, 163, 90, 0.06); }
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 163, 90, 0.4), transparent);
+  }
+
+  .hero-grade {
+    display: grid;
+    gap: clamp(3rem, 2rem + 4vw, 5rem);
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: var(--fs-hero);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    margin: 1.25rem 0 1.5rem;
+    max-width: 16ch;
+  }
+  .hero-sub {
+    font-size: var(--fs-lead);
+    color: var(--texto-suave);
+    max-width: 56ch;
+  }
+  .hero-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2.25rem;
+  }
+  .hero-micro {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    font-family: var(--fonte-display);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--dourado-claro);
+  }
+  .hero-micro .filete { width: 44px; }
+
+  /* ---------- a composição ---------- */
+  .hero-visual {
+    position: relative;
+    width: min(100%, 560px);
+    margin-inline: auto;
+    padding: 2.5rem 0;
+  }
+  .hero-radar {
+    position: relative;
+    padding: 6%;
+  }
+  .hero-radar::before {
+    content: "";
+    position: absolute;
+    inset: 4%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201, 163, 90, 0.12), transparent 66%);
+    z-index: -1;
+  }
+
+  .hero-card {
+    position: absolute;
+    background: rgba(11, 51, 37, 0.78);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(201, 163, 90, 0.32);
+    border-radius: var(--raio-card);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    color: var(--texto);
+    padding: 0.9rem 1.1rem;
+  }
+  .hero-card-rot {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin-bottom: 0.4rem;
+  }
+  .hero-card--indice {
+    top: 0;
+    left: 0;
+    text-align: left;
+  }
+  .hero-card-num {
+    font-size: 2.6rem;
+    font-weight: 600;
+    color: var(--dourado-claro);
+  }
+  .hero-card-sub {
+    margin-left: 0.3rem;
+    font-size: 0.75rem;
+    color: var(--texto-suave);
+  }
+  .hero-card--prioridades {
+    right: 0;
+    bottom: 1.2rem;
+    width: 46%;
+    min-width: 170px;
+  }
+  .hero-card--prioridades ol { display: grid; gap: 0.55rem; color: var(--creme); }
+  .hero-card--prioridades li {
+    display: grid;
+    grid-template-columns: 1.2rem 1fr;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .hero-card--prioridades b {
+    font-family: var(--fonte-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dourado);
+  }
+  .hero-card--prioridades .esqueleto { opacity: 0.2; }
+  .hero-card--triade {
+    left: 4%;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: var(--raio-pilula);
+    font-family: var(--fonte-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dourado-claro);
+  }
+  .hero-card--triade i { font-style: normal; color: var(--dourado); }
+
+  .hero-legenda {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: -1.6rem;
+    text-align: center;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(237, 232, 218, 0.45);
+  }
+
+  @media (max-width: 639px) {
+    .hero-card { padding: 0.7rem 0.85rem; }
+    .hero-card-num { font-size: 2rem; }
+    .hero-card--triade { font-size: 0.9rem; left: 0; }
+    .hero-card--prioridades { bottom: 3.4rem; }
+  }
+
+  @media (min-width: 1000px) {
+    .hero-grade { grid-template-columns: 1.08fr 0.92fr; }
+    .hero-visual { margin-right: -1rem; }
+  }
+  @media (min-width: 1000px) and (min-height: 760px) {
+    .hero { min-height: min(100vh, 980px); display: grid; align-items: center; }
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+/* <details>/<summary>: teclado, leitor de tela e funcionamento sem JS vêm
+   do próprio navegador. Perguntas e respostas em FAQ (data/site.ts). */
+import Icon from "../ui/Icon.astro";
+import { FAQ } from "../../data/site";
+---
+
+<section class="secao secao--clara faq" id="faq" aria-labelledby="faq-titulo">
+  <div class="container container--estreito">
+    <header class="cabeca cabeca--centro">
+      <span class="eyebrow" data-reveal>Perguntas frequentes</span>
+      <h2 id="faq-titulo" data-reveal style="--i:1">O que você <em>precisa saber.</em></h2>
+    </header>
+
+    <div class="faq-lista" data-reveal>
+      {
+        FAQ.map((item, i) => (
+          <details class="faq-item" name="faq">
+            <summary>
+              <span class="faq-num numero" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <span class="faq-pergunta">{item.q}</span>
+              <span class="faq-icone" aria-hidden="true">
+                <Icon name="plus" size={18} />
+              </span>
+            </summary>
+            <div class="faq-resposta">
+              <p>{item.a}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-lista {
+    border-top: 1px solid var(--linha);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--linha);
+  }
+  .faq-item summary {
+    display: grid;
+    grid-template-columns: 2.4rem 1fr 32px;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.35rem 0.25rem;
+    cursor: pointer;
+    list-style: none;
+    border-radius: 6px;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-num {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--acento);
+  }
+  .faq-pergunta {
+    font-family: var(--fonte-display);
+    font-size: clamp(1.2rem, 1.1rem + 0.45vw, 1.45rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--titulo);
+  }
+  .faq-icone {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--linha);
+    color: var(--acento);
+    transition: transform 0.3s var(--ease), background-color 0.3s, color 0.3s;
+  }
+  .faq-item[open] .faq-icone {
+    transform: rotate(45deg);
+    background: var(--verde-escuro);
+    color: var(--dourado);
+    border-color: var(--verde-escuro);
+  }
+  .faq-item summary:hover .faq-pergunta { color: var(--realce); }
+  .faq-resposta {
+    padding: 0 3rem 1.5rem 3.15rem;
+  }
+  .faq-resposta p {
+    color: var(--texto-suave);
+    max-width: 62ch;
+  }
+  @media (max-width: 479px) {
+    .faq-item summary { grid-template-columns: 1fr 32px; }
+    .faq-num { display: none; }
+    .faq-resposta { padding: 0 0.25rem 1.5rem; }
+  }
+</style>

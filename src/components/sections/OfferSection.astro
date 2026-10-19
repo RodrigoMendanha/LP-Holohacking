@@ -1,0 +1,197 @@
+---
+/* Tudo vem de data/site.ts. Nenhum preço, prazo ou garantia é inventado:
+   campo vazio = a linha simplesmente não aparece. */
+import CtaButton from "../ui/CtaButton.astro";
+import Icon, { type IconName } from "../ui/Icon.astro";
+import {
+  PLAN_NAME,
+  PRICE,
+  INSTALLMENTS,
+  ACCESS_DURATION,
+  GUARANTEE,
+  SUPPORT,
+  UPDATES,
+  BONUSES,
+} from "../../data/site";
+
+// O que a plataforma reúne — os módulos apresentados na própria página.
+const inclui = [
+  "Mapeamento Holístico",
+  "HOLOSCAN",
+  "Ferramentas de Corpo, Mente e Espírito",
+  "Playbook de Estratégias HOLOS",
+  "Resultado HOLOS",
+  "Evolução entre retornos",
+];
+
+const condicoes = (
+  [
+    { t: ACCESS_DURATION, i: "calendar" },
+    { t: GUARANTEE, i: "shield" },
+    { t: SUPPORT, i: "message" },
+    { t: UPDATES, i: "refresh" },
+  ] as { t: string; i: IconName }[]
+).filter((c) => c.t);
+
+const temPreco = Boolean(PRICE);
+---
+
+<section class="secao tema-escuro oferta" id="oferta" aria-labelledby="oferta-titulo">
+  <div class="container">
+    <header class="cabeca cabeca--centro">
+      <span class="eyebrow" data-reveal>Acesso</span>
+      <h2 id="oferta-titulo" data-reveal style="--i:1">
+        {PLAN_NAME ? PLAN_NAME : <>A jornada completa, <em>em uma plataforma.</em></>}
+      </h2>
+    </header>
+
+    <div class="oferta-cartao painel" data-reveal>
+      <div class="oferta-inclui">
+        <span class="eyebrow">O que está incluído</span>
+        <ul role="list">
+          {
+            inclui.map((t) => (
+              <li>
+                <span class="oferta-check" aria-hidden="true"><Icon name="check" size={14} /></span>
+                {t}
+              </li>
+            ))
+          }
+        </ul>
+
+        {
+          BONUSES.length > 0 && (
+            <div class="oferta-bonus">
+              <span class="eyebrow">Bônus</span>
+              <ul role="list">
+                {BONUSES.map((b) => (
+                  <li>
+                    <span class="oferta-check" aria-hidden="true"><Icon name="gift" size={14} /></span>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="oferta-preco">
+        {
+          temPreco ? (
+            <>
+              <span class="eyebrow">Investimento</span>
+              <p class="oferta-valor numero">{PRICE}</p>
+              {INSTALLMENTS && <p class="oferta-parcelas">{INSTALLMENTS}</p>}
+            </>
+          ) : (
+            <p class="oferta-breve">Condições de acesso serão apresentadas em breve.</p>
+          )
+        }
+
+        {
+          condicoes.length > 0 && (
+            <ul role="list" class="oferta-condicoes">
+              {condicoes.map((c) => (
+                <li>
+                  <Icon name={c.i} size={18} />
+                  {c.t}
+                </li>
+              ))}
+            </ul>
+          )
+        }
+
+        <CtaButton location="offer" block />
+        <p class="oferta-seguro">
+          <Icon name="lock" size={14} />
+          Seu raciocínio profissional continua no centro.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .oferta-cartao {
+    display: grid;
+    max-width: 1000px;
+    margin-inline: auto;
+    overflow: hidden;
+    border-color: var(--dourado);
+  }
+  .oferta-inclui,
+  .oferta-preco {
+    padding: clamp(1.75rem, 1.25rem + 2vw, 3rem);
+  }
+  .oferta-inclui ul { display: grid; gap: 0.2rem; margin-top: 1rem; }
+  .oferta-inclui li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(201, 163, 90, 0.12);
+    font-family: var(--fonte-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--creme);
+  }
+  .oferta-inclui li:last-child { border-bottom: 0; }
+  .oferta-check {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--dourado);
+    color: var(--verde-noite);
+  }
+  .oferta-bonus { margin-top: 1.75rem; }
+
+  .oferta-preco {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.25rem;
+    background: rgba(201, 163, 90, 0.07);
+    border-top: 1px solid var(--linha);
+  }
+  .oferta-valor {
+    font-size: clamp(2.8rem, 2rem + 3vw, 4.2rem);
+    font-weight: 600;
+    color: var(--dourado-claro);
+  }
+  .oferta-parcelas { color: var(--texto-suave); margin-top: -0.5rem; }
+  .oferta-breve {
+    font-family: var(--fonte-display);
+    font-size: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--dourado-claro);
+  }
+  .oferta-condicoes { display: grid; gap: 0.65rem; }
+  .oferta-condicoes li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.92rem;
+    color: var(--texto);
+  }
+  .oferta-condicoes :global(svg) { color: var(--dourado); flex-shrink: 0; }
+  .oferta-seguro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--texto-suave);
+  }
+  .oferta-seguro :global(svg) { color: var(--dourado); }
+
+  @media (min-width: 860px) {
+    .oferta-cartao { grid-template-columns: 1.1fr 0.9fr; }
+    .oferta-preco { border-top: 0; border-left: 1px solid var(--linha); }
+  }
+</style>

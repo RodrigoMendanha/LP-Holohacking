@@ -1,0 +1,109 @@
+---
+import Icon from "../ui/Icon.astro";
+
+const sim = [
+  "É nutricionista",
+  "Deseja aprofundar seus atendimentos",
+  "Trabalha com rotina, comportamento e contexto",
+  "Quer integrar Corpo, Mente e Espírito",
+  "Deseja mais organização",
+  "Quer estruturar os retornos",
+  "Valoriza a autonomia profissional",
+];
+const nao = [
+  "Procura diagnóstico automático",
+  "Quer que um software decida a conduta",
+  "Busca dieta automática",
+  "Quer um protocolo rígido",
+];
+---
+
+<section class="secao secao--clara publico" id="para-quem" aria-labelledby="publico-titulo">
+  <div class="container">
+    <header class="cabeca cabeca--centro">
+      <span class="eyebrow" data-reveal>Para quem é</span>
+      <h2 id="publico-titulo" data-reveal style="--i:1">Feito para quem conduz <em>com profundidade.</em></h2>
+    </header>
+
+    <div class="publico-grade">
+      <div class="publico-col publico-col--sim" data-reveal>
+        <h3>Faz sentido para você se:</h3>
+        <ul role="list">
+          {
+            sim.map((t) => (
+              <li>
+                <span class="publico-marca" aria-hidden="true"><Icon name="check" size={14} /></span>
+                {t}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="publico-col publico-col--nao" data-reveal style="--i:1">
+        <h3>Talvez não seja para você se:</h3>
+        <ul role="list">
+          {
+            nao.map((t) => (
+              <li>
+                <span class="publico-marca" aria-hidden="true"><Icon name="x" size={14} /></span>
+                {t}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .publico-grade {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 1040px;
+    margin-inline: auto;
+  }
+  .publico-col {
+    padding: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+    border-radius: var(--raio);
+  }
+  .publico-col--sim {
+    background: #fff;
+    border: 1px solid var(--linha);
+    box-shadow: var(--sombra);
+  }
+  .publico-col--nao {
+    background: transparent;
+    border: 1px dashed var(--borda-forte);
+  }
+  .publico-col h3 {
+    font-size: var(--fs-h3);
+    margin-bottom: 1.25rem;
+  }
+  .publico-col li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--borda);
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  .publico-col li:last-child { border-bottom: 0; }
+  .publico-marca {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    margin-top: 0.05rem;
+    border-radius: 50%;
+  }
+  .publico-col--sim .publico-marca { background: var(--verde-escuro); color: var(--dourado); }
+  .publico-col--nao .publico-marca { border: 1px solid var(--borda-forte); color: var(--texto-suave); }
+  .publico-col--nao li { color: var(--texto-suave); }
+
+  @media (min-width: 860px) {
+    .publico-grade { grid-template-columns: 1.15fr 0.85fr; align-items: start; }
+  }
+</style>

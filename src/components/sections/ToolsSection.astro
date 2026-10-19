@@ -1,0 +1,133 @@
+---
+import Icon, { type IconName } from "../ui/Icon.astro";
+
+// Nomes e descrições como estão na galeria de ferramentas do produto.
+const pilares: { nome: string; icone: IconName; ferramentas: { t: string; d: string }[] }[] = [
+  {
+    nome: "Corpo",
+    icone: "leaf",
+    ferramentas: [
+      { t: "OQ³ — O Que Quer · Precisa · Consegue", d: "Clareza clínica entre desejo, necessidade e capacidade prática do paciente." },
+      { t: "Linha do Momentum", d: "Leitura do momento de vida e do que o corpo consegue sustentar." },
+      { t: "Mapa da Rotina", d: "Registro de como o dia e a semana realmente acontecem." },
+    ],
+  },
+  {
+    nome: "Mente",
+    icone: "brain",
+    ferramentas: [
+      { t: "PQQ — Escada dos Porquês", d: "Os porquês profundos: o propósito por trás dos objetivos do paciente." },
+      { t: "Mapa de Crenças Alimentares", d: "Levantamento das crenças limitantes sobre a comida." },
+      { t: "Gatilhos & Respostas", d: "Registro de episódios: gatilho, pensamento, emoção, resposta e consequência." },
+    ],
+  },
+  {
+    nome: "Espírito",
+    icone: "sun",
+    ferramentas: [
+      { t: "Mapa do Propósito", d: "Síntese do OQ³ e do PQQ: clareza, direção e um plano que pode ser vivido." },
+      { t: "Roda Holística da Vida", d: "Visão panorâmica das áreas da vida e do equilíbrio entre elas." },
+      { t: "Carta ao Futuro Eu", d: "Escrita guiada para conectar o paciente à pessoa que deseja se tornar." },
+    ],
+  },
+];
+---
+
+<section class="secao secao--clara ferramentas" id="ferramentas" aria-labelledby="ferramentas-titulo">
+  <div class="container">
+    <header class="cabeca">
+      <span class="eyebrow" data-reveal>Ferramentas de aprofundamento</span>
+      <h2 id="ferramentas-titulo" data-reveal style="--i:1">Aprofunde apenas <em>onde fizer sentido.</em></h2>
+      <p data-reveal style="--i:2">
+        Ferramentas organizadas nas três dimensões do método, prontas para quando o atendimento pedir um olhar mais
+        profundo.
+      </p>
+    </header>
+
+    <div class="pilares">
+      {
+        pilares.map((p, i) => (
+          <article class="pilar card card--hover" data-reveal style={`--i:${i}`} aria-labelledby={`pilar-${i}`}>
+            <div class="pilar-topo">
+              <span class="icone">
+                <Icon name={p.icone} />
+              </span>
+              <h3 id={`pilar-${i}`}>{p.nome}</h3>
+            </div>
+            <ul role="list">
+              {p.ferramentas.map((f) => (
+                <li>
+                  <b>{f.t}</b>
+                  <span>{f.d}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="ferramentas-nota" data-reveal>
+      <span class="filete" aria-hidden="true"></span>
+      O profissional escolhe as ferramentas de acordo com o atendimento. <em>Não é necessário aplicar tudo.</em>
+    </p>
+  </div>
+</section>
+
+<style>
+  .pilares {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .pilar { background: var(--creme-claro); }
+  .pilar-topo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.25rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--linha);
+  }
+  .pilar h3 {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  .pilar li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--borda);
+  }
+  .pilar li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .pilar b {
+    display: block;
+    font-family: var(--fonte-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--titulo);
+    margin-bottom: 0.25rem;
+  }
+  .pilar li span {
+    font-size: 0.9rem;
+    color: var(--texto-suave);
+    line-height: 1.55;
+  }
+
+  .ferramentas-nota {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    max-width: 760px;
+    margin: clamp(2.5rem, 2rem + 2vw, 3.5rem) auto 0;
+    font-family: var(--fonte-display);
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--titulo);
+  }
+  .ferramentas-nota .filete { flex-shrink: 0; width: 48px; }
+  .ferramentas-nota em { color: var(--acento); }
+
+  @media (min-width: 900px) {
+    .pilares { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

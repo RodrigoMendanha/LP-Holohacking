@@ -1,0 +1,119 @@
+---
+/* CREATOR_* em data/site.ts. Sem nome configurado, a seção fala do método
+   — nunca uma biografia inventada. */
+import { CREATOR_NAME, CREATOR_BIO, CREATOR_IMAGE, CREATOR_ROLE } from "../../data/site";
+
+const temCriador = Boolean(CREATOR_NAME);
+---
+
+<section class="secao secao--creme-claro criador" id="criador" aria-labelledby="criador-titulo">
+  <div class:list={["container", "criador-grade", { "criador-grade--sem-foto": !CREATOR_IMAGE }]}>
+    <div class="criador-retrato" data-reveal>
+      {
+        CREATOR_IMAGE ? (
+          <img
+            src={CREATOR_IMAGE}
+            alt={CREATOR_NAME ? `Retrato de ${CREATOR_NAME}` : ""}
+            width="640"
+            height="800"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class="criador-marca" aria-hidden="true">
+            <img src="/images/brand/logo-holohacking.png" alt="" width="140" height="140" loading="lazy" />
+          </div>
+        )
+      }
+    </div>
+
+    <div class="criador-texto">
+      {
+        temCriador ? (
+          <>
+            <span class="eyebrow" data-reveal>Sobre o criador</span>
+            <h2 id="criador-titulo" data-reveal style="--i:1">{CREATOR_NAME}</h2>
+            {CREATOR_ROLE && <p class="criador-papel" data-reveal style="--i:2">{CREATOR_ROLE}</p>}
+            {CREATOR_BIO.map((p, i) => (
+              <p data-reveal style={`--i:${i + 2}`}>{p}</p>
+            ))}
+          </>
+        ) : (
+          <>
+            <span class="eyebrow" data-reveal>Por trás da plataforma</span>
+            <h2 id="criador-titulo" data-reveal style="--i:1">
+              Um método antes de <em>uma plataforma.</em>
+            </h2>
+            <p data-reveal style="--i:2">
+              O HoloHacking nasce da Nutrição Holística — um método que integra corpo, mente e espírito para
+              compreender o comportamento alimentar e conduzir pacientes com profundidade, ciência e propósito.
+            </p>
+            <p data-reveal style="--i:3">
+              A plataforma existe para que esse método caiba na rotina real de quem atende.
+            </p>
+          </>
+        )
+      }
+      <p class="criador-assinatura" data-reveal>Corpo · Mente · Espírito — em equilíbrio, em propósito.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .criador-grade {
+    display: grid;
+    gap: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+    align-items: center;
+  }
+  .criador-retrato {
+    width: min(100%, 420px);
+    margin-inline: auto;
+  }
+  .criador-retrato > img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--raio);
+    box-shadow: var(--sombra-forte);
+  }
+  .criador-marca {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle, rgba(201, 163, 90, 0.18), transparent 65%),
+      linear-gradient(165deg, var(--verde-escuro), var(--verde-noite));
+    border: 1px solid var(--linha);
+    box-shadow: var(--sombra-forte), 0 0 0 14px rgba(201, 163, 90, 0.06);
+  }
+  .criador-marca img { width: 38%; height: auto; }
+  .criador-texto h2 {
+    font-size: var(--fs-h2);
+    margin: 1rem 0 1.5rem;
+  }
+  .criador-texto p:not(.criador-assinatura):not(.criador-papel) {
+    font-size: var(--fs-lead);
+    color: var(--texto-suave);
+    max-width: 58ch;
+  }
+  .criador-texto p + p { margin-top: 1rem; }
+  .criador-papel {
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--acento);
+    font-weight: 500;
+  }
+  .criador-assinatura {
+    margin-top: 2rem !important;
+    font-family: var(--fonte-display);
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--acento);
+  }
+  @media (min-width: 900px) {
+    .criador-grade { grid-template-columns: 0.8fr 1.2fr; }
+    .criador-grade--sem-foto { grid-template-columns: 0.6fr 1.4fr; }
+  }
+</style>
