@@ -257,6 +257,79 @@ function iniciarZoomGrupo(dialogo: HTMLDialogElement) {
   });
 }
 
+/* ---------- carrossel de depoimentos ----------
+   O trilho rola sozinho por toque/trackpad (scroll-snap); as setas andam
+   um slide, os indicadores mostram onde se está. Sem JS, o trilho continua
+   rolável para o lado. */
+function iniciarCarrossel() {
+  document.querySelectorAll<HTMLElement>("[data-carrossel]").forEach((raiz) => {
+    const trilho = raiz.querySelector<HTMLElement>("[data-carrossel-trilho]");
+    const anterior = raiz.querySelector<HTMLButtonElement>("[data-carrossel-anterior]");
+    const proximo = raiz.querySelector<HTMLButtonElement>("[data-carrossel-proximo]");
+    const contador = raiz.querySelector<HTMLElement>("[data-carrossel-contador]");
+    const pontos = [...raiz.querySelectorAll<HTMLElement>("[data-carrossel-pontos] .ponto")];
+    if (!trilho || !anterior || !proximo) return;
+    const slides = [...trilho.children] as HTMLElement[];
+    if (!slides.length) return;
+
+    const inicio = () => parseFloat(getComputedStyle(trilho).paddingLeft) || 0;
+    const posicao = (s: HTMLElement) =>
+      trilho.scrollLeft + s.getBoundingClientRect().left - trilho.getBoundingClientRect().left - inicio();
+
+    const atual = () => {
+      let melhor = 0;
+      let dist = Infinity;
+      slides.forEach((s, i) => {
+        const d = Math.abs(posicao(s) - trilho.scrollLeft);
+        if (d < dist) {
+          dist = d;
+          melhor = i;
+        }
+      });
+      return melhor;
+    };
+
+    const atualizar = () => {
+      const i = atual();
+      const fim = trilho.scrollLeft + trilho.clientWidth >= trilho.scrollWidth - 4;
+      anterior.disabled = trilho.scrollLeft <= 4;
+      proximo.disabled = fim;
+      const mostrado = fim ? slides.length - 1 : i;
+      pontos.forEach((p, k) => p.classList.toggle("ativo", k === mostrado));
+      if (contador) contador.textContent = `${mostrado + 1} de ${slides.length}`;
+    };
+
+    const irPara = (i: number) => {
+      const alvo = slides[Math.max(0, Math.min(slides.length - 1, i))];
+      trilho.scrollTo({ left: posicao(alvo), behavior: reduzMovimento ? "auto" : "smooth" });
+    };
+
+    anterior.addEventListener("click", () => irPara(atual() - 1));
+    proximo.addEventListener("click", () => irPara(atual() + 1));
+    trilho.addEventListener("keydown", (ev) => {
+      if (ev.key === "ArrowRight") {
+        ev.preventDefault();
+        irPara(atual() + 1);
+      }
+      if (ev.key === "ArrowLeft") {
+        ev.preventDefault();
+        irPara(atual() - 1);
+      }
+    });
+    let pendente = 0;
+    trilho.addEventListener(
+      "scroll",
+      () => {
+        cancelAnimationFrame(pendente);
+        pendente = requestAnimationFrame(atualizar);
+      },
+      { passive: true },
+    );
+    window.addEventListener("resize", atualizar);
+    atualizar();
+  });
+}
+
 /* ---------- medição dos CTAs (só fala com o que estiver carregado) ---------- */
 type Dados = Record<string, string | undefined>;
 function rastrear(evento: string, dados: Dados) {
@@ -285,4 +358,5 @@ iniciarHeader();
 iniciarMenu();
 iniciarVsl();
 iniciarZoom();
+iniciarCarrossel();
 iniciarCtas();

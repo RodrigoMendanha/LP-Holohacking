@@ -130,83 +130,99 @@ export const CREATOR_WHY: string[] = [];
 export const CREATOR_CREDENTIALS: string[] = [];
 
 /* ---------------------------------------------------------------------------
-   PROVA SOCIAL — mensagens reais enviadas no chat do "Encontro especial –
-   Software de Nutrição Holística", transcritas LITERALMENTE dos prints
-   (public/images/social-proof). Nada foi reescrito; erros de digitação do
-   chat foram mantidos. Lista vazia = seção oculta na página.
+   PROVA SOCIAL — recortes das mensagens reais do chat do "Encontro especial –
+   Software de Nutrição Holística" (uma imagem por depoimento, em
+   public/images/social-proof). Na página aparecem só as imagens, em
+   carrossel. O alt traz o texto literal da mensagem para leitores de tela.
+   Lista vazia = seção oculta. A ordem aqui é a ordem do carrossel.
 --------------------------------------------------------------------------- */
 export const TESTIMONIALS_CONTEXT =
   "Mensagens enviadas ao vivo no chat do encontro especial de apresentação do software às nutricionistas.";
 
-export interface Testimonial {
-  quote: string;
+export interface TestimonialImage {
+  /** Recorte da mensagem, em /public. */
+  src: string;
+  /** Nome de quem enviou (como aparece no chat). */
   name: string;
-  /** Horário da mensagem no chat, ex.: "22:10" */
-  time?: string;
-  /** Ex.: "Nutricionista · São Paulo" */
-  role?: string;
-  /** Foto opcional, em /public. Sem foto, aparecem as iniciais. */
-  image?: string;
-  /** Destaque grande, no topo da seção (use em um só). */
-  featured?: boolean;
+  /** Texto literal da mensagem, para acessibilidade. */
+  alt: string;
 }
-export const TESTIMONIALS: Testimonial[] = [
+export const TESTIMONIAL_IMAGES: TestimonialImage[] = [
   {
+    src: "/images/social-proof/01-karen-bordin.webp",
     name: "Karen Bordin",
-    time: "22:10",
-    featured: true,
-    quote:
-      "Eu já trabalho com tudo isso mas ficava solto, agora realmente vai me dar clareza, nós ganhamos de um lado e o paciente do outro, parabéns pela excelência",
+    alt: "Mensagem de Karen Bordin no chat: Eu já trabalho com tudo isso mas ficava solto, agora realmente vai me dar clareza, nós ganhamos de um lado e o paciente do outro, parabéns pela excelência",
   },
   {
+    src: "/images/social-proof/02-hannah-formigon.webp",
     name: "Dra Hannah Formigon",
-    time: "22:09",
-    quote:
-      "Poder cuidar de forma holística dos nossos pacientes com uma ferramenta tão espetacular é tudo que faltava no nosso atendimento! Obrigada por criar essa ferramenta com tanto amor e trabalho 💚",
+    alt: "Mensagem de Dra Hannah Formigon no chat: Poder cuidar de forma holística dos nossos pacientes com uma ferramenta tão espetacular é tudo que faltava no nosso atendimento! Obrigada por criar essa ferramenta com tanto amor e trabalho",
   },
   {
+    src: "/images/social-proof/03-maria-ines-rangel-paes.webp",
     name: "Maria Inês Rangel Paes",
-    time: "22:11",
-    quote: "Fez muito sentido, facilita o atendimento e traz clareza e segurança para aplicar todas as ferramentas. Parabéns!",
+    alt: "Mensagem de Maria Inês Rangel Paes no chat: Fez muito sentido, facilita o atendimento e traz clareza e segurança para aplicar todas as ferramentas. Parabéns!",
   },
   {
+    src: "/images/social-proof/04-henrique-lopes.webp",
     name: "Henrique Lopes",
-    time: "22:10",
-    quote: "O que todo nutricionista precisa para conduzir com uma transformação na vida do paciente! Parabéns equipe! 🍏",
+    alt: "Mensagem de Henrique Lopes no chat: O que todo nutricionista precisa para conduzir com uma transformação na vida do paciente! Parabéns equipe!",
   },
   {
+    src: "/images/social-proof/05-elisa-caetano.webp",
     name: "Elisa Caetano",
-    time: "20:56",
-    quote: "Perfeito! Somos os nutris do futuro! Que demais! Animada para colocar em prática!",
+    alt: "Mensagem de Elisa Caetano no chat: Perfeito! Somos os nutris do futuro! Que demais! Animada para colocar em prática!",
   },
   {
+    src: "/images/social-proof/06-karla-escoda.webp",
     name: "Karla Escoda",
-    time: "22:11",
-    quote:
-      "ficou incrivel, tudo. O layout do site, a funcionalidade, a nossa percepção para conscientizadores dos nossos pacientes. Muitas ferramentas que já quero aplicar e transformar a via dos pacientes com esse olhar. Parabéns a todos vocês!!!",
+    alt: "Mensagem de Karla Escoda no chat: ficou incrivel, tudo. O layout do site, a funcionalidade, a nossa percepção para conscientizadores dos nossos pacientes. Muitas ferramentas que já quero aplicar e transformar a via dos pacientes com esse olhar. Parabéns a todos vocês!!!",
   },
-];
-
-/** Reações curtas do mesmo chat, na faixa abaixo dos depoimentos. */
-export const TESTIMONIAL_REACTIONS: { text: string; name: string }[] = [
-  { text: "Revolucionário 😍", name: "Erica Lacerda" },
-  { text: "Salvando a vida dos Nutri 🙌", name: "Erica Lacerda" },
-  { text: "É viciante mexer nesse aplicativo... rs", name: "Sabrina Gomes Brochado" },
-  { text: "perfeito, já vou usar", name: "sandra alves" },
-  { text: "simplesmente maravilhoso!", name: "Fran" },
-  { text: "Vocês são espetaculares! fizeram com muita dedicação isso! Ficou maravilhosoooo", name: "Sheila Vidor" },
-];
-
-/** Prints originais do chat (prova), abertos no visualizador. */
-export const TESTIMONIAL_PRINTS: { src: string; alt: string }[] = [
-  { src: "/images/social-proof/print-0013.webp", alt: "Print do chat com as mensagens de Henrique Lopes e Karen Bordin" },
-  { src: "/images/social-proof/print-9999.webp", alt: "Print do chat com as mensagens de Dra Hannah Formigon e Elisa Caetano" },
-  { src: "/images/social-proof/print-0007.webp", alt: "Print do chat com a mensagem de Maria Inês Rangel Paes" },
-  { src: "/images/social-proof/print-0006.webp", alt: "Print do chat com as mensagens de Erica Lacerda e Karla Escoda" },
-  { src: "/images/social-proof/print-9975.webp", alt: "Print do chat com a mensagem de Elisa Caetano" },
-  { src: "/images/social-proof/print-9990.webp", alt: "Print do chat com as mensagens de Erica Lacerda e Sabrina Gomes Brochado" },
-  { src: "/images/social-proof/print-9988.webp", alt: "Print do chat com as mensagens de Fran e sandra alves" },
-  { src: "/images/social-proof/print-9994.webp", alt: "Print do chat com a mensagem de Sheila Vidor" },
+  {
+    src: "/images/social-proof/07-sabrina-gomes-brochado.webp",
+    name: "Sabrina Gomes Brochado",
+    alt: "Mensagem de Sabrina Gomes Brochado no chat: Realmente é uma mudança de vida para todos nós! Que Deus abençoe Vocês!",
+  },
+  {
+    src: "/images/social-proof/08-lisliane-andrade.webp",
+    name: "Lisliane Andrade",
+    alt: "Mensagem de Lisliane Andrade no chat: Rodrigo, vocês estão de parabéns, que Deus continue iluminando vocês para novas ideias para trazer saúde, para fazer diferença na vida das pessoas, estou muito feliz por Deus me conectar com vocês",
+  },
+  {
+    src: "/images/social-proof/09-elisa-caetano-encantada.webp",
+    name: "Elisa Caetano",
+    alt: "Mensagem de Elisa Caetano no chat: Estou encantada! Vcs são incríveis! Que Deus honre e abençoe sempre vocês! Obrigada por isso e por tanto!",
+  },
+  {
+    src: "/images/social-proof/10-erica-lacerda.webp",
+    name: "Erica Lacerda",
+    alt: "Mensagem de Erica Lacerda no chat: Salvando a vida dos Nutri",
+  },
+  {
+    src: "/images/social-proof/11-sabrina-gomes-brochado-viciante.webp",
+    name: "Sabrina Gomes Brochado",
+    alt: "Mensagem de Sabrina Gomes Brochado no chat: É viciante mexer nesse aplicativo... rs",
+  },
+  {
+    src: "/images/social-proof/12-lisliane-andrade-arrasaram.webp",
+    name: "Lisliane Andrade",
+    alt: "Mensagem de Lisliane Andrade no chat: Vocês arrasaram muito, nem to acreditando que to vivendo tudo isso",
+  },
+  {
+    src: "/images/social-proof/13-sheila-vidor.webp",
+    name: "Sheila Vidor",
+    alt: "Mensagem de Sheila Vidor no chat: Vocês são espetaculares! fizeram com muita dedicação isso! Ficou maravilhosoooo",
+  },
+  {
+    src: "/images/social-proof/14-fran.webp",
+    name: "Fran",
+    alt: "Mensagem de Fran no chat: simplesmente maravilhoso!",
+  },
+  {
+    src: "/images/social-proof/15-sandra-alves.webp",
+    name: "sandra alves",
+    alt: "Mensagem de sandra alves no chat: perfeito, já vou usar",
+  },
 ];
 
 /* ---------------------------------------------------------------------------
