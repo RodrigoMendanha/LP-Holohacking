@@ -22,6 +22,7 @@ import CreatorSection from "../components/sections/CreatorSection.astro";
 import OfferSection from "../components/sections/OfferSection.astro";
 import FAQ from "../components/sections/FAQ.astro";
 import FinalCTA from "../components/sections/FinalCTA.astro";
+import { SHOW_VSL } from "../data/site";
 ---
 
 <BaseLayout>
@@ -29,7 +30,7 @@ import FinalCTA from "../components/sections/FinalCTA.astro";
   <Header />
   <main id="conteudo">
     <Hero />
-    <VideoSection />
+    {SHOW_VSL && <VideoSection />}
     <ProblemSection />
     <MechanismSection />
     <JourneySection />

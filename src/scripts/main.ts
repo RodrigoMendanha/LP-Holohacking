@@ -183,10 +183,17 @@ function iniciarZoom() {
     document.body.classList.add("zoom-aberto");
     // Sem a âncora (#secao) na entrada atual: ao voltar para ela, o navegador
     // rolaria até a seção do último link clicado.
-    history.replaceState(history.state, "", location.pathname + location.search);
-    // o "voltar" do celular fecha o visualizador em vez de sair da página
-    history.pushState({ zoom: true }, "");
-    comHistorico = true;
+    // Em páginas isoladas (iframe/sandbox) o histórico pode ser bloqueado:
+    // aí o visualizador só não responde ao "voltar"; os outros jeitos de
+    // fechar continuam.
+    try {
+      history.replaceState(history.state, "", location.pathname + location.search);
+      // o "voltar" do celular fecha o visualizador em vez de sair da página
+      history.pushState({ zoom: true }, "");
+      comHistorico = true;
+    } catch {
+      comHistorico = false;
+    }
     dialogo.querySelector<HTMLElement>(".zoom-fechar")?.focus();
   };
 
@@ -199,7 +206,11 @@ function iniciarZoom() {
     document.documentElement.style.scrollBehavior = "auto";
     if (comHistorico) {
       comHistorico = false;
-      history.back(); // o popstate abaixo devolve a rolagem
+      try {
+        history.back(); // o popstate abaixo devolve a rolagem
+      } catch {
+        /* sem histórico: fixarLugar() abaixo já devolve a posição */
+      }
     }
     fixarLugar();
   });

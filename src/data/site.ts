@@ -37,6 +37,9 @@ export const SITE = {
      (ex.: VTurb), colado como está.
    Os dois vazios = placeholder "Vídeo de apresentação em breve."
 --------------------------------------------------------------------------- */
+/** false = a seção do vídeo não aparece na página (nem o CTA dela).
+ *  Ligue quando o vídeo existir e preencha VSL_URL ou VSL_EMBED_HTML. */
+export const SHOW_VSL = false;
 export const VSL_URL = "";
 export const VSL_EMBED_HTML = "";
 /** Imagem de capa opcional para o vídeo (16:9), em /public. */

@@ -44,6 +44,7 @@ nunca quebra a página — ele vira um estado neutro e honesto.
 
 | O que | Onde | Se ficar vazio |
 | --- | --- | --- |
+| Mostrar ou esconder a seção do vídeo | `SHOW_VSL` (hoje `false`: a seção não aparece) | — |
 | VSL (YouTube, Vimeo, Panda ou link de iframe) | `VSL_URL` | placeholder "Vídeo de apresentação em breve." |
 | VSL por código de incorporação (ex.: VTurb) | `VSL_EMBED_HTML` (cole o código como o provedor entrega) | idem |
 | Capa do vídeo | `VSL_POSTER` (imagem 16:9 em `public/`) | capa padrão com o botão de play |
