@@ -1,7 +1,6 @@
 ---
-import CtaButton from "../ui/CtaButton.astro";
+import TopCta from "../ui/TopCta.astro";
 import Radar from "../ui/Radar.astro";
-import Icon from "../ui/Icon.astro";
 ---
 
 <section class="hero tema-escuro" aria-labelledby="hero-titulo">
@@ -15,18 +14,15 @@ import Icon from "../ui/Icon.astro";
     <div class="hero-texto">
       <span class="eyebrow" data-reveal>Plataforma profissional para nutricionistas</span>
       <h1 id="hero-titulo" data-reveal style="--i:1">
-        Transforme informações soltas em uma <em>jornada de atendimento</em> clara, estruturada e acompanhável.
+        <span class="hero-linha">Sua consulta gera muita informação.</span>
+        O HoloHacking ajuda você a transformar tudo isso em <em>direção.</em>
       </h1>
       <p class="hero-sub" data-reveal style="--i:2">
-        O HoloHacking reúne Mapeamento Holístico, HOLOSCAN, ferramentas de aprofundamento, Playbook de
-        Estratégias HOLOS, Resultado HOLOS e Evolução em uma única jornada profissional.
+        O HoloHacking organiza o Método da Nutrição Holística em uma jornada que conecta Mapeamento, investigação,
+        aprofundamento, estratégias, Resultado HOLOS e retorno.
       </p>
       <div class="hero-acoes" data-reveal style="--i:3">
-        <CtaButton location="hero" />
-        <a class="btn btn--fantasma" href="#como-funciona">
-          <span>Ver como funciona</span>
-          <Icon name="arrow-down" size={16} />
-        </a>
+        <TopCta location="hero" />
       </div>
       <p class="hero-micro" data-reveal style="--i:4">
         <span class="filete" aria-hidden="true"></span>
@@ -48,6 +44,7 @@ import Icon from "../ui/Icon.astro";
         <span class="hero-card-rot">Índice HOLOS</span>
         <span class="numero hero-card-num">72</span>
         <span class="hero-card-sub">de 100</span>
+        <span class="hero-card-nota">Não representa percentual de saúde.</span>
       </div>
 
       <div class="hero-card hero-card--prioridades" aria-hidden="true">
@@ -112,12 +109,18 @@ import Icon from "../ui/Icon.astro";
   }
 
   .hero h1 {
-    font-size: var(--fs-hero);
+    font-size: clamp(2.05rem, 1.35rem + 2.7vw, 3.55rem);
     font-weight: 600;
-    line-height: 1.04;
+    line-height: 1.08;
     letter-spacing: -0.01em;
     margin: 1.25rem 0 1.5rem;
-    max-width: 17ch;
+    max-width: 21ch;
+  }
+  .hero-linha {
+    display: block;
+    color: var(--creme);
+    font-weight: 500;
+    margin-bottom: 0.15em;
   }
   .hero-sub {
     font-size: var(--fs-lead);
@@ -196,6 +199,16 @@ import Icon from "../ui/Icon.astro";
     margin-left: 0.3rem;
     font-size: 0.75rem;
     color: var(--texto-suave);
+  }
+  .hero-card-nota {
+    display: block;
+    max-width: 15ch;
+    margin-top: 0.45rem;
+    padding-top: 0.45rem;
+    border-top: 1px solid rgba(201, 163, 90, 0.2);
+    font-size: 0.66rem;
+    line-height: 1.35;
+    color: rgba(237, 232, 218, 0.75);
   }
   .hero-card--prioridades {
     right: 0;

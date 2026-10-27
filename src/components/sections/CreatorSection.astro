@@ -1,7 +1,18 @@
 ---
-/* CREATOR_* em data/site.ts. Sem nome configurado, a seção fala do método
-   — nunca uma biografia inventada. */
-import { CREATOR_NAME, CREATOR_BIO, CREATOR_IMAGE, CREATOR_ROLE } from "../../data/site";
+/* RODRIGO / ORIGEM — [CONTEÚDO DO RODRIGO SERÁ ADICIONADO]
+   Estrutura pronta para foto, história, origem do método, por que criou o
+   HoloHacking e formação (CREATOR_* em data/site.ts). Sem CREATOR_NAME, a
+   seção mostra só o texto institucional sobre o método — nunca uma
+   biografia inventada. */
+import {
+  CREATOR_NAME,
+  CREATOR_ROLE,
+  CREATOR_IMAGE,
+  CREATOR_BIO,
+  CREATOR_METHOD_ORIGIN,
+  CREATOR_WHY,
+  CREATOR_CREDENTIALS,
+} from "../../data/site";
 
 const temCriador = Boolean(CREATOR_NAME);
 ---
@@ -31,15 +42,33 @@ const temCriador = Boolean(CREATOR_NAME);
       {
         temCriador ? (
           <>
-            <span class="eyebrow" data-reveal>Sobre o criador</span>
+            <span class="eyebrow" data-reveal>Por trás da plataforma</span>
             <h2 id="criador-titulo" data-reveal style="--i:1">{CREATOR_NAME}</h2>
             {CREATOR_ROLE && <p class="criador-papel" data-reveal style="--i:2">{CREATOR_ROLE}</p>}
-            {CREATOR_BIO.map((p, i) => (
-              <p data-reveal style={`--i:${i + 2}`}>{p}</p>
+            {CREATOR_BIO.map((p) => (
+              <p data-reveal>{p}</p>
             ))}
+            {CREATOR_METHOD_ORIGIN.length > 0 && (
+              <div class="criador-bloco" data-reveal>
+                <h3>A origem do método</h3>
+                {CREATOR_METHOD_ORIGIN.map((p) => <p>{p}</p>)}
+              </div>
+            )}
+            {CREATOR_WHY.length > 0 && (
+              <div class="criador-bloco" data-reveal>
+                <h3>Por que o HoloHacking</h3>
+                {CREATOR_WHY.map((p) => <p>{p}</p>)}
+              </div>
+            )}
+            {CREATOR_CREDENTIALS.length > 0 && (
+              <ul role="list" class="criador-credenciais" data-reveal>
+                {CREATOR_CREDENTIALS.map((c) => <li>{c}</li>)}
+              </ul>
+            )}
           </>
         ) : (
           <>
+            {/* [CONTEÚDO DO RODRIGO SERÁ ADICIONADO] — texto institucional provisório, sem biografia. */}
             <span class="eyebrow" data-reveal>Por trás da plataforma</span>
             <h2 id="criador-titulo" data-reveal style="--i:1">
               Um método antes de <em>uma plataforma.</em>
@@ -98,6 +127,20 @@ const temCriador = Boolean(CREATOR_NAME);
     max-width: 58ch;
   }
   .criador-texto p + p { margin-top: 1rem; }
+  .criador-bloco { margin-top: 1.75rem; }
+  .criador-bloco h3 {
+    font-size: var(--fs-h4);
+    margin-bottom: 0.5rem;
+  }
+  .criador-credenciais {
+    display: grid;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--dourado);
+    font-size: 0.92rem;
+    color: var(--texto-suave);
+  }
   .criador-papel {
     font-size: 0.8rem;
     letter-spacing: 0.16em;

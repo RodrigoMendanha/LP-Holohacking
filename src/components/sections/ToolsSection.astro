@@ -1,33 +1,33 @@
 ---
 import Icon, { type IconName } from "../ui/Icon.astro";
 
-// Nomes e descrições como estão na galeria de ferramentas do produto.
+// Nomes do produto; descrições encurtadas a partir das descrições dele.
 const pilares: { nome: string; icone: IconName; ferramentas: { t: string; d: string }[] }[] = [
   {
     nome: "Corpo",
     icone: "leaf",
     ferramentas: [
-      { t: "OQ³ — O Que Quer · Precisa · Consegue", d: "Clareza clínica entre desejo, necessidade e capacidade prática do paciente." },
-      { t: "Linha do Momentum", d: "Leitura do momento de vida e do que o corpo consegue sustentar." },
-      { t: "Mapa da Rotina", d: "Registro de como o dia e a semana realmente acontecem." },
+      { t: "OQ³", d: "Desejo, necessidade e capacidade." },
+      { t: "Linha do Momentum", d: "O momento de vida e o que dá para sustentar." },
+      { t: "Mapa da Rotina", d: "Como o dia e a semana realmente acontecem." },
     ],
   },
   {
     nome: "Mente",
     icone: "brain",
     ferramentas: [
-      { t: "PQQ — Escada dos Porquês", d: "Os porquês profundos: o propósito por trás dos objetivos do paciente." },
-      { t: "Mapa de Crenças Alimentares", d: "Levantamento das crenças limitantes sobre a comida." },
-      { t: "Gatilhos & Respostas", d: "Registro de episódios: gatilho, pensamento, emoção, resposta e consequência." },
+      { t: "PQQ", d: "Os porquês por trás dos objetivos." },
+      { t: "Mapa de Crenças Alimentares", d: "As crenças sobre a comida." },
+      { t: "Gatilhos & Respostas", d: "Gatilho, pensamento, emoção e resposta." },
     ],
   },
   {
     nome: "Espírito",
     icone: "sun",
     ferramentas: [
-      { t: "Mapa do Propósito", d: "Síntese do OQ³ e do PQQ: clareza, direção e um plano que pode ser vivido." },
-      { t: "Roda Holística da Vida", d: "Visão panorâmica das áreas da vida e do equilíbrio entre elas." },
-      { t: "Carta ao Futuro Eu", d: "Escrita guiada para conectar o paciente à pessoa que deseja se tornar." },
+      { t: "Mapa do Propósito", d: "Clareza e direção para o plano." },
+      { t: "Roda Holística da Vida", d: "As áreas da vida em equilíbrio." },
+      { t: "Carta ao Futuro Eu", d: "Conexão com quem o paciente deseja ser." },
     ],
   },
 ];
@@ -39,8 +39,8 @@ const pilares: { nome: string; icone: IconName; ferramentas: { t: string; d: str
       <span class="eyebrow" data-reveal>Ferramentas de aprofundamento</span>
       <h2 id="ferramentas-titulo" data-reveal style="--i:1">Aprofunde apenas <em>onde fizer sentido.</em></h2>
       <p data-reveal style="--i:2">
-        Ferramentas organizadas nas três dimensões do método, prontas para quando o atendimento pedir um olhar mais
-        profundo.
+        Quando algo merece mais atenção, você escolhe ferramentas de Corpo, Mente e Espírito para aprofundar o
+        atendimento.
       </p>
     </header>
 
@@ -69,7 +69,7 @@ const pilares: { nome: string; icone: IconName; ferramentas: { t: string; d: str
 
     <p class="ferramentas-nota" data-reveal>
       <span class="filete" aria-hidden="true"></span>
-      <span>O profissional escolhe as ferramentas de acordo com o atendimento. <em>Não é necessário aplicar tudo.</em></span>
+      <span>Você escolhe a ferramenta de acordo com o atendimento. <em>Não é necessário aplicar tudo.</em></span>
     </p>
   </div>
 </section>

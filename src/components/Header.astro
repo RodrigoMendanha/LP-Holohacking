@@ -1,10 +1,10 @@
 ---
 import Logo from "./ui/Logo.astro";
-import CtaButton from "./ui/CtaButton.astro";
+import TopCta from "./ui/TopCta.astro";
 import Icon from "./ui/Icon.astro";
 
 const links = [
-  { href: "#como-funciona", label: "Como funciona" },
+  { href: "#por-dentro", label: "Por dentro" },
   { href: "#holoscan", label: "HOLOSCAN" },
   { href: "#resultado", label: "Resultado HOLOS" },
   { href: "#para-quem", label: "Para quem é" },
@@ -25,7 +25,7 @@ const links = [
     </nav>
 
     <div class="header-acoes">
-      <CtaButton location="header" variant="dourado" class="header-cta" />
+      <TopCta location="header" variant="dourado" class="header-cta" />
       <button
         type="button"
         class="header-menu"
@@ -45,7 +45,7 @@ const links = [
       <ul role="list">
         {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>
-      <CtaButton location="menu" variant="dourado" block />
+      <TopCta location="menu" variant="dourado" block />
     </nav>
   </div>
 </header>

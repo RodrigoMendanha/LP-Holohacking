@@ -8,26 +8,33 @@ import Icon from "../ui/Icon.astro";
 import { PRODUCT_SHOTS } from "../../data/site";
 
 const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
+
+// HOLOSCAN, Resultado e Evolução ganham moldura grande, em zigue-zague com
+// as outras três telas.
+const DESTAQUE = new Set(["holoscan", "resultado", "evolucao"]);
+const ORDEM = ["holoscan", "dashboard", "ferramentas", "resultado", "evolucao", "playbook"];
+const telas = [...PRODUCT_SHOTS].sort((a, b) => ORDEM.indexOf(a.id) - ORDEM.indexOf(b.id));
 ---
 
 <section class="secao tema-escuro galeria" id="por-dentro" aria-labelledby="galeria-titulo">
   <div class="container">
     <header class="cabeca cabeca--centro">
       <span class="eyebrow" data-reveal>Produto por dentro</span>
-      <h2 id="galeria-titulo" data-reveal style="--i:1">Tudo em um só lugar, <em>do primeiro ao último encontro.</em></h2>
-      <p data-reveal style="--i:2">
-        {
-          temCaptura
-            ? "Telas reais do HoloHacking, com a paciente fictícia usada nas demonstrações."
-            : "As capturas do produto entram aqui em breve. Por enquanto, cada moldura mostra o que ela vai apresentar."
-        }
-      </p>
+      <h2 id="galeria-titulo" data-reveal style="--i:1">Veja o HoloHacking <em>por dentro.</em></h2>
+      <p data-reveal style="--i:2">Uma única jornada, organizada dentro da ficha do paciente.</p>
+      {
+        temCaptura && (
+          <p class="galeria-nota" data-reveal style="--i:3">
+            Telas reais da plataforma, com a paciente fictícia usada nas demonstrações. Clique para ampliar.
+          </p>
+        )
+      }
     </header>
 
     <ul role="list" class="galeria-grade">
       {
-        PRODUCT_SHOTS.map((s, i) => (
-          <li class="tela" data-reveal style={`--i:${i % 3}`}>
+        telas.map((s, i) => (
+          <li class:list={["tela", { "tela--destaque": DESTAQUE.has(s.id) }]} data-reveal style={`--i:${i % 2}`}>
             <div class="tela-moldura">
               <div class="tela-barra" aria-hidden="true">
                 <i />
@@ -94,6 +101,12 @@ const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
             </div>
             <h3>{s.title}</h3>
             <p>{s.caption}</p>
+            {!s.src && (s.id === "resultado" || s.id === "playbook") && (
+              <a class="tela-link" href={s.id === "resultado" ? "#resultado" : "#playbook"}>
+                {s.id === "resultado" ? "Ver a estrutura do Resultado HOLOS" : "Ver como o Playbook HOLOS funciona"}
+                <Icon name="arrow-down" size={14} />
+              </a>
+            )}
           </li>
         ))
       }
@@ -139,6 +152,27 @@ const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
 </section>
 
 <style>
+  .tela-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    padding: 0.35rem 0;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dourado-claro);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201, 163, 90, 0.4);
+  }
+  .tela-link:hover { color: var(--dourado); border-bottom-color: var(--dourado); }
+  .galeria-nota {
+    margin-top: 0.75rem;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+  }
   .galeria-grade {
     display: grid;
     gap: clamp(1.5rem, 1rem + 2vw, 2.5rem) 1.5rem;
@@ -381,10 +415,16 @@ const temCaptura = PRODUCT_SHOTS.some((s) => s.src);
   .abs-doc b { height: 10px; width: 70%; border-radius: 3px; background: var(--dourado); opacity: 0.8; margin-bottom: 6px; }
   .abs-doc span { height: 6px; border-radius: 3px; background: var(--tinta); opacity: 0.14; }
 
+  .tela--destaque h3 { font-size: 1.7rem; }
+
   @media (min-width: 640px) {
     .galeria-grade { grid-template-columns: repeat(2, 1fr); }
+    .tela--destaque,
+    .tela:last-child { grid-column: span 2; }
   }
   @media (min-width: 1000px) {
-    .galeria-grade { grid-template-columns: repeat(3, 1fr); }
+    .galeria-grade { grid-template-columns: repeat(3, 1fr); gap: 2.5rem 1.75rem; }
+    .tela--destaque { grid-column: span 2; }
+    .tela:last-child:not(.tela--destaque) { grid-column: auto; }
   }
 </style>

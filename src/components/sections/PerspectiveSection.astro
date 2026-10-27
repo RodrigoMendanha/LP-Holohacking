@@ -1,0 +1,105 @@
+---
+/* Nova perspectiva: método e estrutura. Responde "por que um jeito novo de
+   organizar?" antes de qualquer funcionalidade aparecer. */
+---
+
+<section class="secao tema-escuro perspectiva" aria-labelledby="perspectiva-titulo">
+  <div class="container container--estreito">
+    <span class="eyebrow" data-reveal>Uma nova perspectiva</span>
+    <h2 id="perspectiva-titulo" data-reveal style="--i:1">
+      O paciente não chega com um problema isolado. <em>Ele chega com uma vida inteira.</em>
+    </h2>
+    <p class="perspectiva-texto" data-reveal style="--i:2">
+      A alimentação acontece junto com rotina, comportamento, contexto, objetivos, dificuldades e significado. A
+      Nutrição Holística amplia esse olhar. O HoloHacking organiza esse olhar para que ele não vire apenas mais
+      informação.
+    </p>
+
+    <div class="perspectiva-par" data-reveal style="--i:3">
+      <div>
+        <span class="perspectiva-rot">Nutrição Holística</span>
+        <b>O método</b>
+        <span>a visão que amplia o olhar sobre o paciente.</span>
+      </div>
+      <span class="perspectiva-mais" aria-hidden="true">+</span>
+      <div>
+        <span class="perspectiva-rot">HoloHacking</span>
+        <b>A estrutura</b>
+        <span>a tecnologia que leva essa visão para o dia a dia do atendimento.</span>
+      </div>
+    </div>
+
+    <p class="perspectiva-fecho" data-reveal style="--i:4">
+      A Nutrição Holística amplia o olhar. <em>O HoloHacking organiza esse olhar na prática.</em>
+    </p>
+  </div>
+</section>
+
+<style>
+  .perspectiva { text-align: center; }
+  .perspectiva h2 {
+    font-size: var(--fs-h2);
+    margin: 1rem auto 1.5rem;
+    max-width: 22ch;
+  }
+  .perspectiva-texto {
+    font-size: var(--fs-lead);
+    color: var(--texto-suave);
+    max-width: 58ch;
+    margin-inline: auto;
+  }
+  .perspectiva-par {
+    display: grid;
+    gap: 1rem;
+    align-items: stretch;
+    margin: clamp(2.25rem, 1.75rem + 2vw, 3.25rem) auto;
+    max-width: 720px;
+  }
+  .perspectiva-par > div {
+    display: grid;
+    gap: 0.3rem;
+    padding: 1.4rem 1.25rem;
+    border-radius: var(--raio-card);
+    border: 1px solid rgba(201, 163, 90, 0.3);
+    background: rgba(244, 239, 227, 0.035);
+  }
+  .perspectiva-rot {
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+  .perspectiva-par b {
+    font-family: var(--fonte-display);
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--dourado-claro);
+    line-height: 1.15;
+  }
+  .perspectiva-par div span:last-child {
+    font-size: 0.92rem;
+    color: var(--texto-suave);
+  }
+  .perspectiva-mais {
+    align-self: center;
+    font-family: var(--fonte-display);
+    font-size: 2rem;
+    color: var(--dourado);
+    line-height: 1;
+  }
+  .perspectiva-fecho {
+    font-family: var(--fonte-display);
+    font-size: clamp(1.45rem, 1.2rem + 1.1vw, 2.1rem);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--creme);
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+  .perspectiva-fecho em { color: var(--dourado); }
+
+  @media (min-width: 700px) {
+    .perspectiva-par { grid-template-columns: 1fr auto 1fr; }
+  }
+</style>

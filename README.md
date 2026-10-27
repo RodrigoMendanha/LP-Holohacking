@@ -51,9 +51,10 @@ nunca quebra a página — ele vira um estado neutro e honesto.
 | Checkout | `CHECKOUT_URL` | todos os CTAs rolam até a oferta; o botão da oferta aparece desativado ("Acesso em breve") |
 | Destino alternativo (lista de espera, WhatsApp comercial) | `CTA_FALLBACK_URL` — usado só se não houver checkout | — |
 | Texto dos botões | `CTA_LABEL`, `CTA_LABEL_FINAL` | — |
-| Oferta | `PLAN_NAME`, `PRICE`, `INSTALLMENTS`, `ACCESS_DURATION`, `GUARANTEE`, `SUPPORT`, `UPDATES`, `BONUSES` | "Condições de acesso serão apresentadas em breve." — cada linha vazia simplesmente não aparece |
-| Números do produto na copy | `HOLOSCAN_QUESTIONS` (81), `PLAYBOOK_STRATEGIES` (75) | — |
-| Criador | `CREATOR_NAME`, `CREATOR_ROLE`, `CREATOR_BIO` (parágrafos), `CREATOR_IMAGE` | texto institucional sobre o método, com o símbolo da marca |
+| Oferta | `PLAN_NAME`, `PRICE`, `INSTALLMENTS`, `PAYMENT_METHODS`, `ACCESS_DURATION`, `ACCESS_INFO`, `GUARANTEE`, `SUPPORT`, `UPDATES`, `BONUSES` | "Condições de acesso serão apresentadas em breve." — cada linha vazia simplesmente não aparece |
+| Números do produto na copy | `HOLOSCAN_QUESTIONS` (81), `PLAYBOOK_SYSTEMS` (5), `PLAYBOOK_FOCI` (15), `PLAYBOOK_STRATEGIES` (75) | — |
+| CTA do topo | `TOP_CTA_MODE` (`"navegacao"` = "Ver como funciona"; `"comercial"` = CTA de compra) | — |
+| Rodrigo / origem | `CREATOR_NAME`, `CREATOR_ROLE`, `CREATOR_IMAGE`, `CREATOR_BIO`, `CREATOR_METHOD_ORIGIN`, `CREATOR_WHY`, `CREATOR_CREDENTIALS` | texto institucional sobre o método, com o símbolo da marca |
 | Depoimentos | `TESTIMONIALS` | **a seção inteira some** |
 | Capturas do produto | `PRODUCT_SHOTS[].src` e `.alt` | moldura ilustrativa com o selo "Captura do produto em breve" |
 | Perguntas frequentes | `FAQ` | — |
@@ -63,34 +64,39 @@ nunca quebra a página — ele vira um estado neutro e honesto.
 | Domínio, canonical, sitemap | `SITE.url` | URLs relativas; sitemap vazio |
 | Liberar indexação | `SITE.indexable = true` | `noindex` no `<meta>` e `Disallow: /` no robots.txt |
 
-### Copy das seções
+### Copy das seções — a narrativa
 
-O texto de cada seção está no próprio componente, em `src/components/sections/`:
+A página vende primeiro a necessidade de estrutura, depois o mecanismo e só
+então as funcionalidades. Cada seção responde a uma pergunta:
 
-| Seção | Arquivo |
-| --- | --- |
-| Header | `src/components/Header.astro` |
-| Hero | `Hero.astro` |
-| VSL | `VideoSection.astro` |
-| Problema | `ProblemSection.astro` |
-| Nova forma de atender (6 movimentos) | `MechanismSection.astro` |
-| Jornada completa | `JourneySection.astro` |
-| Mapeamento Holístico | `MappingSection.astro` |
-| HOLOSCAN (sistemas, tríade, aviso) | `HoloscanSection.astro` |
-| Ferramentas | `ToolsSection.astro` |
-| Playbook | `PlaybookSection.astro` |
-| Resultado HOLOS + PDF/WhatsApp | `ResultSection.astro` |
-| Evolução | `EvolutionSection.astro` |
-| Benefícios | `BenefitsSection.astro` |
-| Não substitui o profissional | `ProfessionalControlSection.astro` |
-| Para quem é / não é | `AudienceSection.astro` |
-| Produto por dentro | `ProductGallery.astro` |
-| Depoimentos | `Testimonials.astro` |
-| Sobre o criador | `CreatorSection.astro` |
-| Oferta | `OfferSection.astro` |
-| FAQ | `FAQ.astro` (conteúdo em `site.ts`) |
-| CTA final | `FinalCTA.astro` |
-| Rodapé | `src/components/Footer.astro` |
+| # | Seção | Pergunta que responde | Arquivo (`src/components/sections/`) |
+| --- | --- | --- | --- |
+| 1 | Hero | O que é isso para mim? | `Hero.astro` |
+| 2 | Problema | Por que isso importa? | `ProblemSection.astro` |
+| 3 | Nova perspectiva | Qual é o olhar novo? | `PerspectiveSection.astro` |
+| 4 | Mecanismo (6 movimentos) | Como a jornada funciona? | `MechanismSection.astro` |
+| 5 | Produto por dentro | Como é na prática? | `ProductGallery.astro` |
+| 6 | Mapeamento Holístico | Como começa antes da consulta? | `MappingSection.astro` |
+| 7 | HOLOSCAN | Como sei onde aprofundar? | `HoloscanSection.astro` |
+| 8 | Ferramentas | Como aprofundo? | `ToolsSection.astro` |
+| 9 | Playbook HOLOS | Como chego à estratégia? | `PlaybookSection.astro` |
+| 10 | Resultado HOLOS | O que o paciente leva? | `ResultSection.astro` |
+| 11 | Retorno / Evolução | O que acontece no retorno? | `EvolutionSection.astro` |
+| 12 | Autonomia profissional | Quem decide? | `ProfessionalControlSection.astro` |
+| 13 | Benefícios | O que muda na prática? | `BenefitsSection.astro` |
+| 14 | Para quem é | É para mim? | `AudienceSection.astro` |
+| 15 | Rodrigo / origem | Quem está por trás? — **placeholder** | `CreatorSection.astro` |
+| 16 | Prova social | Quem já usa? — **oculta sem depoimentos** | `Testimonials.astro` |
+| 17 | Oferta | Como acesso? — **"em breve" sem condições** | `OfferSection.astro` |
+| 18 | FAQ | — | `FAQ.astro` (conteúdo em `site.ts`) |
+| 19 | CTA final | — | `FinalCTA.astro` |
+
+Header: `src/components/Header.astro` · Rodapé: `src/components/Footer.astro` ·
+VSL (desligada): `VideoSection.astro`.
+
+**CTAs:** o topo (header e hero) usa `TOP_CTA_MODE` — hoje "Ver como funciona",
+que rola até o mecanismo. Os CTAs comerciais ficam só em: depois do Resultado
+HOLOS, depois de "Para quem é", na oferta e no final.
 
 ### Imagens
 

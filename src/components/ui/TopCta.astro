@@ -1,0 +1,28 @@
+---
+/* CTA do topo (header, menu e hero). TOP_CTA_MODE em data/site.ts decide:
+   "navegacao" rola até o mecanismo; "comercial" vira o CTA de compra. */
+import CtaButton from "./CtaButton.astro";
+import Icon from "./Icon.astro";
+import type { CtaLocation } from "../../lib/cta";
+import { TOP_CTA_MODE, TOP_CTA_NAV_LABEL, TOP_CTA_NAV_HREF } from "../../data/site";
+
+interface Props {
+  location: CtaLocation;
+  variant?: "dourado" | "verde" | "fantasma";
+  block?: boolean;
+  class?: string;
+}
+const { location, variant = "dourado", block = false, class: className } = Astro.props;
+const classes = ["btn", `btn--${variant}`, block && "btn--bloco", className].filter(Boolean).join(" ");
+---
+
+{
+  TOP_CTA_MODE === "comercial" ? (
+    <CtaButton location={location} variant={variant} block={block} class={className} />
+  ) : (
+    <a class={classes} href={TOP_CTA_NAV_HREF} data-cta data-location={location} data-cta-mode="navegacao">
+      <span>{TOP_CTA_NAV_LABEL}</span>
+      <Icon name="arrow-down" size={16} />
+    </a>
+  )
+}

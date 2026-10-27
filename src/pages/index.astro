@@ -5,48 +5,53 @@ import Footer from "../components/Footer.astro";
 import Hero from "../components/sections/Hero.astro";
 import VideoSection from "../components/sections/VideoSection.astro";
 import ProblemSection from "../components/sections/ProblemSection.astro";
+import PerspectiveSection from "../components/sections/PerspectiveSection.astro";
 import MechanismSection from "../components/sections/MechanismSection.astro";
-import JourneySection from "../components/sections/JourneySection.astro";
+import ProductGallery from "../components/sections/ProductGallery.astro";
 import MappingSection from "../components/sections/MappingSection.astro";
 import HoloscanSection from "../components/sections/HoloscanSection.astro";
 import ToolsSection from "../components/sections/ToolsSection.astro";
 import PlaybookSection from "../components/sections/PlaybookSection.astro";
 import ResultSection from "../components/sections/ResultSection.astro";
 import EvolutionSection from "../components/sections/EvolutionSection.astro";
-import BenefitsSection from "../components/sections/BenefitsSection.astro";
 import ProfessionalControlSection from "../components/sections/ProfessionalControlSection.astro";
+import BenefitsSection from "../components/sections/BenefitsSection.astro";
 import AudienceSection from "../components/sections/AudienceSection.astro";
-import ProductGallery from "../components/sections/ProductGallery.astro";
-import Testimonials from "../components/sections/Testimonials.astro";
 import CreatorSection from "../components/sections/CreatorSection.astro";
+import Testimonials from "../components/sections/Testimonials.astro";
 import OfferSection from "../components/sections/OfferSection.astro";
 import FAQ from "../components/sections/FAQ.astro";
 import FinalCTA from "../components/sections/FinalCTA.astro";
 import { SHOW_VSL } from "../data/site";
 ---
 
+<!--
+  Narrativa: problema → nova perspectiva → mecanismo → produto real →
+  cada etapa (uma pergunta por seção) → autonomia → para quem é →
+  Rodrigo, prova social e oferta (prontos para receber conteúdo) → FAQ.
+-->
 <BaseLayout>
   <div id="topo"></div>
   <Header />
   <main id="conteudo">
     <Hero />
     {SHOW_VSL && <VideoSection />}
-    <ProblemSection />
-    <MechanismSection />
-    <JourneySection />
-    <MappingSection />
-    <HoloscanSection />
-    <ToolsSection />
-    <PlaybookSection />
-    <ResultSection />
-    <EvolutionSection />
-    <BenefitsSection />
-    <ProfessionalControlSection />
-    <AudienceSection />
-    <ProductGallery />
-    <Testimonials />
-    <CreatorSection />
-    <OfferSection />
+    <ProblemSection />            <!-- Por que isso importa? -->
+    <PerspectiveSection />        <!-- Qual é o olhar novo? -->
+    <MechanismSection />          <!-- Como a jornada funciona? -->
+    <ProductGallery />            <!-- Como é por dentro? -->
+    <MappingSection />            <!-- Como começa antes da consulta? -->
+    <HoloscanSection />           <!-- Como sei onde aprofundar? -->
+    <ToolsSection />              <!-- Como aprofundo? -->
+    <PlaybookSection />           <!-- Como chego à estratégia? -->
+    <ResultSection />             <!-- O que o paciente leva? -->
+    <EvolutionSection />          <!-- O que acontece no retorno? -->
+    <ProfessionalControlSection /><!-- Quem decide? -->
+    <BenefitsSection />           <!-- O que muda na prática? -->
+    <AudienceSection />           <!-- É para mim? -->
+    <CreatorSection />            <!-- [RODRIGO / ORIGEM — placeholder] -->
+    <Testimonials />              <!-- [PROVA SOCIAL — oculta sem depoimentos] -->
+    <OfferSection />              <!-- [OFERTA — "em breve" sem condições] -->
     <FAQ />
     <FinalCTA />
   </main>

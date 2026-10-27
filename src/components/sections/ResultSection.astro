@@ -1,9 +1,13 @@
 ---
+/* Resultado HOLOS — um dos pontos altos da página. Duas páginas de um
+   documento ILUSTRATIVO (estrutura, sem conteúdo clínico inventado), o
+   caminho Resultado → PDF → WhatsApp e o CTA. */
 import CtaButton from "../ui/CtaButton.astro";
 import Icon from "../ui/Icon.astro";
 ---
 
 <section class="secao tema-escuro resultado" id="resultado" aria-labelledby="resultado-titulo">
+  <div class="resultado-luz" aria-hidden="true"></div>
   <div class="container">
     <header class="cabeca cabeca--centro">
       <span class="eyebrow" data-reveal>Resultado HOLOS</span>
@@ -11,142 +15,134 @@ import Icon from "../ui/Icon.astro";
         O paciente não sai apenas com informação. <em>Sai com direção.</em>
       </h2>
       <p data-reveal style="--i:2">
-        Ao final do atendimento, a nutricionista organiza o que foi compreendido em um Resultado HOLOS claro e
-        aplicável.
+        Ao final do atendimento, você transforma o que foi compreendido em um Resultado HOLOS claro para o paciente.
       </p>
     </header>
 
-    <div class="resultado-grade">
-      <figure class="documento-palco" data-reveal>
-        <div class="documento-sombra" aria-hidden="true"></div>
-        <article class="documento" aria-label="Ilustração de um Resultado HOLOS">
-          <header class="doc-topo">
-            <div class="doc-emissor">
-              <img src="/images/brand/logo-holohacking.png" alt="" width="40" height="40" loading="lazy" />
-              <div>
-                <span class="doc-marca">Resultado HOLOS</span>
-                <span class="doc-quem">Nome da nutricionista · CRN</span>
-              </div>
+    <figure class="folhas" data-reveal aria-label="Ilustração das duas páginas de um Resultado HOLOS">
+      <article class="folha folha--1">
+        <header class="doc-topo">
+          <div class="doc-emissor">
+            <img src="/images/brand/logo-holohacking.png" alt="" width="40" height="40" loading="lazy" />
+            <div>
+              <span class="doc-marca">Resultado HOLOS</span>
+              <span class="doc-quem">Nome da nutricionista · registro profissional</span>
             </div>
-            <h3>Direção para a fase atual</h3>
-            <p class="doc-meta">Paciente <b>Nome do paciente</b> · Data do atendimento</p>
-          </header>
-
-          <div class="doc-corpo">
-            <section class="doc-bloco">
-              <h4>Momento atual</h4>
-              <span class="esqueleto" style="width:94%"></span>
-              <span class="esqueleto" style="width:80%"></span>
-            </section>
-            <section class="doc-bloco">
-              <h4>Foco da fase</h4>
-              <p class="doc-foco"><span class="esqueleto" style="width:70%;height:10px"></span></p>
-            </section>
-            <section class="doc-bloco doc-bloco--duplo">
-              <div>
-                <h4>O que fazer</h4>
-                <ul role="list">
-                  <li><i></i><span class="esqueleto" style="width:86%"></span></li>
-                  <li><i></i><span class="esqueleto" style="width:72%"></span></li>
-                  <li><i></i><span class="esqueleto" style="width:80%"></span></li>
-                </ul>
-              </div>
-              <div>
-                <h4>O que observar</h4>
-                <ul role="list">
-                  <li><i></i><span class="esqueleto" style="width:78%"></span></li>
-                  <li><i></i><span class="esqueleto" style="width:64%"></span></li>
-                </ul>
-              </div>
-            </section>
-            <section class="doc-bloco">
-              <h4>Corpo · Mente · Espírito</h4>
-              <div class="doc-triade">
-                <span><b>Corpo</b><span class="esqueleto" style="width:80%"></span></span>
-                <span><b>Mente</b><span class="esqueleto" style="width:70%"></span></span>
-                <span><b>Espírito</b><span class="esqueleto" style="width:76%"></span></span>
-              </div>
-            </section>
-            <section class="doc-bloco">
-              <h4>Próximos passos</h4>
-              <span class="esqueleto" style="width:88%"></span>
-              <span class="esqueleto" style="width:56%"></span>
-            </section>
           </div>
-
-          <footer class="doc-assinatura">
-            <span class="doc-linha"></span>
-            <span>Assinatura da nutricionista</span>
-          </footer>
-        </article>
-        <figcaption class="mock-nota">Ilustração · estrutura do documento, sem dados reais</figcaption>
-      </figure>
-
-      <div class="resultado-lado">
-        <ul role="list" class="resultado-itens">
-          <li data-reveal style="--i:0">
-            <span class="icone"><Icon name="compass" /></span>
-            <div><b>Momento atual e foco da fase</b><span>O que foi compreendido, dito de forma clara.</span></div>
-          </li>
-          <li data-reveal style="--i:1">
-            <span class="icone"><Icon name="book" /></span>
-            <div><b>Estratégias escolhidas</b><span>O que fazer e o que observar até o próximo encontro.</span></div>
-          </li>
-          <li data-reveal style="--i:2">
-            <span class="icone"><Icon name="route" /></span>
-            <div><b>Próximos passos</b><span>Um caminho que o paciente consegue seguir.</span></div>
-          </li>
-        </ul>
-
-        <div class="entrega" data-reveal style="--i:3">
-          <span class="eyebrow">Da consulta às mãos do paciente</span>
-          <ol role="list" class="entrega-fluxo">
-            <li><span class="icone"><Icon name="file" /></span><b>Resultado HOLOS</b></li>
-            <li aria-hidden="true" class="entrega-seta"><Icon name="arrow-right" size={16} /></li>
-            <li><span class="icone"><Icon name="clipboard" /></span><b>PDF</b></li>
-            <li aria-hidden="true" class="entrega-seta"><Icon name="arrow-right" size={16} /></li>
-            <li><span class="icone"><Icon name="message" /></span><b>WhatsApp</b></li>
-          </ol>
-          <p>O Resultado pode ser salvo em PDF e enviado ao paciente pelo canal que você já usa — como o WhatsApp.</p>
+          <h3>Direção para a fase atual</h3>
+          <p class="doc-meta">Paciente <b>Nome do paciente</b> · Data do atendimento</p>
+        </header>
+        <div class="doc-corpo">
+          <section class="doc-bloco">
+            <h4>Momento atual</h4>
+            <span class="esqueleto" style="width:96%"></span>
+            <span class="esqueleto" style="width:88%"></span>
+            <span class="esqueleto" style="width:62%"></span>
+          </section>
+          <section class="doc-bloco">
+            <h4>Foco desta fase</h4>
+            <p class="doc-foco"><span class="esqueleto" style="width:72%;height:10px"></span></p>
+          </section>
+          <section class="doc-bloco">
+            <h4>Estratégias escolhidas</h4>
+            <ol role="list" class="doc-estrategias">
+              <li><b>1</b><span class="esqueleto" style="width:84%"></span><i>Ação</i></li>
+              <li><b>2</b><span class="esqueleto" style="width:70%"></span><i>Observação</i></li>
+              <li><b>3</b><span class="esqueleto" style="width:78%"></span><i>Reflexão</i></li>
+            </ol>
+          </section>
         </div>
+        <span class="doc-pagina">1 / 2</span>
+      </article>
 
-        <p class="resultado-mensagem" data-reveal>
+      <article class="folha folha--2">
+        <div class="doc-corpo">
+          <section class="doc-bloco doc-bloco--duplo">
+            <div>
+              <h4>O que fazer</h4>
+              <ul role="list">
+                <li><i></i><span class="esqueleto" style="width:86%"></span></li>
+                <li><i></i><span class="esqueleto" style="width:72%"></span></li>
+                <li><i></i><span class="esqueleto" style="width:80%"></span></li>
+              </ul>
+            </div>
+            <div>
+              <h4>O que observar</h4>
+              <ul role="list">
+                <li><i></i><span class="esqueleto" style="width:78%"></span></li>
+                <li><i></i><span class="esqueleto" style="width:64%"></span></li>
+              </ul>
+            </div>
+          </section>
+          <section class="doc-bloco">
+            <h4>Corpo · Mente · Espírito</h4>
+            <div class="doc-triade">
+              <span><b>Corpo</b><span class="esqueleto" style="width:80%"></span></span>
+              <span><b>Mente</b><span class="esqueleto" style="width:70%"></span></span>
+              <span><b>Espírito</b><span class="esqueleto" style="width:76%"></span></span>
+            </div>
+          </section>
+          <section class="doc-bloco">
+            <h4>Próximos passos</h4>
+            <span class="esqueleto" style="width:90%"></span>
+            <span class="esqueleto" style="width:58%"></span>
+          </section>
+        </div>
+        <footer class="doc-assinatura">
+          <span class="doc-linha"></span>
+          <span>Assinatura da nutricionista</span>
+        </footer>
+        <span class="doc-pagina">2 / 2</span>
+      </article>
+      <figcaption class="mock-nota">Ilustração da estrutura do documento · sem dados reais</figcaption>
+    </figure>
+
+    <div class="resultado-base">
+      <div class="entrega" data-reveal>
+        <span class="eyebrow">Da consulta às mãos do paciente</span>
+        <ol role="list" class="entrega-fluxo">
+          <li><span class="icone"><Icon name="file" /></span><b>Resultado HOLOS</b></li>
+          <li aria-hidden="true" class="entrega-seta"><Icon name="arrow-right" size={16} /></li>
+          <li><span class="icone"><Icon name="clipboard" /></span><b>PDF</b></li>
+          <li aria-hidden="true" class="entrega-seta"><Icon name="arrow-right" size={16} /></li>
+          <li><span class="icone"><Icon name="message" /></span><b>WhatsApp</b></li>
+        </ol>
+        <p>
+          O Resultado pode ser gerado em PDF e compartilhado pelo canal que você já usa com o paciente, como o
+          WhatsApp.
+        </p>
+      </div>
+
+      <div class="resultado-fecho" data-reveal style="--i:1">
+        <p class="resultado-mensagem">
           O Resultado é construído pela nutricionista, <em>com apoio do Playbook.</em>
         </p>
-
-        <div data-reveal>
-          <CtaButton location="result" />
-        </div>
+        <p class="resultado-decide">O sistema organiza. Você decide.</p>
+        <CtaButton location="result" />
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .resultado-grade {
-    display: grid;
-    gap: clamp(3rem, 2rem + 4vw, 5rem);
-    align-items: center;
-  }
-
-  /* ---------- o documento (inspirado no .relatorio do produto) ---------- */
-  .documento-palco {
-    position: relative;
-    max-width: 560px;
-    width: 100%;
-    margin-inline: auto;
-  }
-  .documento-sombra {
+  .resultado-luz {
     position: absolute;
-    inset: 6% -4% -3% 8%;
-    border-radius: var(--raio);
-    background: rgba(201, 163, 90, 0.1);
-    border: 1px solid rgba(201, 163, 90, 0.22);
-    transform: rotate(3deg);
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 60% 45% at 50% 42%, rgba(201, 163, 90, 0.14), transparent 70%);
   }
-  .documento {
+  .resultado .container { position: relative; }
+
+  /* ---------- as duas páginas (inspiradas no .relatorio do produto) ---------- */
+  .folhas {
+    display: grid;
+    gap: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .folha {
     position: relative;
-    padding: clamp(1.5rem, 1.1rem + 2vw, 2.6rem);
+    padding: clamp(1.5rem, 1.1rem + 2vw, 2.75rem);
     border-radius: var(--raio);
     background: var(--creme-claro);
     color: var(--tinta);
@@ -154,6 +150,15 @@ import Icon from "../ui/Icon.astro";
     --titulo: var(--verde-escuro);
     --texto-suave: var(--tinta-suave);
     --acento: var(--dourado-texto);
+  }
+  .doc-pagina {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 0.9rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: var(--tinta-suave);
+    opacity: 0.8;
   }
   .doc-topo {
     padding-bottom: 1.25rem;
@@ -171,8 +176,8 @@ import Icon from "../ui/Icon.astro";
     color: var(--acento);
   }
   .doc-quem { font-size: 0.78rem; color: var(--tinta-suave); }
-  .documento h3 {
-    font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.1rem);
+  .folha h3 {
+    font-size: clamp(1.7rem, 1.35rem + 1.3vw, 2.3rem);
     font-weight: 500;
     color: var(--verde-escuro);
     margin: 1rem 0 0.4rem;
@@ -180,38 +185,66 @@ import Icon from "../ui/Icon.astro";
   .doc-meta { font-size: 0.82rem; color: var(--tinta-suave); }
   .doc-meta b { color: var(--acento); font-weight: 500; }
 
-  .doc-corpo { display: grid; gap: 1.25rem; color: var(--tinta); }
+  .doc-corpo { display: grid; gap: 1.4rem; color: var(--tinta); }
   .doc-bloco h4 {
     font-family: var(--fonte-corpo);
-    font-size: 0.6rem;
+    font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.26em;
     text-transform: uppercase;
     color: var(--acento);
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.65rem;
   }
   .doc-foco {
-    padding: 0.8rem 1rem;
+    padding: 0.85rem 1rem;
     border-radius: var(--raio-botao);
     background: var(--dourado-bg);
     border-left: 2px solid var(--dourado);
   }
   .doc-foco .esqueleto { opacity: 0.28; }
+  .doc-estrategias { display: grid; gap: 0.55rem; }
+  .doc-estrategias li {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr auto;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: var(--raio-botao);
+    border: 1px solid rgba(201, 163, 90, 0.3);
+  }
+  .doc-estrategias b {
+    font-family: var(--fonte-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--acento);
+  }
+  .doc-estrategias .esqueleto { margin: 0 !important; }
+  .doc-estrategias i {
+    font-style: normal;
+    font-size: 0.56rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--acento);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--raio-pilula);
+    border: 1px solid rgba(201, 163, 90, 0.4);
+  }
   .doc-bloco--duplo {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
   }
   .doc-bloco ul { display: grid; gap: 0.55rem; }
-  .doc-bloco li { display: flex; align-items: center; gap: 0.55rem; }
-  .doc-bloco li i {
+  .doc-bloco ul li { display: flex; align-items: center; gap: 0.55rem; }
+  .doc-bloco ul li i {
     flex-shrink: 0;
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: var(--dourado);
   }
-  .doc-bloco li .esqueleto { flex: 1; margin: 0 !important; }
+  .doc-bloco ul li .esqueleto { flex: 1; margin: 0 !important; }
   .doc-triade {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -235,6 +268,7 @@ import Icon from "../ui/Icon.astro";
     justify-items: end;
     gap: 0.35rem;
     margin-top: 1.75rem;
+    padding-bottom: 0.5rem;
     font-size: 0.72rem;
     color: var(--tinta-suave);
   }
@@ -244,26 +278,16 @@ import Icon from "../ui/Icon.astro";
     background: var(--tinta-suave);
     opacity: 0.5;
   }
+  .folhas .mock-nota { grid-column: 1 / -1; }
 
-  /* ---------- o lado do texto ---------- */
-  .resultado-lado { display: grid; gap: 2rem; }
-  .resultado-itens { display: grid; gap: 1.25rem; }
-  .resultado-itens li {
+  /* ---------- entrega e fecho ---------- */
+  .resultado-base {
     display: grid;
-    grid-template-columns: 46px 1fr;
-    gap: 1rem;
-    align-items: start;
+    gap: 1.5rem;
+    max-width: 1080px;
+    margin: clamp(2.5rem, 2rem + 2vw, 3.5rem) auto 0;
+    align-items: center;
   }
-  .resultado-itens b {
-    display: block;
-    font-family: var(--fonte-display);
-    font-size: 1.35rem;
-    font-weight: 600;
-    color: var(--dourado-claro);
-    line-height: 1.2;
-  }
-  .resultado-itens span:not(.icone) { font-size: 0.95rem; color: var(--texto-suave); }
-
   .entrega {
     padding: 1.5rem;
     border-radius: var(--raio-card);
@@ -293,25 +317,33 @@ import Icon from "../ui/Icon.astro";
   .entrega-seta { color: rgba(201, 163, 90, 0.6); }
   .entrega p { font-size: 0.88rem; color: var(--texto-suave); }
 
+  .resultado-fecho { display: grid; gap: 1rem; justify-items: start; }
   .resultado-mensagem {
     font-family: var(--fonte-display);
-    font-size: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+    font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.85rem);
     font-weight: 500;
     line-height: 1.3;
     color: var(--creme);
     padding-left: 1.25rem;
     border-left: 2px solid var(--dourado);
   }
-
-  @media (max-width: 639px) {
-    .documento-sombra { display: none; }
+  .resultado-decide {
+    padding-left: 1.25rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dourado);
   }
+
   @media (max-width: 479px) {
-    .doc-bloco--duplo { grid-template-columns: 1fr; }
+    .doc-bloco--duplo,
     .doc-triade { grid-template-columns: 1fr; }
     .entrega-fluxo .icone { width: 40px; height: 40px; }
   }
-  @media (min-width: 1000px) {
-    .resultado-grade { grid-template-columns: 1.05fr 0.95fr; }
+  @media (min-width: 860px) {
+    .folhas { grid-template-columns: 1fr 1fr; align-items: start; }
+    .folha--2 { margin-top: 3rem; }
+    .resultado-base { grid-template-columns: 1.1fr 0.9fr; }
   }
 </style>

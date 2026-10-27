@@ -1,26 +1,26 @@
 ---
+/* O mecanismo em seis movimentos. Absorve a antiga "Jornada completa": cada
+   movimento diz onde acontece na plataforma, numa seção só. */
 import Icon, { type IconName } from "../ui/Icon.astro";
 
-const passos: { t: string; d: string; i: IconName }[] = [
-  { t: "Mapear", d: "O paciente responde ao Mapeamento Holístico antes da consulta.", i: "map" },
-  { t: "Investigar", d: "O HOLOSCAN organiza os relatos e mostra onde vale aprofundar.", i: "search" },
-  { t: "Aprofundar", d: "Ferramentas de Corpo, Mente e Espírito, escolhidas por você.", i: "layers" },
-  { t: "Estruturar", d: "O Playbook organiza estratégias possíveis para a fase.", i: "compass" },
-  { t: "Entregar", d: "O Resultado HOLOS leva ao paciente uma direção clara.", i: "file" },
-  { t: "Acompanhar", d: "No retorno, a Evolução coloca antes e agora lado a lado.", i: "refresh" },
+const passos: { t: string; d: string; i: IconName; onde: string[] }[] = [
+  { t: "Mapear", d: "O paciente responde ao Mapeamento Holístico antes da consulta.", i: "map", onde: ["Mapeamento Holístico"] },
+  { t: "Investigar", d: "No atendimento, o HOLOSCAN reúne os relatos em cinco territórios e mostra onde vale olhar com mais atenção.", i: "search", onde: ["Atendimento", "HOLOSCAN"] },
+  { t: "Aprofundar", d: "Onde fizer sentido, você aplica ferramentas de Corpo, Mente e Espírito.", i: "layers", onde: ["Ferramentas"] },
+  { t: "Estruturar", d: "O Playbook HOLOS reúne focos e estratégias possíveis para apoiar a sua decisão.", i: "compass", onde: ["Playbook HOLOS"] },
+  { t: "Entregar", d: "Você constrói o Resultado HOLOS e o compartilha com o paciente em PDF.", i: "file", onde: ["Resultado HOLOS", "PDF / WhatsApp"] },
+  { t: "Acompanhar", d: "No retorno, Antes e Agora aparecem lado a lado.", i: "refresh", onde: ["Retorno", "Evolução"] },
 ];
 ---
 
-<section class="secao tema-escuro mecanismo" id="como-funciona" aria-labelledby="mecanismo-titulo">
+<section class="secao secao--creme-claro mecanismo" id="como-funciona" aria-labelledby="mecanismo-titulo">
   <div class="container">
     <header class="cabeca cabeca--centro">
-      <span class="eyebrow" data-reveal>Uma nova forma de atender</span>
+      <span class="eyebrow" data-reveal>O mecanismo</span>
       <h2 id="mecanismo-titulo" data-reveal style="--i:1">
         Seis movimentos. <em>Um único raciocínio.</em>
       </h2>
-      <p data-reveal style="--i:2">
-        O HoloHacking organiza o atendimento em etapas que se conectam — da primeira informação ao retorno.
-      </p>
+      <p data-reveal style="--i:2">Cada etapa conversa com a próxima — da primeira informação ao retorno.</p>
     </header>
 
     <ol class="linha" role="list">
@@ -33,6 +33,9 @@ const passos: { t: string; d: string; i: IconName }[] = [
             <span class="passo-num numero" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
             <h3>{p.t}</h3>
             <p>{p.d}</p>
+            <ul role="list" class="passo-onde" aria-label="Na plataforma">
+              {p.onde.map((o) => <li>{o}</li>)}
+            </ul>
           </li>
         ))
       }
@@ -45,7 +48,6 @@ const passos: { t: string; d: string; i: IconName }[] = [
     position: relative;
     display: grid;
     gap: 0;
-    counter-reset: passo;
   }
   /* mobile: linha vertical à esquerda */
   .linha::before {
@@ -55,7 +57,7 @@ const passos: { t: string; d: string; i: IconName }[] = [
     top: 24px;
     bottom: 24px;
     width: 1px;
-    background: linear-gradient(180deg, rgba(201, 163, 90, 0.55), rgba(201, 163, 90, 0.12));
+    background: linear-gradient(180deg, var(--dourado), rgba(201, 163, 90, 0.2));
   }
   .passo {
     position: relative;
@@ -64,9 +66,10 @@ const passos: { t: string; d: string; i: IconName }[] = [
     column-gap: 1.25rem;
     padding-bottom: 2rem;
   }
+  .passo > :not(.passo-no) { grid-column: 2; }
   .passo:last-child { padding-bottom: 0; }
   .passo-no {
-    grid-row: 1 / span 3;
+    grid-row: 1 / span 4;
     position: relative;
     z-index: 1;
     display: grid;
@@ -77,28 +80,44 @@ const passos: { t: string; d: string; i: IconName }[] = [
     border: 1px solid var(--dourado);
     background: var(--verde-escuro);
     color: var(--dourado);
-    box-shadow: 0 0 0 6px rgba(6, 35, 26, 1), 0 0 24px rgba(201, 163, 90, 0.18);
+    box-shadow: 0 0 0 6px var(--sup-fundo), 0 10px 24px rgba(6, 35, 26, 0.18);
   }
   .passo-num {
     font-size: 0.95rem;
     font-weight: 600;
-    color: rgba(201, 163, 90, 0.7);
+    color: var(--acento);
     letter-spacing: 0.08em;
     padding-top: 0.2rem;
   }
   .passo h3 {
     font-size: 1.5rem;
     font-weight: 600;
-    letter-spacing: 0.01em;
     margin: 0.15rem 0 0.4rem;
   }
   .passo p {
     color: var(--texto-suave);
     font-size: 0.95rem;
-    max-width: 40ch;
+    max-width: 42ch;
+  }
+  .passo-onde {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+  }
+  .passo-onde li {
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--raio-pilula);
+    border: 1px solid var(--linha);
+    background: #fff;
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--titulo);
+    white-space: nowrap;
   }
 
-  /* desktop: linha horizontal premium */
+  /* desktop: linha horizontal */
   @media (min-width: 1000px) {
     .linha {
       grid-template-columns: repeat(6, 1fr);
@@ -111,14 +130,16 @@ const passos: { t: string; d: string; i: IconName }[] = [
       bottom: auto;
       width: auto;
       height: 1px;
-      background: linear-gradient(90deg, rgba(201, 163, 90, 0.15), rgba(201, 163, 90, 0.6) 50%, rgba(201, 163, 90, 0.15));
+      background: linear-gradient(90deg, rgba(201, 163, 90, 0.25), var(--dourado) 50%, rgba(201, 163, 90, 0.25));
     }
     .passo {
       grid-template-columns: 1fr;
       justify-items: center;
+      align-content: start;
       text-align: center;
       padding: 0;
     }
+    .passo > :not(.passo-no) { grid-column: auto; }
     .passo-no {
       grid-row: auto;
       width: 56px;
@@ -127,5 +148,6 @@ const passos: { t: string; d: string; i: IconName }[] = [
     }
     .passo h3 { font-size: 1.45rem; }
     .passo p { font-size: 0.9rem; }
+    .passo-onde { justify-content: center; }
   }
 </style>

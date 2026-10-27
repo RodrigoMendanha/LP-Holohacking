@@ -59,6 +59,14 @@ export const CTA_FALLBACK_URL = "";
 export const CTA_LABEL = "Conhecer o HoloHacking";
 export const CTA_LABEL_FINAL = "Quero conhecer o HoloHacking";
 
+/** CTA do topo (header e hero).
+ *  "navegacao" = "Ver como funciona", rola até o mecanismo (uso atual,
+ *  enquanto não existe ação comercial definida).
+ *  "comercial" = usa o mesmo destino e texto dos CTAs comerciais acima. */
+export const TOP_CTA_MODE: "navegacao" | "comercial" = "navegacao";
+export const TOP_CTA_NAV_LABEL = "Ver como funciona";
+export const TOP_CTA_NAV_HREF = "#como-funciona";
+
 /* ---------------------------------------------------------------------------
    OFERTA — nada é inventado. Vazio = "Condições de acesso serão
    apresentadas em breve."
@@ -77,25 +85,40 @@ export const SUPPORT = "";
 /** Ex.: "Atualizações da plataforma incluídas durante o acesso" */
 export const UPDATES = "";
 export const BONUSES: string[] = [];
+/** Ex.: "Pix, boleto ou cartão" */
+export const PAYMENT_METHODS = "";
+/** Ex.: "Acesso enviado por e-mail logo após a confirmação" */
+export const ACCESS_INFO = "";
 
 /* ---------------------------------------------------------------------------
    HOLOSCAN — números que aparecem na copy.
 --------------------------------------------------------------------------- */
 export const HOLOSCAN_QUESTIONS = 81;
+export const PLAYBOOK_SYSTEMS = 5;
+export const PLAYBOOK_FOCI = 15;
 export const PLAYBOOK_STRATEGIES = 75;
 
 /* ---------------------------------------------------------------------------
-   CRIADOR — sem biografia inventada. Vazio = texto institucional neutro.
+   RODRIGO / ORIGEM — [CONTEÚDO DO RODRIGO SERÁ ADICIONADO]
+   Nada aqui é inventado. Enquanto CREATOR_NAME estiver vazio, a seção
+   mostra só o texto institucional sobre o método (sem biografia).
 --------------------------------------------------------------------------- */
 export const CREATOR_NAME = "";
-/** Um ou mais parágrafos. */
-export const CREATOR_BIO: string[] = [];
-/** Caminho em /public, ex.: "/images/creator/retrato.jpg" (retrato 4:5). */
-export const CREATOR_IMAGE = "";
 export const CREATOR_ROLE = "";
+/** Caminho em /public, ex.: "/images/creator/rodrigo.jpg" (retrato 4:5). */
+export const CREATOR_IMAGE = "";
+/** A história: um ou mais parágrafos. */
+export const CREATOR_BIO: string[] = [];
+/** A origem do método: um ou mais parágrafos. */
+export const CREATOR_METHOD_ORIGIN: string[] = [];
+/** Por que criou o HoloHacking: um ou mais parágrafos. */
+export const CREATOR_WHY: string[] = [];
+/** Formação e credenciais, uma por linha. Ex.: "Nutricionista — CRN X 0000" */
+export const CREATOR_CREDENTIALS: string[] = [];
 
 /* ---------------------------------------------------------------------------
-   DEPOIMENTOS — só reais e autorizados. Lista vazia = seção oculta.
+   PROVA SOCIAL — "Quem atende com HoloHacking". Só depoimentos reais e
+   autorizados (de 3 a 6). Lista vazia = seção oculta na página.
 --------------------------------------------------------------------------- */
 export interface Testimonial {
   quote: string;
@@ -125,30 +148,30 @@ export const PRODUCT_SHOTS: ProductShot[] = [
   {
     id: "dashboard",
     title: "Ficha do paciente",
-    caption: "A jornada clínica de cada paciente: mapear, confrontar, integrar e acompanhar.",
+    caption: "Cada paciente com a sua jornada, da pré-consulta ao retorno.",
     src: "/images/product/dashboard.webp",
     alt: "Ficha da paciente fictícia Marina Alves no HoloHacking, com ações rápidas, resumo e a jornada clínica.",
   },
   {
     id: "holoscan",
     title: "HOLOSCAN",
-    caption: "O radar dos cinco sistemas e a ordem do que pede mais investigação.",
+    caption: "O radar dos cinco territórios e a ordem do que pede mais investigação.",
     src: "/images/product/holoscan.webp",
     alt: "Tela do HOLOSCAN com o radar dos cinco sistemas e a lista “Onde olhar primeiro”.",
   },
   {
     id: "ferramentas",
     title: "Ferramentas",
-    caption: "OQ³: desejo, necessidade e capacidade — uma das ferramentas do módulo Corpo.",
+    caption: "OQ³, uma das ferramentas de Corpo: desejo, necessidade e capacidade.",
     src: "/images/product/ferramentas.webp",
     alt: "Ferramenta OQ³ do módulo Corpo, com as três perguntas: quer, precisa e consegue.",
   },
-  { id: "playbook", title: "Playbook", caption: "Caminhos possíveis organizados a partir do atendimento.", src: "", alt: "" },
-  { id: "resultado", title: "Resultado HOLOS", caption: "A entrega ao paciente, construída pela nutricionista.", src: "", alt: "" },
+  { id: "playbook", title: "Playbook HOLOS", caption: "Focos e estratégias possíveis, para apoiar a sua decisão.", src: "", alt: "" },
+  { id: "resultado", title: "Resultado HOLOS", caption: "O documento que o paciente leva, construído por você.", src: "", alt: "" },
   {
     id: "evolucao",
     title: "Evolução",
-    caption: "Duas aplicações lado a lado, sem cálculo automático de melhora ou piora.",
+    caption: "Antes e Agora lado a lado, sem cálculo automático de melhora ou piora.",
     src: "/images/product/evolucao.webp",
     alt: "Tela de evolução do HOLOSCAN comparando duas aplicações, com radar tracejado e preenchido e as notas de cada sistema.",
   },
@@ -164,43 +187,43 @@ export interface FaqItem {
 export const FAQ: FaqItem[] = [
   {
     q: "Preciso instalar alguma coisa?",
-    a: "Não. O HoloHacking é uma plataforma on-line: você acessa pelo navegador, sem instalar programas.",
+    a: "Não. O HoloHacking funciona no navegador, sem instalar programas.",
   },
   {
     q: "Funciona no celular?",
-    a: "Sim. A interface se adapta a telas menores. Para conduzir o atendimento completo, telas maiores — computador ou tablet — costumam ser mais confortáveis.",
+    a: "Sim, pelo navegador. A interface se adapta a telas menores.",
   },
   {
     q: "O HOLOSCAN faz diagnóstico?",
-    a: "Não. O HOLOSCAN organiza os relatos do paciente e mostra áreas que merecem maior investigação. Ele não substitui diagnóstico clínico, exames ou o julgamento profissional.",
+    a: "Não. O HOLOSCAN organiza os relatos do atendimento em cinco territórios e ajuda a visualizar onde vale investigar com mais atenção. Não é diagnóstico e não substitui exames nem o julgamento profissional.",
   },
   {
-    q: "A plataforma decide a conduta pelo profissional?",
-    a: "Não. O HOLOSCAN e o Playbook organizam informações e caminhos possíveis. Quem interpreta, escolhe as estratégias e define a conduta é sempre a nutricionista.",
+    q: "A plataforma decide a conduta?",
+    a: "Não. O HOLOSCAN e o Playbook HOLOS reúnem informações e possibilidades. Quem interpreta, escolhe as estratégias e define a conduta é sempre a nutricionista.",
   },
   {
     q: "Preciso aplicar todas as ferramentas?",
-    a: "Não. As ferramentas são escolhidas de acordo com cada atendimento. Você aprofunda apenas onde fizer sentido.",
+    a: "Não. Você escolhe as ferramentas de acordo com cada atendimento e aprofunda apenas onde fizer sentido.",
   },
   {
     q: "Como funciona o Resultado HOLOS?",
-    a: "Ao final do atendimento, a nutricionista organiza o que foi compreendido — momento atual, foco da fase, estratégias e próximos passos — em um documento claro para o paciente, com apoio do Playbook.",
+    a: "Ao final do atendimento, você organiza o que foi compreendido — momento atual, foco desta fase, estratégias escolhidas e próximos passos — em um documento claro para o paciente, com apoio do Playbook HOLOS.",
   },
   {
     q: "Como funciona o retorno?",
-    a: "O histórico fica registrado na ficha do paciente. No retorno, a tela de Evolução coloca antes e agora lado a lado, para que o acompanhamento continue de onde parou.",
+    a: "O contexto fica registrado na ficha do paciente. No retorno, Antes e Agora aparecem lado a lado para apoiar a sua leitura do que mudou. O sistema não calcula melhora ou piora.",
   },
   {
     q: "Posso gerar PDF?",
-    a: "Sim. O Resultado HOLOS pode ser salvo em PDF para ser compartilhado com o paciente pelo canal que você preferir.",
+    a: "Sim. O Resultado HOLOS pode ser gerado em PDF e compartilhado pelo canal que você já usa com o paciente, como o WhatsApp.",
   },
   {
     q: "Como recebo o acesso?",
-    a: "As instruções de acesso são enviadas após a confirmação da inscrição.",
+    a: "A forma de acesso será apresentada junto com as condições de acesso.",
   },
   {
     q: "O paciente usa o sistema?",
-    a: "O paciente participa respondendo ao Mapeamento Holístico por um link e recebe o Resultado HOLOS. A condução do atendimento dentro da plataforma é feita pela nutricionista.",
+    a: "O paciente participa pelo link do Mapeamento Holístico e recebe o Resultado HOLOS, sem precisar criar conta. A condução do atendimento na plataforma é feita pela nutricionista.",
   },
 ];
 

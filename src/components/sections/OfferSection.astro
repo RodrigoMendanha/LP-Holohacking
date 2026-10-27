@@ -12,6 +12,8 @@ import {
   SUPPORT,
   UPDATES,
   BONUSES,
+  PAYMENT_METHODS,
+  ACCESS_INFO,
 } from "../../data/site";
 
 // O que a plataforma reúne — os módulos apresentados na própria página.
@@ -26,7 +28,9 @@ const inclui = [
 
 const condicoes = (
   [
+    { t: PAYMENT_METHODS, i: "grid" },
     { t: ACCESS_DURATION, i: "calendar" },
+    { t: ACCESS_INFO, i: "mail" },
     { t: GUARANTEE, i: "shield" },
     { t: SUPPORT, i: "message" },
     { t: UPDATES, i: "refresh" },

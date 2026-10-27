@@ -1,11 +1,12 @@
 ---
 import Radar from "../ui/Radar.astro";
 
-// Valores ilustrativos. A tela mostra antes e agora lado a lado e não
-// rotula "melhor" ou "pior" — quem interpreta é o profissional.
+// Valores fictícios e de propósito neutros: dois sobem, dois descem e um
+// fica praticamente igual. A tela mostra Antes e Agora lado a lado e não
+// rotula "melhor" ou "pior" — sem seta, sem cor de ganho/perda.
 const sistemas = ["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"];
 const antes = [5.4, 4.6, 6.2, 5.1, 4.8];
-const agora = [6.6, 5.9, 7.0, 4.9, 6.3];
+const agora = [6.1, 4.2, 6.3, 4.6, 5.5];
 const fmt = (n: number) => n.toFixed(1).replace(".", ",");
 ---
 
@@ -15,9 +16,10 @@ const fmt = (n: number) => n.toFixed(1).replace(".", ",");
       <span class="eyebrow" data-reveal>Evolução</span>
       <h2 id="evolucao-titulo" data-reveal style="--i:1">No retorno, você <em>não começa do zero.</em></h2>
       <p data-reveal style="--i:2">
-        O HoloHacking preserva a continuidade entre encontros para que o acompanhamento tenha contexto. Antes e agora
-        aparecem lado a lado — a leitura do que mudou é sua.
+        O HoloHacking preserva o contexto entre encontros. No retorno, Antes e Agora aparecem lado a lado para apoiar
+        sua leitura do que mudou.
       </p>
+      <p class="evo-leitura" data-reveal style="--i:3">O sistema não calcula melhora ou piora. <em>A leitura é sua.</em></p>
     </header>
 
     <figure class="evo-painel" data-reveal>
@@ -44,12 +46,12 @@ const fmt = (n: number) => n.toFixed(1).replace(".", ",");
             <span>Antes</span>
             <b class="numero">58</b>
           </div>
-          <span class="evo-seta" aria-hidden="true">→</span>
-          <div class="evo-um evo-um--agora">
+          <span class="evo-divisor" aria-hidden="true"></span>
+          <div class="evo-um">
             <span>Agora</span>
-            <b class="numero">63</b>
+            <b class="numero">57</b>
           </div>
-          <span class="evo-indice-rot">Índice HOLOS</span>
+          <span class="evo-indice-rot">Índice HOLOS · não representa percentual de saúde</span>
         </div>
 
         <table class="evo-tabela">
@@ -74,12 +76,20 @@ const fmt = (n: number) => n.toFixed(1).replace(".", ",");
           </tbody>
         </table>
       </div>
-      <figcaption class="mock-nota evo-nota">Ilustração · valores fictícios, sem interpretação automática</figcaption>
+      <figcaption class="mock-nota evo-nota">Valores fictícios. Sem interpretação automática.</figcaption>
     </figure>
   </div>
 </section>
 
 <style>
+  .evo-leitura {
+    margin-top: 1rem;
+    font-family: var(--fonte-display);
+    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem) !important;
+    font-weight: 500;
+    color: var(--titulo) !important;
+  }
+  .evo-leitura em { color: var(--acento); }
   .evo-painel {
     display: grid;
     gap: clamp(2rem, 1.5rem + 3vw, 4rem);
@@ -130,20 +140,14 @@ const fmt = (n: number) => n.toFixed(1).replace(".", ",");
     color: var(--texto-suave);
   }
   .evo-um b {
-    font-size: 2.4rem;
-    font-weight: 400;
-    color: var(--texto-suave);
-  }
-  .evo-um--agora span { color: var(--acento); }
-  .evo-um--agora b {
-    font-size: 3.6rem;
-    font-weight: 600;
+    font-size: 3rem;
+    font-weight: 500;
     color: var(--titulo);
   }
-  .evo-seta {
-    font-size: 1.6rem;
-    color: var(--dourado);
-    padding-bottom: 0.5rem;
+  .evo-divisor {
+    align-self: stretch;
+    width: 1px;
+    background: var(--linha);
   }
   .evo-indice-rot {
     flex-basis: 100%;
@@ -175,11 +179,11 @@ const fmt = (n: number) => n.toFixed(1).replace(".", ",");
     font-weight: 400;
     color: var(--texto);
   }
-  .evo-tabela td { color: var(--texto-suave); width: 5rem; }
-  .evo-tabela td:last-child {
+  .evo-tabela td { width: 5rem; }
+  .evo-tabela td {
     font-family: var(--fonte-display);
-    font-size: 1.15rem;
-    font-weight: 600;
+    font-size: 1.12rem;
+    font-weight: 500;
     color: var(--titulo);
   }
   .evo-tabela tr:last-child th,

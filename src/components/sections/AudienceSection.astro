@@ -1,5 +1,6 @@
 ---
 import Icon from "../ui/Icon.astro";
+import CtaButton from "../ui/CtaButton.astro";
 
 const sim = [
   "É nutricionista",
@@ -12,9 +13,10 @@ const sim = [
 ];
 const nao = [
   "Procura diagnóstico automático",
-  "Quer que um software decida a conduta",
+  "Quer que um software escolha a conduta",
   "Busca dieta automática",
   "Quer um protocolo rígido",
+  "Procura uma ferramenta que pense no lugar do profissional",
 ];
 ---
 
@@ -22,7 +24,9 @@ const nao = [
   <div class="container">
     <header class="cabeca cabeca--centro">
       <span class="eyebrow" data-reveal>Para quem é</span>
-      <h2 id="publico-titulo" data-reveal style="--i:1">Feito para quem conduz <em>com profundidade.</em></h2>
+      <h2 id="publico-titulo" data-reveal style="--i:1">
+        Feito para nutricionistas que querem conduzir com profundidade <em>sem perder estrutura.</em>
+      </h2>
     </header>
 
     <div class="publico-grade">
@@ -53,10 +57,19 @@ const nao = [
         </ul>
       </div>
     </div>
+
+    <div class="publico-cta" data-reveal>
+      <CtaButton location="audience" />
+    </div>
   </div>
 </section>
 
 <style>
+  .publico-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(2.25rem, 1.75rem + 2vw, 3rem);
+  }
   .publico-grade {
     display: grid;
     gap: 1.25rem;

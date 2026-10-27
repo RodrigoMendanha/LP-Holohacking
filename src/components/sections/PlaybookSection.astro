@@ -1,6 +1,6 @@
 ---
 import Icon from "../ui/Icon.astro";
-import { PLAYBOOK_STRATEGIES } from "../../data/site";
+import { PLAYBOOK_SYSTEMS, PLAYBOOK_FOCI, PLAYBOOK_STRATEGIES } from "../../data/site";
 
 // Cartões ilustrativos: só etiquetas e linhas-esqueleto — nenhuma estratégia
 // clínica inventada.
@@ -14,27 +14,27 @@ const cartoes = [
 <section class="secao secao--creme-claro playbook" id="playbook" aria-labelledby="playbook-titulo">
   <div class="container playbook-grade">
     <div class="playbook-texto">
-      <span class="eyebrow" data-reveal>Playbook de Estratégias HOLOS</span>
+      <span class="eyebrow" data-reveal>Playbook HOLOS</span>
       <h2 id="playbook-titulo" data-reveal style="--i:1">Da investigação para a <em>estratégia.</em></h2>
       <p class="playbook-lead" data-reveal style="--i:2">
-        O Playbook de Estratégias HOLOS organiza caminhos possíveis a partir do que apareceu no atendimento — para
-        que a conduta tenha estrutura, sem perder a sua assinatura.
+        Depois de investigar e aprofundar, o desafio é transformar o que apareceu em uma direção prática. O Playbook
+        HOLOS organiza possibilidades de foco e estratégias para apoiar essa decisão.
       </p>
 
       <dl class="playbook-numeros">
         <div data-reveal style="--i:0">
+          <dt>sistemas</dt>
+          <dd class="numero">{PLAYBOOK_SYSTEMS}</dd>
+        </div>
+        <div data-reveal style="--i:1">
+          <dt>focos</dt>
+          <dd class="numero">{PLAYBOOK_FOCI}</dd>
+        </div>
+        <div data-reveal style="--i:2">
           <dt>estratégias</dt>
           <dd class="numero">{PLAYBOOK_STRATEGIES}</dd>
         </div>
-        <div data-reveal style="--i:1">
-          <dt>sistemas</dt>
-          <dd class="numero">5</dd>
-        </div>
-        <div data-reveal style="--i:2">
-          <dt>dimensões</dt>
-          <dd class="numero numero--texto">Corpo · Mente · Espírito</dd>
-        </div>
-        <div data-reveal style="--i:3">
+        <div class="playbook-naturezas" data-reveal style="--i:3">
           <dt>naturezas</dt>
           <dd class="numero numero--texto">Ação · Observação · Reflexão</dd>
         </div>
@@ -43,6 +43,7 @@ const cartoes = [
       <blockquote class="playbook-mensagem" data-reveal>
         <p>O Playbook orienta. <em>A decisão continua sendo profissional.</em></p>
       </blockquote>
+      <p class="playbook-escolha" data-reveal>Nada vai para o paciente sem a sua escolha.</p>
     </div>
 
     <figure class="playbook-visual" data-reveal style="--i:2">
@@ -102,13 +103,21 @@ const cartoes = [
   }
   .playbook-numeros {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1px;
     margin-top: 2.25rem;
     border-radius: var(--raio-card);
     overflow: hidden;
     border: 1px solid var(--linha);
     background: var(--linha);
+  }
+  .playbook-numeros .playbook-naturezas { grid-column: 1 / -1; }
+  .playbook-escolha {
+    margin-top: 1rem;
+    padding-left: 1.4rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--texto-suave);
   }
   .playbook-numeros div {
     display: flex;

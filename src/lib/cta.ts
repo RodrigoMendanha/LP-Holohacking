@@ -1,7 +1,7 @@
 /* Uma origem só para todo CTA da página. Ver CHECKOUT_URL em data/site.ts. */
 import { CHECKOUT_URL, CTA_FALLBACK_URL } from "../data/site";
 
-export type CtaLocation = "header" | "hero" | "vsl" | "result" | "offer" | "final" | "menu";
+export type CtaLocation = "header" | "hero" | "vsl" | "result" | "audience" | "offer" | "final" | "menu";
 
 export interface CtaTarget {
   /** null = sem destino: o botão é renderizado desativado (só na oferta). */

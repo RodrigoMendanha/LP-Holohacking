@@ -4,13 +4,14 @@ import Triad from "../ui/Triad.astro";
 import Icon from "../ui/Icon.astro";
 import { HOLOSCAN_QUESTIONS } from "../../data/site";
 
-// Mesma ordem e mesmos rótulos curtos do radar do produto.
+// Os cinco territórios organizacionais (ordem do briefing). O radar usa a
+// ordem e os rótulos curtos do próprio produto.
 const sistemas = [
-  "Sistema Fúngico",
-  "Sistema Ácido-Inflamatório",
-  "Sistema Metabólico",
-  "Sistema Detox + Linfático",
-  "Sistema Mental-Emocional-Espiritual",
+  "Metabólico",
+  "Fúngico",
+  "Ácido-Inflamatório",
+  "Detox + Linfático",
+  "Mental-Emocional-Espiritual",
 ];
 const rotulos = ["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"];
 ---
@@ -21,18 +22,22 @@ const rotulos = ["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"];
     <header class="cabeca cabeca--centro">
       <span class="eyebrow" data-reveal>HOLOSCAN</span>
       <h2 id="holoscan-titulo" data-reveal style="--i:1">
-        Uma leitura integral para saber <em>onde aprofundar.</em>
+        Uma leitura estruturada para saber <em>onde aprofundar.</em>
       </h2>
       <p data-reveal style="--i:2">
-        O HOLOSCAN é uma tecnologia de leitura integral baseada em {HOLOSCAN_QUESTIONS} perguntas. Ele organiza os
-        relatos do paciente para ajudar o profissional a visualizar áreas que merecem maior investigação.
+        O HOLOSCAN é uma aplicação estruturada de {HOLOSCAN_QUESTIONS} perguntas que organiza os relatos do
+        atendimento em cinco territórios e ajuda a visualizar onde vale investigar com mais atenção.
+      </p>
+      <p class="holoscan-nao" data-reveal style="--i:3">
+        <Icon name="shield" size={16} />
+        O HOLOSCAN não é diagnóstico.
       </p>
     </header>
 
     <div class="holoscan-grade">
       <figure class="painel holoscan-painel" data-reveal>
         <div class="holoscan-painel-topo">
-          <span class="eyebrow">Leitura integral</span>
+          <span class="eyebrow">Leitura estruturada</span>
           <span class="pilula">Ilustração</span>
         </div>
         <div class="holoscan-radar">
@@ -40,7 +45,7 @@ const rotulos = ["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"];
             values={[6.8, 5.2, 7.9, 6.1, 7.4]}
             labels={rotulos}
             size={420}
-            title="Radar HOLOSCAN ilustrativo, com os cinco sistemas e valores fictícios"
+            title="Radar HOLOSCAN ilustrativo, com os cinco territórios e valores fictícios"
           />
         </div>
         <figcaption class="holoscan-legenda">Valores fictícios · peça ilustrativa</figcaption>
@@ -50,22 +55,22 @@ const rotulos = ["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"];
         <li class="metrica" data-reveal style="--i:0">
           <span class="metrica-num numero">{HOLOSCAN_QUESTIONS}</span>
           <span class="metrica-rot">perguntas</span>
-          <span class="metrica-desc">respondidas pelo paciente</span>
+          <span class="metrica-desc">aplicadas pela nutricionista durante o atendimento</span>
         </li>
         <li class="metrica" data-reveal style="--i:1">
           <span class="metrica-num numero">5</span>
-          <span class="metrica-rot">sistemas</span>
-          <span class="metrica-desc">que organizam a leitura em territórios</span>
+          <span class="metrica-rot">territórios</span>
+          <span class="metrica-desc">organizacionais de investigação</span>
         </li>
         <li class="metrica" data-reveal style="--i:2">
           <span class="metrica-num numero metrica-num--texto">Índice <em>HOLOS</em></span>
           <span class="metrica-rot">visão de conjunto</span>
-          <span class="metrica-desc">uma síntese da leitura, de 0 a 100</span>
+          <span class="metrica-desc">Organiza as respostas desta aplicação e não representa percentual de saúde.</span>
         </li>
         <li class="metrica" data-reveal style="--i:3">
           <span class="metrica-num numero metrica-num--texto">Corpo · Mente · Espírito</span>
-          <span class="metrica-rot">tríade</span>
-          <span class="metrica-desc">as três dimensões do método</span>
+          <span class="metrica-rot">perspectivas</span>
+          <span class="metrica-desc">as três perspectivas do método</span>
         </li>
         <li class="metrica metrica--larga" data-reveal style="--i:4">
           <div>
@@ -84,8 +89,8 @@ const rotulos = ["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"];
     <div class="holoscan-base">
       <div class="sistemas" data-reveal>
         <span class="eyebrow">Os cinco sistemas</span>
-        <h3>Territórios de leitura, <em>não diagnósticos.</em></h3>
-        <p>Cada sistema reúne relatos que costumam caminhar juntos e indica onde olhar com mais atenção.</p>
+        <h3>Cinco territórios organizacionais <em>do HOLOSCAN.</em></h3>
+        <p>Territórios de leitura e investigação, não diagnósticos.</p>
         <ol role="list">
           {
             sistemas.map((s, i) => (
@@ -99,9 +104,9 @@ const rotulos = ["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"];
       </div>
 
       <div class="triade-bloco" data-reveal style="--i:1">
-        <span class="eyebrow">Tríade</span>
+        <span class="eyebrow">Perspectivas do método</span>
         <h3>Corpo · Mente · <em>Espírito</em></h3>
-        <p>A mesma leitura também é vista pelas três dimensões que dão nome ao método.</p>
+        <p>As mesmas respostas também são vistas pelas três perspectivas do método.</p>
         <div class="triade-figura">
           <Triad size={300} />
         </div>
@@ -111,8 +116,7 @@ const rotulos = ["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"];
     <p class="seguranca" data-reveal>
       <Icon name="shield" size={18} />
       <span>
-        O HOLOSCAN organiza informações e prioridades de investigação. Não substitui diagnóstico clínico, exames ou
-        julgamento profissional.
+        O HOLOSCAN apoia a investigação: não é diagnóstico e não substitui exames nem o julgamento profissional.
       </span>
     </p>
   </div>
@@ -130,6 +134,19 @@ const rotulos = ["Fúngico", "Inflamatório", "Metabólico", "Detox", "Mental"];
   }
   .holoscan .container { position: relative; }
 
+  .holoscan-nao {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    padding: 0.45rem 1rem;
+    border-radius: var(--raio-pilula);
+    border: 1px solid rgba(201, 163, 90, 0.45);
+    font-size: 0.85rem !important;
+    font-weight: 500;
+    color: var(--dourado-claro) !important;
+  }
+  .holoscan-nao :global(svg) { color: var(--dourado); }
   .holoscan-grade {
     display: grid;
     gap: 1.5rem;
