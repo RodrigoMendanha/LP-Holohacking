@@ -1,10 +1,10 @@
 ---
-/* RODRIGO / ORIGEM — [CONTEÚDO DO RODRIGO SERÁ ADICIONADO]
-   Estrutura pronta para foto, história, origem do método, por que criou o
-   HoloHacking e formação (CREATOR_* em data/site.ts). Sem CREATOR_NAME, a
-   seção mostra só o texto institucional sobre o método — nunca uma
-   biografia inventada. */
+/* RODRIGO / ORIGEM — conteúdo em CREATOR_* (data/site.ts), copiado do site
+   da Formação em Nutrição Holística. Sem CREATOR_NAME, a seção mostra só o
+   texto institucional sobre o método — nunca uma biografia inventada. */
 import {
+  CREATOR_TITLE,
+  CREATOR_IMAGE_ALT,
   CREATOR_NAME,
   CREATOR_ROLE,
   CREATOR_IMAGE,
@@ -24,7 +24,7 @@ const temCriador = Boolean(CREATOR_NAME);
         CREATOR_IMAGE ? (
           <img
             src={CREATOR_IMAGE}
-            alt={CREATOR_NAME ? `Retrato de ${CREATOR_NAME}` : ""}
+            alt={CREATOR_IMAGE_ALT || (CREATOR_NAME ? `Retrato de ${CREATOR_NAME}` : "")}
             width="640"
             height="800"
             loading="lazy"
@@ -43,11 +43,14 @@ const temCriador = Boolean(CREATOR_NAME);
         temCriador ? (
           <>
             <span class="eyebrow" data-reveal>Por trás da plataforma</span>
-            <h2 id="criador-titulo" data-reveal style="--i:1">{CREATOR_NAME}</h2>
+            <h2 id="criador-titulo" data-reveal style="--i:1">{CREATOR_TITLE || CREATOR_NAME}</h2>
+            {CREATOR_TITLE && <p class="criador-nome" data-reveal style="--i:2">{CREATOR_NAME}</p>}
             {CREATOR_ROLE && <p class="criador-papel" data-reveal style="--i:2">{CREATOR_ROLE}</p>}
-            {CREATOR_BIO.map((p) => (
-              <p data-reveal>{p}</p>
-            ))}
+            <div class="criador-bio">
+              {CREATOR_BIO.map((p) => (
+                <p data-reveal>{p}</p>
+              ))}
+            </div>
             {CREATOR_METHOD_ORIGIN.length > 0 && (
               <div class="criador-bloco" data-reveal>
                 <h3>A origem do método</h3>
@@ -83,12 +86,14 @@ const temCriador = Boolean(CREATOR_NAME);
           </>
         )
       }
-      <p class="criador-assinatura" data-reveal>Corpo · Mente · Espírito — em equilíbrio, em propósito.</p>
+      {!temCriador && <p class="criador-assinatura" data-reveal>Corpo · Mente · Espírito — em equilíbrio, em propósito.</p>}
     </div>
   </div>
 </section>
 
 <style>
+  /* overflow:hidden (de .secao) impediria a foto fixa; clip corta igual sem criar rolagem */
+  .criador { overflow: clip; }
   .criador-grade {
     display: grid;
     gap: clamp(2.5rem, 2rem + 3vw, 4.5rem);
@@ -102,6 +107,7 @@ const temCriador = Boolean(CREATOR_NAME);
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+    object-position: 50% 20%;
     border-radius: var(--raio);
     box-shadow: var(--sombra-forte);
   }
@@ -127,6 +133,19 @@ const temCriador = Boolean(CREATOR_NAME);
     max-width: 58ch;
   }
   .criador-texto p + p { margin-top: 1rem; }
+  .criador-nome {
+    font-family: var(--fonte-display);
+    font-size: clamp(1.35rem, 1.2rem + 0.6vw, 1.7rem) !important;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--acento) !important;
+    margin: -0.5rem 0 1.5rem;
+  }
+  .criador-texto .criador-bio p {
+    font-size: 1.02rem;
+    line-height: 1.75;
+  }
+  .criador-texto .criador-bio p + p { margin-top: 0.9rem; }
   .criador-bloco { margin-top: 1.75rem; }
   .criador-bloco h3 {
     font-size: var(--fs-h4);
@@ -158,5 +177,11 @@ const temCriador = Boolean(CREATOR_NAME);
   @media (min-width: 900px) {
     .criador-grade { grid-template-columns: 0.8fr 1.2fr; }
     .criador-grade--sem-foto { grid-template-columns: 0.6fr 1.4fr; }
+    /* com a história longa, a foto acompanha a leitura */
+    .criador-grade:not(.criador-grade--sem-foto) { align-items: start; }
+    .criador-grade:not(.criador-grade--sem-foto) .criador-retrato {
+      position: sticky;
+      top: 104px;
+    }
   }
 </style>

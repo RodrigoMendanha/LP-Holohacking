@@ -54,7 +54,7 @@ nunca quebra a página — ele vira um estado neutro e honesto.
 | Oferta | `PLAN_NAME`, `PRICE`, `INSTALLMENTS`, `PAYMENT_METHODS`, `ACCESS_DURATION`, `ACCESS_INFO`, `GUARANTEE`, `SUPPORT`, `UPDATES`, `BONUSES` | "Condições de acesso serão apresentadas em breve." — cada linha vazia simplesmente não aparece |
 | Números do produto na copy | `HOLOSCAN_QUESTIONS` (81), `PLAYBOOK_SYSTEMS` (5), `PLAYBOOK_FOCI` (15), `PLAYBOOK_STRATEGIES` (75) | — |
 | CTA do topo | `TOP_CTA_MODE` (`"navegacao"` = "Ver como funciona"; `"comercial"` = CTA de compra) | — |
-| Rodrigo / origem | `CREATOR_NAME`, `CREATOR_ROLE`, `CREATOR_IMAGE`, `CREATOR_BIO`, `CREATOR_METHOD_ORIGIN`, `CREATOR_WHY`, `CREATOR_CREDENTIALS` | texto institucional sobre o método, com o símbolo da marca |
+| Rodrigo / origem | `CREATOR_TITLE`, `CREATOR_NAME`, `CREATOR_IMAGE_ALT`, `CREATOR_ROLE`, `CREATOR_IMAGE`, `CREATOR_BIO`, `CREATOR_METHOD_ORIGIN`, `CREATOR_WHY`, `CREATOR_CREDENTIALS` | texto institucional sobre o método, com o símbolo da marca |
 | Depoimentos | `TESTIMONIALS` | **a seção inteira some** |
 | Capturas do produto | `PRODUCT_SHOTS[].src` e `.alt` | moldura ilustrativa com o selo "Captura do produto em breve" |
 | Perguntas frequentes | `FAQ` | — |
@@ -85,7 +85,7 @@ então as funcionalidades. Cada seção responde a uma pergunta:
 | 12 | Autonomia profissional | Quem decide? | `ProfessionalControlSection.astro` |
 | 13 | Benefícios | O que muda na prática? | `BenefitsSection.astro` |
 | 14 | Para quem é | É para mim? | `AudienceSection.astro` |
-| 15 | Rodrigo / origem | Quem está por trás? — **placeholder** | `CreatorSection.astro` |
+| 15 | Rodrigo / origem | Quem está por trás? — texto e foto do site da Formação | `CreatorSection.astro` |
 | 16 | Prova social | Quem já usa? — **oculta sem depoimentos** | `Testimonials.astro` |
 | 17 | Oferta | Como acesso? — **"em breve" sem condições** | `OfferSection.astro` |
 | 18 | FAQ | — | `FAQ.astro` (conteúdo em `site.ts`) |

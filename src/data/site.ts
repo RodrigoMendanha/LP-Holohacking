@@ -99,21 +99,34 @@ export const PLAYBOOK_FOCI = 15;
 export const PLAYBOOK_STRATEGIES = 75;
 
 /* ---------------------------------------------------------------------------
-   RODRIGO / ORIGEM — [CONTEÚDO DO RODRIGO SERÁ ADICIONADO]
-   Nada aqui é inventado. Enquanto CREATOR_NAME estiver vazio, a seção
-   mostra só o texto institucional sobre o método (sem biografia).
+   RODRIGO / ORIGEM — texto copiado literalmente da seção "Sobre o criador"
+   do site da Formação em Nutrição Holística (src/lib/data.ts → CRIADOR),
+   a pedido do cliente. Foto: banner_rodrigo.jpg do mesmo site.
+   CREATOR_NAME vazio = a seção volta ao texto institucional sobre o método.
 --------------------------------------------------------------------------- */
-export const CREATOR_NAME = "";
+/** Título da seção (aparece acima do nome). */
+export const CREATOR_TITLE = "Conheça o criador do Método da Nutrição Holística®";
+export const CREATOR_NAME = "Rodrigo Mendanha";
 export const CREATOR_ROLE = "";
-/** Caminho em /public, ex.: "/images/creator/rodrigo.jpg" (retrato 4:5). */
-export const CREATOR_IMAGE = "";
+/** Caminho em /public. */
+export const CREATOR_IMAGE = "/images/creator/rodrigo-mendanha.webp";
+export const CREATOR_IMAGE_ALT = "Rodrigo Mendanha, criador do método da Nutrição Holística";
 /** A história: um ou mais parágrafos. */
-export const CREATOR_BIO: string[] = [];
-/** A origem do método: um ou mais parágrafos. */
+export const CREATOR_BIO: string[] = [
+  "Desde a faculdade, eu percebi algo que mudaria para sempre minha visão sobre Nutrição: os nutrientes e calorias eram apenas a ponta do iceberg.",
+  "Como você, eu também via pacientes seguindo dietas perfeitas no papel, mas que não conseguiam resultados duradouros. Outros abandonavam o tratamento mesmo quando as mudanças começavam a aparecer.",
+  "Algo estava faltando.",
+  "Foi quando comecei a perceber que a Nutrição vai muito além do prato. Cada pessoa carrega uma história única, medos, traumas e sonhos que impactam diretamente sua relação com a comida.",
+  "Comecei a testar uma abordagem diferente com pessoas próximas, abordagem essa que considerava corpo, mente e espírito como um todo integrado.",
+  "Os resultados foram surpreendentes.",
+  "Mas eu precisava de mais, participei de mais de 100 congressos e cursos, estudei diferentes linhas terapêuticas, testei protocolos, refinei a metodologia.",
+  "Foi aí que nasceu a Nutrição Holística®, o método que tem transformado a vida de milhares de pacientes e centenas de nutricionistas pelo Brasil.",
+  "Hoje, depois de atender mais de 4.000 pacientes e mentorar mais de 500 nutricionistas, posso dizer com certeza:",
+  "Existe um caminho melhor. Um que une ciência e visão integral do ser humano, e é exatamente este caminho que quero compartilhar com você.",
+];
+/** Blocos opcionais extras (vazios = não aparecem). */
 export const CREATOR_METHOD_ORIGIN: string[] = [];
-/** Por que criou o HoloHacking: um ou mais parágrafos. */
 export const CREATOR_WHY: string[] = [];
-/** Formação e credenciais, uma por linha. Ex.: "Nutricionista — CRN X 0000" */
 export const CREATOR_CREDENTIALS: string[] = [];
 
 /* ---------------------------------------------------------------------------
