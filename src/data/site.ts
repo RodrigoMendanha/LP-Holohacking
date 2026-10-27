@@ -226,8 +226,9 @@ export const TESTIMONIAL_IMAGES: TestimonialImage[] = [
 ];
 
 /* ---------------------------------------------------------------------------
-   PRODUTO POR DENTRO — capturas reais do app, feitas no modo demonstração
-   com a paciente fictícia "Marina Alves" (caso-marina.js do produto).
+   PRODUTO POR DENTRO — capturas reais do app, feitas com pacientes fictícias:
+   "Marina Alves" (modo demonstração) e "Marina Ficticia" (fixture de teste
+   do produto, servidor simulado — nenhum dado real).
    Nunca usar paciente real.
    src vazio = moldura ilustrativa com o aviso "Captura do produto em breve".
 --------------------------------------------------------------------------- */
@@ -261,8 +262,20 @@ export const PRODUCT_SHOTS: ProductShot[] = [
     src: "/images/product/ferramentas.webp",
     alt: "Ferramenta OQ³ do módulo Corpo, com as três perguntas: quer, precisa e consegue.",
   },
-  { id: "playbook", title: "Playbook HOLOS", caption: "Focos e estratégias possíveis, para apoiar a sua decisão.", src: "", alt: "" },
-  { id: "resultado", title: "Resultado HOLOS", caption: "O documento que o paciente leva, construído por você.", src: "", alt: "" },
+  {
+    id: "playbook",
+    title: "Playbook HOLOS",
+    caption: "Estratégias de Corpo, Mente e Espírito, escolhidas pela nutricionista.",
+    src: "/images/product/playbook.webp",
+    alt: "Tela do Playbook HOLOS com as estratégias organizadas em Corpo, Mente e Espírito, três delas marcadas pela nutricionista.",
+  },
+  {
+    id: "resultado",
+    title: "Resultado HOLOS",
+    caption: "O documento que o paciente leva, construído por você.",
+    src: "/images/product/resultado.webp",
+    alt: "Resultado HOLOS da paciente fictícia: seu momento agora, foco desta fase e o que vamos trabalhar.",
+  },
   {
     id: "evolucao",
     title: "Evolução",

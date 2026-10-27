@@ -1,14 +1,7 @@
 ---
-import Icon from "../ui/Icon.astro";
+import ZoomDialog from "../ui/ZoomDialog.astro";
 import { PLAYBOOK_SYSTEMS, PLAYBOOK_FOCI, PLAYBOOK_STRATEGIES } from "../../data/site";
 
-// Cartões ilustrativos: só etiquetas e linhas-esqueleto — nenhuma estratégia
-// clínica inventada.
-const cartoes = [
-  { dim: "Corpo", tipo: "Ação", sel: true, w: [86, 64] },
-  { dim: "Mente", tipo: "Observação", sel: false, w: [78, 52] },
-  { dim: "Espírito", tipo: "Reflexão", sel: true, w: [82, 60] },
-];
 ---
 
 <section class="secao secao--creme-claro playbook" id="playbook" aria-labelledby="playbook-titulo">
@@ -47,43 +40,28 @@ const cartoes = [
     </div>
 
     <figure class="playbook-visual" data-reveal style="--i:2">
-      <div class="pb-painel" aria-hidden="true">
-        <div class="pb-topo">
-          <span class="eyebrow">Estratégias possíveis</span>
-          <span class="pb-filtros">
-            <span class="pilula">Sistema</span>
-            <span class="pilula">Dimensão</span>
-          </span>
-        </div>
-        <ul role="list" class="pb-cartoes">
-          {
-            cartoes.map((c) => (
-              <li class:list={["pb-cartao", { "pb-cartao--sel": c.sel }]}>
-                <div class="pb-tags">
-                  <span>{c.dim}</span>
-                  <span>{c.tipo}</span>
-                </div>
-                <span class="esqueleto pb-titulo" style={`width:${c.w[0]}%`} />
-                <span class="esqueleto" style={`width:${c.w[1]}%`} />
-                <span class="pb-sel">
-                  {c.sel ? (
-                    <>
-                      <Icon name="check" size={14} /> escolhida pela nutricionista
-                    </>
-                  ) : (
-                    <>
-                      <Icon name="plus" size={14} /> considerar
-                    </>
-                  )}
-                </span>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-      <figcaption class="mock-nota">Ilustração · conteúdo das estratégias omitido</figcaption>
+      <a
+        class="tela-real"
+        href="/images/product/playbook-focos.webp"
+        data-zoom="playbook"
+        data-zoom-titulo="Playbook HOLOS · Foco desta fase"
+        data-zoom-legenda="Os focos sugeridos vêm das áreas prioritárias do HOLOSCAN. Você escolhe um."
+        data-zoom-alt="Tela real do Playbook HOLOS: focos sugeridos para as duas áreas prioritárias do HOLOSCAN."
+        aria-label="Ampliar a tela do Playbook HOLOS"
+      >
+        <img
+          src="/images/product/playbook-focos.webp"
+          alt="Tela real do Playbook HOLOS, passo “Foco desta fase”: três focos sugeridos para a área Metabólica e três para Detox e Linfático, um deles escolhido pela nutricionista."
+          width="1400"
+          height="852"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+      <figcaption class="mock-nota">Tela real do sistema · paciente fictícia · clique para ampliar</figcaption>
     </figure>
   </div>
+  <ZoomDialog grupo="playbook" item="Tela" />
 </section>
 
 <style>
@@ -155,64 +133,19 @@ const cartoes = [
   }
   .playbook-mensagem em { color: var(--acento); }
 
-  .pb-painel {
-    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  .tela-real {
+    display: block;
     border-radius: var(--raio);
-    background:
-      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201, 163, 90, 0.14), transparent 60%),
-      linear-gradient(165deg, var(--verde-escuro), var(--verde-noite));
+    overflow: hidden;
     border: 1px solid var(--linha);
+    background: #0b3326;
+    padding: clamp(0.5rem, 0.3rem + 0.8vw, 1rem);
     box-shadow: var(--sombra-forte);
-    color: var(--creme);
+    cursor: zoom-in;
+    transition: transform 0.35s var(--ease), border-color 0.35s;
   }
-  .pb-topo {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
-  }
-  .pb-topo .eyebrow { color: var(--dourado); }
-  .pb-filtros { display: flex; gap: 0.4rem; }
-  .pb-filtros .pilula { color: var(--dourado-claro); font-size: 0.6rem; }
-  .pb-cartoes { display: grid; gap: 0.75rem; }
-  .pb-cartao {
-    display: grid;
-    gap: 0.55rem;
-    padding: 1rem 1.1rem;
-    border-radius: var(--raio-card);
-    border: 1px solid rgba(201, 163, 90, 0.2);
-    background: rgba(244, 239, 227, 0.04);
-    color: var(--creme);
-  }
-  .pb-cartao--sel {
-    border-color: var(--dourado);
-    background: rgba(201, 163, 90, 0.09);
-  }
-  .pb-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-  .pb-tags span {
-    font-size: 0.58rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--dourado);
-    padding: 0.2rem 0.55rem;
-    border-radius: var(--raio-pilula);
-    border: 1px solid rgba(201, 163, 90, 0.35);
-  }
-  .pb-cartao .esqueleto { opacity: 0.2; }
-  .pb-cartao .pb-titulo { height: 10px; opacity: 0.32; }
-  .pb-sel {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.2rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    color: rgba(237, 232, 218, 0.55);
-  }
-  .pb-cartao--sel .pb-sel { color: var(--dourado-claro); }
+  .tela-real:hover { transform: translateY(-4px); border-color: var(--dourado); }
+  .tela-real img { width: 100%; height: auto; }
 
   @media (min-width: 1000px) {
     .playbook-grade { grid-template-columns: 1fr 1fr; }

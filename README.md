@@ -56,7 +56,7 @@ nunca quebra a página — ele vira um estado neutro e honesto.
 | CTA do topo | `TOP_CTA_MODE` (`"navegacao"` = "Ver como funciona"; `"comercial"` = CTA de compra) | — |
 | Rodrigo / origem | `CREATOR_TITLE`, `CREATOR_NAME`, `CREATOR_IMAGE_ALT`, `CREATOR_ROLE`, `CREATOR_IMAGE`, `CREATOR_BIO`, `CREATOR_METHOD_ORIGIN`, `CREATOR_WHY`, `CREATOR_CREDENTIALS` | texto institucional sobre o método, com o símbolo da marca |
 | Depoimentos | `TESTIMONIALS` | **a seção inteira some** |
-| Capturas do produto | `PRODUCT_SHOTS[].src` e `.alt` | moldura ilustrativa com o selo "Captura do produto em breve" |
+| Capturas do produto | `PRODUCT_SHOTS[].src` e `.alt` | moldura ilustrativa com o selo "Captura do produto em breve" (hoje todas têm imagem real) |
 | Perguntas frequentes | `FAQ` | — |
 | Termos, Privacidade, Contato | `LEGAL_URLS` | o item aparece sem link |
 | Razão social, CNPJ, endereço, e-mail | `COMPANY` | a linha não aparece |
@@ -117,6 +117,12 @@ As 4 capturas atuais (`dashboard`, `holoscan`, `ferramentas`, `evolucao`) são t
 feitas no modo demonstração (`?demo=1`) com a paciente fictícia "Marina Alves", com o acesso ao
 Supabase bloqueado — nenhum dado de produção foi lido. Para refazê-las, rode o app localmente,
 entre pelo acesso de desenvolvimento e use `DEMO.irPara(t)` para chegar a cada tela.
+
+As telas de Playbook e Resultado HOLOS (`playbook`, `resultado`, `playbook-focos`,
+`resultado-pagina-1/2`) e o celular do Mapeamento (`mapeamento-celular`) vêm do branch do produto
+`claude/admiring-mccarthy-jke2pf`, rodado com o servidor simulado dos testes
+(`testes/supabase-falso.mjs` + `testes/fixture-direcao.mjs`): pacientes fictícias "Marina Ficticia"
+e "Joana Fictícia", nutricionista "Nutri Fictícia" — nenhum banco real envolvido.
 
 **Trocar o logo:** substitua `public/images/brand/logo-holohacking.png` mantendo o nome (ou ajuste o
 caminho em `src/components/ui/Logo.astro`). Hoje existe só o PNG de 256 px — ver "Pendências".
@@ -183,8 +189,8 @@ Na Vercel/Netlify: comando de build `npm run build`, pasta de saída `dist`.
   nutricionista já usa. Não promete envio automático.
 - **Nomes das ferramentas:** "OQ³ — O Que Quer · Precisa · Consegue" e "PQQ — Escada dos Porquês"
   seguem o briefing; no produto aparecem como "OQ3" e "PQQ — Pra Que Que?". As descrições vêm do produto.
-- **Capturas de Playbook e Resultado HOLOS:** essas telas ainda não existem no app (a emissão de
-  relatório exige sessão no servidor). As duas molduras seguem com "Captura do produto em breve".
+- **Capturas de Playbook e Resultado HOLOS:** feitas a partir de um branch do produto que ainda não
+  está no `main`. Se o layout mudar até a publicação, refaça as capturas.
 - **Aviso na captura do HOLOSCAN:** a tela mostra "Aplicação histórica sem pacote metodológico V1",
   porque a paciente da demo foi calculada pelo motor anterior. Uma demo recalculada no pacote V1
   geraria uma captura sem esse aviso.
