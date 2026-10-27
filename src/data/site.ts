@@ -130,18 +130,84 @@ export const CREATOR_WHY: string[] = [];
 export const CREATOR_CREDENTIALS: string[] = [];
 
 /* ---------------------------------------------------------------------------
-   PROVA SOCIAL — "Quem atende com HoloHacking". Só depoimentos reais e
-   autorizados (de 3 a 6). Lista vazia = seção oculta na página.
+   PROVA SOCIAL — mensagens reais enviadas no chat do "Encontro especial –
+   Software de Nutrição Holística", transcritas LITERALMENTE dos prints
+   (public/images/social-proof). Nada foi reescrito; erros de digitação do
+   chat foram mantidos. Lista vazia = seção oculta na página.
 --------------------------------------------------------------------------- */
+export const TESTIMONIALS_CONTEXT =
+  "Mensagens enviadas ao vivo no chat do encontro especial de apresentação do software às nutricionistas.";
+
 export interface Testimonial {
   quote: string;
   name: string;
+  /** Horário da mensagem no chat, ex.: "22:10" */
+  time?: string;
   /** Ex.: "Nutricionista · São Paulo" */
   role?: string;
-  /** Caminho em /public. Opcional. */
+  /** Foto opcional, em /public. Sem foto, aparecem as iniciais. */
   image?: string;
+  /** Destaque grande, no topo da seção (use em um só). */
+  featured?: boolean;
 }
-export const TESTIMONIALS: Testimonial[] = [];
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    name: "Karen Bordin",
+    time: "22:10",
+    featured: true,
+    quote:
+      "Eu já trabalho com tudo isso mas ficava solto, agora realmente vai me dar clareza, nós ganhamos de um lado e o paciente do outro, parabéns pela excelência",
+  },
+  {
+    name: "Dra Hannah Formigon",
+    time: "22:09",
+    quote:
+      "Poder cuidar de forma holística dos nossos pacientes com uma ferramenta tão espetacular é tudo que faltava no nosso atendimento! Obrigada por criar essa ferramenta com tanto amor e trabalho 💚",
+  },
+  {
+    name: "Maria Inês Rangel Paes",
+    time: "22:11",
+    quote: "Fez muito sentido, facilita o atendimento e traz clareza e segurança para aplicar todas as ferramentas. Parabéns!",
+  },
+  {
+    name: "Henrique Lopes",
+    time: "22:10",
+    quote: "O que todo nutricionista precisa para conduzir com uma transformação na vida do paciente! Parabéns equipe! 🍏",
+  },
+  {
+    name: "Elisa Caetano",
+    time: "20:56",
+    quote: "Perfeito! Somos os nutris do futuro! Que demais! Animada para colocar em prática!",
+  },
+  {
+    name: "Karla Escoda",
+    time: "22:11",
+    quote:
+      "ficou incrivel, tudo. O layout do site, a funcionalidade, a nossa percepção para conscientizadores dos nossos pacientes. Muitas ferramentas que já quero aplicar e transformar a via dos pacientes com esse olhar. Parabéns a todos vocês!!!",
+  },
+];
+
+/** Reações curtas do mesmo chat, na faixa abaixo dos depoimentos. */
+export const TESTIMONIAL_REACTIONS: { text: string; name: string }[] = [
+  { text: "Revolucionário 😍", name: "Erica Lacerda" },
+  { text: "Salvando a vida dos Nutri 🙌", name: "Erica Lacerda" },
+  { text: "É viciante mexer nesse aplicativo... rs", name: "Sabrina Gomes Brochado" },
+  { text: "perfeito, já vou usar", name: "sandra alves" },
+  { text: "simplesmente maravilhoso!", name: "Fran" },
+  { text: "Vocês são espetaculares! fizeram com muita dedicação isso! Ficou maravilhosoooo", name: "Sheila Vidor" },
+];
+
+/** Prints originais do chat (prova), abertos no visualizador. */
+export const TESTIMONIAL_PRINTS: { src: string; alt: string }[] = [
+  { src: "/images/social-proof/print-0013.webp", alt: "Print do chat com as mensagens de Henrique Lopes e Karen Bordin" },
+  { src: "/images/social-proof/print-9999.webp", alt: "Print do chat com as mensagens de Dra Hannah Formigon e Elisa Caetano" },
+  { src: "/images/social-proof/print-0007.webp", alt: "Print do chat com a mensagem de Maria Inês Rangel Paes" },
+  { src: "/images/social-proof/print-0006.webp", alt: "Print do chat com as mensagens de Erica Lacerda e Karla Escoda" },
+  { src: "/images/social-proof/print-9975.webp", alt: "Print do chat com a mensagem de Elisa Caetano" },
+  { src: "/images/social-proof/print-9990.webp", alt: "Print do chat com as mensagens de Erica Lacerda e Sabrina Gomes Brochado" },
+  { src: "/images/social-proof/print-9988.webp", alt: "Print do chat com as mensagens de Fran e sandra alves" },
+  { src: "/images/social-proof/print-9994.webp", alt: "Print do chat com a mensagem de Sheila Vidor" },
+];
 
 /* ---------------------------------------------------------------------------
    PRODUTO POR DENTRO — capturas reais do app, feitas no modo demonstração

@@ -86,7 +86,7 @@ então as funcionalidades. Cada seção responde a uma pergunta:
 | 13 | Benefícios | O que muda na prática? | `BenefitsSection.astro` |
 | 14 | Para quem é | É para mim? | `AudienceSection.astro` |
 | 15 | Rodrigo / origem | Quem está por trás? — texto e foto do site da Formação | `CreatorSection.astro` |
-| 16 | Prova social | Quem já usa? — **oculta sem depoimentos** | `Testimonials.astro` |
+| 16 | Prova social | O que disseram? — depoimentos reais do chat + prints | `Testimonials.astro` |
 | 17 | Oferta | Como acesso? — **"em breve" sem condições** | `OfferSection.astro` |
 | 18 | FAQ | — | `FAQ.astro` (conteúdo em `site.ts`) |
 | 19 | CTA final | — | `FinalCTA.astro` |

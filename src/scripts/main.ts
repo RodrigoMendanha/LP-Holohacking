@@ -125,9 +125,15 @@ function iniciarVsl() {
    miniatura que abriu. Sem JS, o link abre a imagem na mesma aba e o
    "voltar" do navegador traz de volta à página. */
 function iniciarZoom() {
-  const dialogo = document.querySelector<HTMLDialogElement>("[data-zoom-dialog]");
-  const gatilhos = [...document.querySelectorAll<HTMLAnchorElement>("a[data-zoom]")];
-  if (!dialogo || !gatilhos.length || typeof dialogo.showModal !== "function") return;
+  // um visualizador por grupo (galeria do produto, prints dos depoimentos…)
+  document.querySelectorAll<HTMLDialogElement>("dialog[data-zoom-dialog]").forEach(iniciarZoomGrupo);
+}
+
+function iniciarZoomGrupo(dialogo: HTMLDialogElement) {
+  const grupo = dialogo.dataset.zoomDialog || "";
+  const item = dialogo.dataset.zoomItem || "Tela";
+  const gatilhos = [...document.querySelectorAll<HTMLAnchorElement>(`a[data-zoom="${grupo}"]`)];
+  if (!gatilhos.length || typeof dialogo.showModal !== "function") return;
 
   const img = dialogo.querySelector<HTMLImageElement>("[data-zoom-img]")!;
   const titulo = dialogo.querySelector<HTMLElement>("[data-zoom-titulo-alvo]")!;
@@ -139,6 +145,8 @@ function iniciarZoom() {
   let origem: HTMLElement | null = null;
   let comHistorico = false;
   let yAberto = 0;
+  // só o grupo que abriu por último devolve a rolagem no popstate
+  let devolverRolagem = false;
   // fechar chama history.back(); o navegador tentaria restaurar a rolagem
   // de uma entrada antiga (ex.: a seção de um link clicado antes). A posição
   // de quando a imagem abriu é que vale.
@@ -157,6 +165,7 @@ function iniciarZoom() {
     [60, 160, 320].forEach((ms) => setTimeout(voltarAoLugar, ms));
     setTimeout(() => {
       html.style.scrollBehavior = "";
+      devolverRolagem = false;
       if ("scrollRestoration" in history) history.scrollRestoration = "auto";
     }, 360);
   };
@@ -168,7 +177,7 @@ function iniciarZoom() {
     img.alt = g.dataset.zoomAlt || "";
     titulo.textContent = g.dataset.zoomTitulo || "";
     legenda.textContent = g.dataset.zoomLegenda || "";
-    contador.textContent = `Tela ${atual + 1} de ${gatilhos.length}`;
+    contador.textContent = `${item} ${atual + 1} de ${gatilhos.length}`;
   };
   const umaSo = gatilhos.length < 2;
   anterior.hidden = umaSo;
@@ -177,6 +186,7 @@ function iniciarZoom() {
   const abrir = (i: number, de: HTMLElement) => {
     origem = de;
     yAberto = window.scrollY;
+    devolverRolagem = true;
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     mostrar(i);
     dialogo.showModal();
@@ -221,7 +231,7 @@ function iniciarZoom() {
       dialogo.close();
       return;
     }
-    if (history.scrollRestoration === "manual") fixarLugar();
+    if (devolverRolagem && history.scrollRestoration === "manual") fixarLugar();
   });
 
   gatilhos.forEach((g, i) =>

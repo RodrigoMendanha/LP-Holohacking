@@ -1,0 +1,155 @@
+---
+/* Visualizador em tela cheia (<dialog>). Cada grupo tem o seu: os links
+   a[data-zoom="<grupo>"] abrem este diálogo e navegam só entre si.
+   Sempre há como sair: Fechar, "Voltar à página", Esc, clique fora e o
+   voltar do navegador (ver iniciarZoom em scripts/main.ts). */
+import Icon from "./Icon.astro";
+
+interface Props {
+  grupo: string;
+  /** palavra do contador e dos rótulos: "Tela 2 de 4", "Print 3 de 8" */
+  item?: string;
+}
+const { grupo, item = "Tela" } = Astro.props;
+const idTitulo = `zoom-titulo-${grupo}`;
+---
+
+<dialog class="zoom" data-zoom-dialog={grupo} data-zoom-item={item} aria-labelledby={idTitulo}>
+  <div class="zoom-caixa">
+    <header class="zoom-topo">
+      <p class="zoom-contador" data-zoom-contador></p>
+      <button type="button" class="zoom-fechar" data-zoom-fechar>
+        <Icon name="x" size={18} />
+        <span>Fechar</span>
+      </button>
+    </header>
+    <figure class="zoom-figura">
+      <img data-zoom-img src="" alt="" width="1600" height="1000" />
+      <figcaption>
+        <h3 id={idTitulo} data-zoom-titulo-alvo></h3>
+        <p data-zoom-legenda-alvo></p>
+      </figcaption>
+    </figure>
+    <footer class="zoom-base">
+      <button type="button" class="zoom-nav" data-zoom-anterior aria-label={`${item} anterior`}>
+        <Icon name="arrow-left" size={18} />
+        <span>Anterior</span>
+      </button>
+      <button type="button" class="btn btn--fantasma zoom-voltar" data-zoom-fechar>
+        <Icon name="arrow-left" size={16} />
+        <span>Voltar à página</span>
+      </button>
+      <button type="button" class="zoom-nav" data-zoom-proxima aria-label={`Próximo: ${item.toLowerCase()}`}>
+        <span>Próxima</span>
+        <Icon name="arrow-right" size={18} />
+      </button>
+    </footer>
+  </div>
+</dialog>
+
+<style>
+  .zoom {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--creme);
+  }
+  .zoom::backdrop {
+    background: rgba(3, 20, 14, 0.92);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  .zoom[open] { display: grid; place-items: center; }
+  .zoom-caixa {
+    display: grid;
+    gap: 0.9rem;
+    width: min(100% - 2rem, 1240px);
+    max-height: calc(100dvh - 2rem);
+    padding: 1rem 0;
+  }
+  .zoom-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .zoom-contador {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+  .zoom-fechar,
+  .zoom-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.6rem 1rem;
+    border-radius: var(--raio-botao);
+    border: 1px solid rgba(201, 163, 90, 0.45);
+    background: rgba(11, 51, 37, 0.9);
+    color: var(--dourado-claro);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .zoom-fechar:hover,
+  .zoom-nav:hover {
+    background: var(--dourado);
+    color: var(--verde-noite);
+    border-color: var(--dourado);
+  }
+  .zoom-figura {
+    display: grid;
+    gap: 0.75rem;
+    min-height: 0;
+  }
+  .zoom-figura img {
+    justify-self: center;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(100dvh - 15rem);
+    object-fit: contain;
+    border-radius: var(--raio-card);
+    border: 1px solid rgba(201, 163, 90, 0.35);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+    background: var(--verde-noite);
+  }
+  .zoom-figura h3 {
+    font-size: 1.35rem;
+    color: var(--dourado-claro);
+  }
+  .zoom-figura p {
+    font-size: 0.9rem;
+    color: rgba(237, 232, 218, 0.78);
+  }
+  .zoom-base {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .zoom-voltar { min-height: 44px; padding: 0.6rem 1.1rem; color: var(--creme); }
+  :global(body.zoom-aberto) { overflow: hidden; }
+
+  @media (max-width: 639px) {
+    .zoom-nav span,
+    .zoom-voltar span { display: none; }
+    .zoom-nav,
+    .zoom-voltar { padding: 0.6rem 0.85rem; }
+    .zoom-voltar::after {
+      content: "Voltar";
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+    }
+  }
+</style>

@@ -1,7 +1,27 @@
 ---
-/* Só aparece com depoimentos reais e autorizados em TESTIMONIALS.
-   Lista vazia = a seção não é renderizada. */
-import { TESTIMONIALS } from "../../data/site";
+/* Prova social. Depoimentos transcritos literalmente do chat (TESTIMONIALS
+   em data/site.ts) + os prints originais como prova, abertos no
+   visualizador. Lista vazia = seção oculta. */
+import ZoomDialog from "../ui/ZoomDialog.astro";
+import Icon from "../ui/Icon.astro";
+import {
+  TESTIMONIALS,
+  TESTIMONIALS_CONTEXT,
+  TESTIMONIAL_REACTIONS,
+  TESTIMONIAL_PRINTS,
+} from "../../data/site";
+
+const iniciais = (nome: string) =>
+  nome
+    .replace(/^Dr[a]?\.?\s+/i, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]!.toUpperCase())
+    .join("");
+
+const destaque = TESTIMONIALS.find((t) => t.featured);
+const demais = TESTIMONIALS.filter((t) => t !== destaque);
 ---
 
 {
@@ -11,54 +31,302 @@ import { TESTIMONIALS } from "../../data/site";
         <header class="cabeca cabeca--centro">
           <span class="eyebrow" data-reveal>Prova social</span>
           <h2 id="depoimentos-titulo" data-reveal style="--i:1">
-            Quem atende com <em>HoloHacking.</em>
+            O que nutricionistas disseram <em>ao conhecer o HoloHacking.</em>
           </h2>
+          {TESTIMONIALS_CONTEXT && (
+            <p data-reveal style="--i:2">
+              {TESTIMONIALS_CONTEXT}
+            </p>
+          )}
         </header>
-        <ul role="list" class="depoimentos-grade">
-          {TESTIMONIALS.map((t, i) => (
-            <li class="card depoimento" data-reveal style={`--i:${i % 3}`}>
+
+        {destaque && (
+          <figure class="dep-destaque painel" data-reveal>
+            <span class="dep-aspas" aria-hidden="true">“</span>
+            <blockquote>
+              <p>{destaque.quote}</p>
+            </blockquote>
+            <figcaption class="dep-autor">
+              <span class="dep-avatar dep-avatar--claro" aria-hidden="true">
+                {destaque.image ? <img src={destaque.image} alt="" width="52" height="52" loading="lazy" /> : iniciais(destaque.name)}
+              </span>
+              <span>
+                <b>{destaque.name}</b>
+                {destaque.role ? <i>{destaque.role}</i> : destaque.time && <i>no chat do encontro · {destaque.time}</i>}
+              </span>
+            </figcaption>
+          </figure>
+        )}
+
+        <ul role="list" class="dep-grade">
+          {demais.map((t, i) => (
+            <li class="dep-card" data-reveal style={`--i:${i % 3}`}>
               <figure>
                 <blockquote>
                   <p>“{t.quote}”</p>
                 </blockquote>
-                <figcaption>
-                  {t.image && <img src={t.image} alt="" width="48" height="48" loading="lazy" decoding="async" />}
+                <figcaption class="dep-autor">
+                  <span class="dep-avatar" aria-hidden="true">
+                    {t.image ? <img src={t.image} alt="" width="44" height="44" loading="lazy" /> : iniciais(t.name)}
+                  </span>
                   <span>
                     <b>{t.name}</b>
-                    {t.role && <i>{t.role}</i>}
+                    {t.role ? <i>{t.role}</i> : t.time && <i>no chat do encontro · {t.time}</i>}
                   </span>
                 </figcaption>
               </figure>
             </li>
           ))}
         </ul>
+
+        {TESTIMONIAL_REACTIONS.length > 0 && (
+          <div class="dep-reacoes" data-reveal>
+            <span class="eyebrow">Também no chat</span>
+            <ul role="list">
+              {TESTIMONIAL_REACTIONS.map((r) => (
+                <li>
+                  <span class="dep-bolha">{r.text}</span>
+                  <span class="dep-bolha-nome">{r.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {TESTIMONIAL_PRINTS.length > 0 && (
+          <div class="dep-prints" data-reveal>
+            <div class="dep-prints-cabeca">
+              <span class="eyebrow">Prints originais</span>
+              <p>As mensagens acima, como foram enviadas no chat. Clique para ampliar.</p>
+            </div>
+            <ul role="list">
+              {TESTIMONIAL_PRINTS.map((p, i) => (
+                <li>
+                  <a
+                    class="dep-print"
+                    href={p.src}
+                    data-zoom="prints"
+                    data-zoom-titulo="Print original do chat"
+                    data-zoom-legenda={p.alt}
+                    data-zoom-alt={p.alt}
+                    aria-label={`Ampliar print ${i + 1}: ${p.alt}`}
+                  >
+                    <img src={p.src} alt="" width="200" height="260" loading="lazy" decoding="async" />
+                    <span class="dep-print-dica" aria-hidden="true">
+                      <Icon name="expand" size={12} />
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
+
+      {TESTIMONIAL_PRINTS.length > 0 && <ZoomDialog grupo="prints" item="Print" />}
     </section>
   )
 }
 
 <style>
-  .depoimentos-grade { display: grid; gap: 1.25rem; }
-  .depoimento { background: var(--creme-claro); }
-  .depoimento blockquote p {
+  /* ---------- destaque ---------- */
+  .dep-destaque {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto clamp(1.75rem, 1.25rem + 2vw, 2.75rem);
+    padding: clamp(2rem, 1.5rem + 2.5vw, 3.5rem) clamp(1.5rem, 1rem + 3vw, 4rem);
+    text-align: center;
+  }
+  .dep-aspas {
+    display: block;
     font-family: var(--fonte-display);
-    font-size: 1.3rem;
+    font-size: 5.5rem;
+    line-height: 0.6;
+    color: var(--dourado);
+    margin-bottom: 0.5rem;
+  }
+  .dep-destaque blockquote p {
+    font-family: var(--fonte-display);
+    font-size: clamp(1.45rem, 1.2rem + 1.2vw, 2.15rem);
     font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.32;
+    color: var(--creme);
+  }
+  .dep-destaque .dep-autor {
+    justify-content: center;
+    border-top-color: rgba(201, 163, 90, 0.25);
+  }
+  .dep-destaque .dep-autor b { color: var(--dourado-claro); }
+  .dep-destaque .dep-autor i { color: rgba(237, 232, 218, 0.7); }
+
+  /* ---------- cards ---------- */
+  .dep-grade {
+    columns: 1;
+    column-gap: 1.25rem;
+  }
+  .dep-card {
+    break-inside: avoid;
+    margin-bottom: 1.25rem;
+    padding: clamp(1.4rem, 1.1rem + 1vw, 1.9rem);
+    border-radius: var(--raio-card);
+    background: var(--creme-claro);
+    border: 1px solid var(--borda);
+    transition: transform 0.35s var(--ease), border-color 0.35s, box-shadow 0.35s;
+  }
+  .dep-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--dourado-suave);
+    box-shadow: var(--sombra);
+  }
+  .dep-card blockquote p {
+    font-family: var(--fonte-display);
+    font-size: 1.22rem;
+    font-weight: 500;
+    line-height: 1.42;
     color: var(--titulo);
   }
-  .depoimento figcaption {
+
+  .dep-autor {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    margin-top: 1.5rem;
-    padding-top: 1.25rem;
+    margin-top: 1.4rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--linha);
+    text-align: left;
+  }
+  .dep-autor b {
+    display: block;
+    font-weight: 500;
+    color: var(--titulo);
+    line-height: 1.3;
+  }
+  .dep-autor i {
+    font-style: normal;
+    font-size: 0.78rem;
+    color: var(--texto-suave);
+  }
+  .dep-avatar {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--verde-escuro);
+    color: var(--dourado-claro);
+    font-family: var(--fonte-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .dep-avatar--claro {
+    width: 52px;
+    height: 52px;
+    background: var(--dourado);
+    color: var(--verde-noite);
+    font-size: 1.2rem;
+  }
+  .dep-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- reações ---------- */
+  .dep-reacoes {
+    margin-top: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    text-align: center;
+  }
+  .dep-reacoes ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.9rem 1rem;
+    margin-top: 1rem;
+  }
+  .dep-reacoes li {
+    display: grid;
+    justify-items: start;
+    gap: 0.3rem;
+    max-width: 100%;
+  }
+  .dep-bolha {
+    padding: 0.6rem 1rem;
+    border-radius: 16px 16px 16px 4px;
+    background: var(--verde-escuro);
+    color: var(--creme);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    text-align: left;
+  }
+  .dep-bolha-nome {
+    padding-left: 0.4rem;
+    font-size: 0.72rem;
+    color: var(--texto-suave);
+  }
+
+  /* ---------- prints ---------- */
+  .dep-prints {
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    padding-top: clamp(1.75rem, 1.5rem + 1vw, 2.25rem);
     border-top: 1px solid var(--linha);
   }
-  .depoimento img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
-  .depoimento b { display: block; font-weight: 500; }
-  .depoimento i { font-style: normal; font-size: 0.85rem; color: var(--texto-suave); }
-  @media (min-width: 900px) {
-    .depoimentos-grade { grid-template-columns: repeat(3, 1fr); }
+  .dep-prints-cabeca {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.4rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .dep-prints-cabeca p {
+    font-size: 0.85rem;
+    color: var(--texto-suave);
+  }
+  .dep-prints ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+  .dep-print {
+    position: relative;
+    display: block;
+    aspect-ratio: 3 / 4;
+    border-radius: var(--raio-botao);
+    overflow: hidden;
+    border: 1px solid var(--borda-forte);
+    background: var(--verde-noite);
+    cursor: zoom-in;
+    transition: transform 0.3s var(--ease), border-color 0.3s, box-shadow 0.3s;
+  }
+  .dep-print:hover {
+    transform: translateY(-3px);
+    border-color: var(--dourado);
+    box-shadow: var(--sombra);
+  }
+  .dep-print img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 30%;
+  }
+  .dep-print-dica {
+    position: absolute;
+    right: 0.4rem;
+    bottom: 0.4rem;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(6, 35, 26, 0.85);
+    border: 1px solid rgba(201, 163, 90, 0.5);
+    color: var(--dourado-claro);
+  }
+
+  @media (min-width: 700px) {
+    .dep-grade { columns: 2; }
+    .dep-prints ul { grid-template-columns: repeat(8, 1fr); }
+  }
+  @media (min-width: 1100px) {
+    .dep-grade { columns: 3; }
   }
 </style>
