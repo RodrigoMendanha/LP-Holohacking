@@ -20,7 +20,7 @@ export const SITE = {
     "Organize Mapeamento Holístico, HOLOSCAN, ferramentas, estratégias, Resultado HOLOS e Evolução em uma única jornada profissional.",
   /** URL pública definitiva, sem barra no final. Ex.: "https://holohacking.com.br".
    *  Vazio = sem canonical absoluto e sem sitemap (normal antes do domínio). */
-  url: "",
+  url: "https://holohacking.app.br",
   locale: "pt_BR",
   ogImage: "/images/social/og-holohacking.png",
   ogImageAlt: "HoloHacking — plataforma profissional para nutricionistas, com o radar HOLOSCAN em dourado.",
