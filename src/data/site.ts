@@ -355,7 +355,7 @@ export const COMPANY = {
 --------------------------------------------------------------------------- */
 export const ANALYTICS_IDS = {
   /** Ex.: "GTM-XXXXXXX". Se houver GTM, prefira configurar GA4 e Pixel dentro dele. */
-  GTM: "",
+  GTM: "GTM-P28ZKS4H",
   /** Ex.: "G-XXXXXXXXXX" */
   GA4: "",
   /** Ex.: "123456789012345" */
